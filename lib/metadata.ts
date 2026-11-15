@@ -27,7 +27,7 @@ export function buildPageMetadata(opts: DynamicMetadataOptions): Metadata {
     keywords: opts.keywords || [
       "ARCH NEW ERA DESIGN",
       "NRBL TECH",
-      "Nidhi Sharma",
+      "Manoj Kumar Sharma",
       "Architects in Shahdara Delhi",
       "Home Construction Delhi NCR",
       "Interior Designing Delhi",

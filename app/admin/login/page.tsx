@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
         setLoading(false);
         return;
       }
-      toast.success(`Welcome back, ${data.user?.name || "Nidhi Sharma"}!`);
+      toast.success(`Welcome back, ${data.user?.name || "Manoj Kumar Sharma"}!`);
       router.push("/admin/dashboard");
       router.refresh();
     } catch {

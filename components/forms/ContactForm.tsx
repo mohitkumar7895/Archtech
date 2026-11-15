@@ -58,7 +58,7 @@ export function ContactForm({
   onSuccess,
   compact = false,
   whatsappNumber = "7535942407",
-  contactPerson = "Nidhi Sharma",
+  contactPerson = "Manoj Kumar Sharma",
 }: ContactFormProps) {
   const formId = useId();
   const [submitted, setSubmitted] = useState(false);
@@ -101,7 +101,7 @@ export function ContactForm({
         toast.error(json.error || "Could not submit your enquiry. Please check fields.");
         return;
       }
-      toast.success(json.message || "Enquiry submitted! Nidhi Sharma will reach out shortly.");
+      toast.success(json.message || "Enquiry submitted! Manoj Kumar Sharma will reach out shortly.");
       setSubmitted(true);
       reset();
       if (onSuccess) {

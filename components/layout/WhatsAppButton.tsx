@@ -6,7 +6,7 @@ import { formatWhatsAppUrl } from "@/lib/utils";
 
 export function WhatsAppButton({
   whatsappNumber = "7535942407",
-  contactPerson = "Nidhi Sharma",
+  contactPerson = "Manoj Kumar Sharma",
 }: {
   whatsappNumber?: string;
   contactPerson?: string;

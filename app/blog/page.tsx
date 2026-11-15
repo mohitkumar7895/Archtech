@@ -15,7 +15,7 @@ export async function generateMetadata() {
   return buildPageMetadata({
     title: "Architecture, Construction Cost & Interior Design Blog | ARCH NEW ERA DESIGN",
     description:
-      "Read expert articles by Nidhi Sharma and ARCH NEW ERA DESIGN (NRBL TECH) on house construction cost per sq. ft. in Delhi NCR, Vastu planning, and luxury interior trends.",
+      "Read expert articles by Manoj Kumar Sharma and ARCH NEW ERA DESIGN (NRBL TECH) on house construction cost per sq. ft. in Delhi NCR, Vastu planning, and luxury interior trends.",
     path: "/blog",
     ogImage: settings.heroImage,
   });

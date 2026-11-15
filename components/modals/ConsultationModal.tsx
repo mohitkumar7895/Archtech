@@ -7,7 +7,7 @@ import { useModal } from "@/hooks/useModal";
 
 export function ConsultationModal({
   whatsappNumber = "7535942407",
-  contactPerson = "Nidhi Sharma",
+  contactPerson = "Manoj Kumar Sharma",
 }: {
   whatsappNumber?: string;
   contactPerson?: string;

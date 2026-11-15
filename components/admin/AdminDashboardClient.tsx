@@ -2116,7 +2116,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                       category: "Residential Homes",
                       areaSqFt: "3,200 sq. ft.",
                       completionDate: "2026",
-                      architectLead: "Nidhi Sharma",
+                      architectLead: "Manoj Kumar Sharma",
                       shortDescription: "",
                       description: "",
                       coverImage:
@@ -2661,7 +2661,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                       content: "<h2>Article Heading</h2>\n<p>Write your architectural insights here...</p>",
                       featuredImage:
                         "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-                      author: "Nidhi Sharma",
+                      author: "Manoj Kumar Sharma",
                       authorRole: "Principal Project Lead – ARCH NEW ERA DESIGN",
                       category: blogCategories[0]?.name || "Construction Cost & Planning",
                       tags: ["Architecture", "Delhi NCR"],
@@ -2755,7 +2755,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                       <label className="text-xs font-bold uppercase block mb-1">Author</label>
                       <input
                         type="text"
-                        value={editingBlog.author || "Nidhi Sharma"}
+                        value={editingBlog.author || "Manoj Kumar Sharma"}
                         onChange={(e) => setEditingBlog({ ...editingBlog, author: e.target.value })}
                         className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
                       />
@@ -3081,7 +3081,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                       focusKeyword: "",
                       secondaryKeywords: [],
                       pageContent:
-                        "<h2>Architectural & Turnkey Construction Excellence</h2>\n<p>Contact Nidhi Sharma at ARCH NEW ERA DESIGN (NRBL TECH) for a personalized consultation.</p>",
+                        "<h2>Architectural & Turnkey Construction Excellence</h2>\n<p>Contact Manoj Kumar Sharma at ARCH NEW ERA DESIGN (NRBL TECH) for a personalized consultation.</p>",
                       featuredImage:
                         "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
                       imageAltText: "",
@@ -3767,7 +3767,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                                 <a
                                   href={formatWhatsAppUrl(
                                     enq.phone,
-                                    `Hello ${enq.customerName}, this is Nidhi Sharma from ARCH NEW ERA DESIGN (NRBL TECH) regarding your enquiry for ${enq.serviceRequired}.`
+                                    `Hello ${enq.customerName}, this is Manoj Kumar Sharma from ARCH NEW ERA DESIGN (NRBL TECH) regarding your enquiry for ${enq.serviceRequired}.`
                                   )}
                                   target="_blank"
                                   rel="noopener noreferrer"
@@ -3819,7 +3819,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                         <a
                           href={formatWhatsAppUrl(
                             selectedLead.phone,
-                            `Hello ${selectedLead.customerName}, Nidhi Sharma here from ARCH NEW ERA DESIGN (NRBL TECH).`
+                            `Hello ${selectedLead.customerName}, Manoj Kumar Sharma here from ARCH NEW ERA DESIGN (NRBL TECH).`
                           )}
                           target="_blank"
                           rel="noopener noreferrer"

@@ -88,12 +88,12 @@ export default async function AboutPage() {
                 />
               </div>
 
-              {/* Leadership Card: Nidhi Sharma */}
+              {/* Leadership Card: Manoj Kumar Sharma */}
               <div className="rounded-2xl bg-[#071A35] text-white p-7 border border-[#D6B36A]/50 shadow-xl space-y-4">
                 <div className="flex items-center justify-between border-b border-white/10 pb-4">
                   <div className="flex items-center gap-3.5">
                     <div className="w-12 h-12 rounded-xl bg-[#D6B36A] text-[#071A35] flex items-center justify-center font-serif font-bold text-xl">
-                      NS
+                      MS
                     </div>
                     <div>
                       <h3 className="font-serif text-xl font-bold text-white">

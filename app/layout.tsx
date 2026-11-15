@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: "%s | ARCH NEW ERA DESIGN (NRBL TECH)",
   },
   description:
-    "Your Dream Home, Our Expertise. Thoughtful Design. Stronger Structure. Brighter Lives. Premier Architecture, Construction, Interior Designing & Turnkey Solutions in Shahdara, Delhi by Nidhi Sharma.",
+    "Your Dream Home, Our Expertise. Thoughtful Design. Stronger Structure. Brighter Lives. Premier Architecture, Construction, Interior Designing & Turnkey Solutions in Shahdara, Delhi by Manoj Kumar Sharma.",
   icons: {
     icon: "/favicon.svg",
   },

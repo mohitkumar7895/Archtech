@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     revalidatePath("/admin/dashboard");
     return NextResponse.json({
       success: true,
-      message: "Thank you! Nidhi Sharma's team at ARCH NEW ERA DESIGN will contact you shortly.",
+      message: "Thank you! Manoj Kumar Sharma's team at ARCH NEW ERA DESIGN will contact you shortly.",
       enquiry,
     });
   } catch (err: any) {
@@ -60,7 +60,7 @@ export async function PATCH(req: NextRequest) {
       status,
       followUpDate,
       newNote,
-      noteAuthor: auth.user?.name || "Nidhi Sharma",
+      noteAuthor: auth.user?.name || "Manoj Kumar Sharma",
     });
     revalidatePath("/admin/dashboard");
     return NextResponse.json({ success: true, enquiry: updated });

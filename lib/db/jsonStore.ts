@@ -66,7 +66,7 @@ let lastMtime = 0;
 function createInitialStore(): DatabaseStore {
   const adminEmail = process.env.ADMIN_INITIAL_EMAIL || "manoj712009@gmail.com";
   const adminPassword = process.env.ADMIN_INITIAL_PASSWORD || "Admin@123";
-  const adminName = process.env.ADMIN_INITIAL_NAME || "Nidhi Sharma";
+  const adminName = process.env.ADMIN_INITIAL_NAME || "Manoj Kumar Sharma";
   const passwordHash = bcrypt.hashSync(adminPassword, 10);
 
   return {
@@ -128,7 +128,7 @@ function createInitialStore(): DatabaseStore {
             id: "note-1",
             enquiryId: "enq-sample-1",
             note: "Initial sample enquiry record. Admin can update status, add follow-up notes, or contact via WhatsApp.",
-            author: "Nidhi Sharma",
+            author: "Manoj Kumar Sharma",
             createdAt: new Date().toISOString(),
           },
         ],

@@ -20,7 +20,7 @@ export const INITIAL_SITE_SETTINGS: SiteSettings = {
   companyName: "ARCH NEW ERA DESIGN",
   brandIdentity: "NRBL TECH",
   categoryText: "Architecture | Construction | Interior Designing | Turnkey Solutions",
-  contactPerson: "Nidhi Sharma",
+  contactPerson: "Manoj Kumar Sharma",
   phone: "7535942407",
   whatsapp: "7535942407",
   email: "manoj712009@gmail.com",
@@ -45,7 +45,7 @@ export const INITIAL_SITE_SETTINGS: SiteSettings = {
   introBadge: "ARCH NEW ERA DESIGN • NRBL TECH",
   introTitle: "Crafting Enduring Architecture & Turnkey Living Spaces Across Delhi NCR",
   introDescription:
-    "Led by Nidhi Sharma at B-366, Ashok Nagar, Shahdara, Delhi, ARCH NEW ERA DESIGN (NRBL TECH) brings together architectural precision, seismic-grade structural engineering, and bespoke luxury interiors under one unified roof. We design and build spaces that bring good energy, lasting strength, and timeless elegance.",
+    "Led by Manoj Kumar Sharma at B-366, Ashok Nagar, Shahdara, Delhi, ARCH NEW ERA DESIGN (NRBL TECH) brings together architectural precision, seismic-grade structural engineering, and bespoke luxury interiors under one unified roof. We design and build spaces that bring good energy, lasting strength, and timeless elegance.",
   introHighlights: [
     "Architect-Led Planning, 2D/3D Elevations & Structural Drawings",
     "IS-Code Compliant RCC Structure & Transparent Material Specifications",
@@ -57,7 +57,7 @@ export const INITIAL_SITE_SETTINGS: SiteSettings = {
   sqftDelivered: "4.5L+ Sq. Ft.",
   clientSatisfaction: "99%",
   footerAbout:
-    "ARCH NEW ERA DESIGN (NRBL TECH) is a premier Architecture, Construction, Interior Designing, and Turnkey Solutions company based in Shahdara, Delhi. Guided by Nidhi Sharma, we create spaces that bring good energy with thoughtful design and stronger structure.",
+    "ARCH NEW ERA DESIGN (NRBL TECH) is a premier Architecture, Construction, Interior Designing, and Turnkey Solutions company based in Shahdara, Delhi. Guided by Manoj Kumar Sharma, we create spaces that bring good energy with thoughtful design and stronger structure.",
   copyrightText: "© 2026 ARCH NEW ERA DESIGN (NRBL TECH). All rights reserved.",
   googleMapsEmbedUrl:
     "https://www.google.com/maps?q=Ashok+Nagar+Shahdara+Delhi+110093&output=embed",
@@ -185,14 +185,14 @@ export const INITIAL_HOMEPAGE_SECTIONS: HomepageSection[] = [
     sectionKey: "our_process",
     title: "Our 6-Step Turnkey Execution Methodology",
     subtitle:
-      "A structured, stress-free journey from your initial consultation with Nidhi Sharma to moving into your completed space.",
+      "A structured, stress-free journey from your initial consultation with Manoj Kumar Sharma to moving into your completed space.",
     badgeText: "HOW WE WORK",
     contentJson: JSON.stringify([
       {
         step: "01",
         title: "Consultation",
         description:
-          "Personal discussion with Nidhi Sharma to understand your lifestyle, plot dimensions, aesthetic preferences, and target budget.",
+          "Personal discussion with Manoj Kumar Sharma to understand your lifestyle, plot dimensions, aesthetic preferences, and target budget.",
       },
       {
         step: "02",
@@ -267,7 +267,7 @@ export const INITIAL_HOMEPAGE_SECTIONS: HomepageSection[] = [
     sectionKey: "final_cta",
     title: "Ready to Build or Transform Your Space?",
     subtitle:
-      "Schedule a direct consultation with Nidhi Sharma at ARCH NEW ERA DESIGN (NRBL TECH) for architectural planning, construction, or turnkey interiors.",
+      "Schedule a direct consultation with Manoj Kumar Sharma at ARCH NEW ERA DESIGN (NRBL TECH) for architectural planning, construction, or turnkey interiors.",
     badgeText: "START YOUR JOURNEY",
     isEnabled: true,
     orderIndex: 12,
@@ -290,7 +290,7 @@ export const INITIAL_ABOUT_SECTION: AboutSection = {
   ],
   imageUrl:
     "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=85",
-  founderName: "Nidhi Sharma",
+  founderName: "Manoj Kumar Sharma",
   founderRole: "Primary Contact & Principal Project Lead",
   founderMessage:
     "At ARCH NEW ERA DESIGN (NRBL TECH), our philosophy is simple: 'Thoughtful Design. Stronger Structure. Brighter Lives.' Every home we design and build is treated as a legacy for the family living inside it. We focus on natural light, structural longevity, honest materials, and spaces that bring good energy.",
@@ -397,7 +397,7 @@ export const INITIAL_SERVICES: Service[] = [
       {
         question: "How do I track the progress of my home construction?",
         answer:
-          "Nidhi Sharma and our site engineering team provide milestone-wise updates, material test verifications, and scheduled on-site walkthroughs.",
+          "Manoj Kumar Sharma and our site engineering team provide milestone-wise updates, material test verifications, and scheduled on-site walkthroughs.",
       },
     ],
     seoTitle: "Home Construction Company in Shahdara Delhi | ARCH NEW ERA DESIGN",
@@ -703,7 +703,7 @@ export const INITIAL_SERVICES: Service[] = [
     shortDescription:
       "Single-window architecture, civil structure, luxury interiors, and final handover starting at ₹1,899/sq. ft.",
     fullDescription:
-      "Our signature Turnkey Construction solution is designed for busy homeowners and NRI/outstation families who want zero coordination hassle. Starting at ₹1,899/sq. ft., we handle 100% of the journey—architectural blueprints, civil structure, premium finishing, modular woodwork, false ceilings, painting, and final cleaning.\n\nYou deal with one trusted team led by Nidhi Sharma, one unified timeline, and one transparent contract.",
+      "Our signature Turnkey Construction solution is designed for busy homeowners and NRI/outstation families who want zero coordination hassle. Starting at ₹1,899/sq. ft., we handle 100% of the journey—architectural blueprints, civil structure, premium finishing, modular woodwork, false ceilings, painting, and final cleaning.\n\nYou deal with one trusted team led by Manoj Kumar Sharma, one unified timeline, and one transparent contract.",
     startingPrice: "₹1,899 / sq. ft.",
     iconName: "KeyRound",
     featuredImage:
@@ -899,7 +899,7 @@ export const INITIAL_PROJECTS: Project[] = [
     ],
     completionDate: "2026",
     areaSqFt: "3,600 sq. ft.",
-    architectLead: "Nidhi Sharma",
+    architectLead: "Manoj Kumar Sharma",
     specifications: [
       { label: "Project Scope", value: "Architecture, Structure & Turnkey Finishes" },
       { label: "Built-up Area", value: "3,600 Sq. Ft. (Stilt + 3 Floors)" },
@@ -933,7 +933,7 @@ export const INITIAL_PROJECTS: Project[] = [
     ],
     completionDate: "2026",
     areaSqFt: "2,400 sq. ft.",
-    architectLead: "Nidhi Sharma",
+    architectLead: "Manoj Kumar Sharma",
     specifications: [
       { label: "Project Scope", value: "Complete Turnkey Interior Designing" },
       { label: "Carpet Area", value: "2,400 Sq. Ft. (4 BHK Residence)" },
@@ -966,7 +966,7 @@ export const INITIAL_PROJECTS: Project[] = [
     ],
     completionDate: "Ongoing",
     areaSqFt: "4,200 sq. ft.",
-    architectLead: "Nidhi Sharma",
+    architectLead: "Manoj Kumar Sharma",
     specifications: [
       { label: "Current Stage", value: "RCC Superstructure & Brickwork" },
       { label: "Total Built-up Area", value: "4,200 Sq. Ft." },
@@ -999,7 +999,7 @@ export const INITIAL_PROJECTS: Project[] = [
     ],
     completionDate: "2026",
     areaSqFt: "6,800 sq. ft.",
-    architectLead: "Nidhi Sharma",
+    architectLead: "Manoj Kumar Sharma",
     specifications: [
       { label: "Project Category", value: "Luxury Villa & Landscape Architecture" },
       { label: "Built-up Area", value: "6,800 Sq. Ft." },
@@ -1032,7 +1032,7 @@ export const INITIAL_PROJECTS: Project[] = [
     ],
     completionDate: "2026",
     areaSqFt: "5,000 sq. ft.",
-    architectLead: "Nidhi Sharma",
+    architectLead: "Manoj Kumar Sharma",
     specifications: [
       { label: "Project Scope", value: "Commercial Facade & Turnkey Office Interiors" },
       { label: "Floor Area", value: "5,000 Sq. Ft." },
@@ -1150,7 +1150,7 @@ export const INITIAL_BLOGS: Blog[] = [
     shortDescription:
       "Understand the breakdown between Essential (₹1,099/sq.ft.), Ready-to-Move (₹1,399/sq.ft.), and Premium Turnkey (₹1,899/sq.ft.) residential construction packages.",
     content: `<h2>Understanding Residential Construction Costs in Delhi NCR</h2>
-<p>Planning to build your dream home in Delhi NCR requires a clear understanding of where every rupee goes—from excavation and RCC structural framing to finishing materials and modular interiors. At <strong>ARCH NEW ERA DESIGN (NRBL TECH)</strong>, led by <strong>Nidhi Sharma</strong>, we believe in transparent, stage-wise cost planning.</p>
+<p>Planning to build your dream home in Delhi NCR requires a clear understanding of where every rupee goes—from excavation and RCC structural framing to finishing materials and modular interiors. At <strong>ARCH NEW ERA DESIGN (NRBL TECH)</strong>, led by <strong>Manoj Kumar Sharma</strong>, we believe in transparent, stage-wise cost planning.</p>
 
 <h3>1. Essential Home Construction (Starting at ₹1,099/sq. ft.)</h3>
 <p>Designed for homeowners who want an uncompromising, earthquake-resistant civil structure with reliable standard finishes. Roughly 55% of the budget is invested in the RCC frame, foundation, TMT steel, cement, and brickwork, while 45% covers essential flooring, doors, windows, plumbing, and electrical wiring.</p>
@@ -1167,11 +1167,11 @@ export const INITIAL_BLOGS: Blog[] = [
   <li><strong>Stilt Parking & Lift Provisions:</strong> Multi-storey builder floor norms in Delhi.</li>
   <li><strong>Brand Selections:</strong> Choice of sanitaryware, flooring marble/tile sizes, and woodwork finishes.</li>
 </ul>
-<p>Have a plot in Shahdara, East Delhi, or anywhere in NCR? Contact <strong>Nidhi Sharma at +91 7535942407</strong> for a free architectural and cost consultation.</p>`,
+<p>Have a plot in Shahdara, East Delhi, or anywhere in NCR? Contact <strong>Manoj Kumar Sharma at +91 7535942407</strong> for a free architectural and cost consultation.</p>`,
     featuredImage:
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
     imageAlt: "Modern house construction cost guide in Delhi NCR",
-    author: "Nidhi Sharma",
+    author: "Manoj Kumar Sharma",
     authorRole: "Principal Project Lead – ARCH NEW ERA DESIGN",
     category: "Construction Cost & Planning",
     tags: ["Construction Cost", "Delhi NCR", "Turnkey Construction", "Home Building"],
@@ -1216,11 +1216,11 @@ export const INITIAL_BLOGS: Blog[] = [
 
 <h3>4. Full-Height Wardrobes & Warm Textures</h3>
 <p>Floor-to-ceiling wardrobes eliminate dust traps and visually heighten bedrooms, while fluted panels and cane/veneer accents add organic warmth.</p>
-<p>Our complete Interior Designing solutions start at <strong>₹900/sq. ft.</strong> Reach out to Nidhi Sharma at B-366, Ashok Nagar, Shahdara, Delhi for a personalized 3D design consultation.</p>`,
+<p>Our complete Interior Designing solutions start at <strong>₹900/sq. ft.</strong> Reach out to Manoj Kumar Sharma at B-366, Ashok Nagar, Shahdara, Delhi for a personalized 3D design consultation.</p>`,
     featuredImage:
       "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80",
     imageAlt: "Luxury interior design living room with warm lighting",
-    author: "Nidhi Sharma",
+    author: "Manoj Kumar Sharma",
     authorRole: "Principal Project Lead – ARCH NEW ERA DESIGN",
     category: "Interior Design Trends",
     tags: ["Interior Designing", "Vastu Interiors", "Modular Kitchen", "False Ceiling"],
@@ -1259,7 +1259,7 @@ export const INITIAL_BLOGS: Blog[] = [
     featuredImage:
       "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
     imageAlt: "Architectural blueprint and turnkey construction supervision",
-    author: "Nidhi Sharma",
+    author: "Manoj Kumar Sharma",
     authorRole: "Principal Project Lead – ARCH NEW ERA DESIGN",
     category: "Architecture & Vastu",
     tags: ["Turnkey Solutions", "Architecture", "Structural Engineering"],
@@ -1299,7 +1299,7 @@ export const INITIAL_SEO_PAGES: SEOPage[] = [
     ],
     pageContent: `<h2>Your Local Architecture & Turnkey Construction Partner in Shahdara, Delhi</h2>
 <p>Located right at <strong>B-366, Ashok Nagar, Shahdara, Delhi – 110093</strong>, <strong>ARCH NEW ERA DESIGN (NRBL TECH)</strong> is East Delhi's trusted destination for complete architectural planning, residential & commercial construction, and luxury interior designing.</p>
-<p>Under the personal guidance of <strong>Nidhi Sharma (+91 7535942407)</strong>, we serve homeowners and commercial builders across Ashok Nagar, Jyoti Nagar, Vivek Vihar, Dilshad Garden, Ram Nagar, Rohtash Nagar, and Yamuna Vihar.</p>
+<p>Under the personal guidance of <strong>Manoj Kumar Sharma (+91 7535942407)</strong>, we serve homeowners and commercial builders across Ashok Nagar, Jyoti Nagar, Vivek Vihar, Dilshad Garden, Ram Nagar, Rohtash Nagar, and Yamuna Vihar.</p>
 <h3>Our Key Services in Shahdara & East Delhi</h3>
 <ul>
   <li><strong>2D/3D Architecture & Structural Drawings:</strong> Vastu-friendly floor plans, front elevations, and RCC drawings.</li>
@@ -1321,7 +1321,7 @@ export const INITIAL_SEO_PAGES: SEOPage[] = [
       {
         question: "Where is ARCH NEW ERA DESIGN located in Shahdara?",
         answer:
-          "Our office is located at B-366, Ashok Nagar, Shahdara, Delhi – 110093, India. You can call or WhatsApp Nidhi Sharma at 7535942407.",
+          "Our office is located at B-366, Ashok Nagar, Shahdara, Delhi – 110093, India. You can call or WhatsApp Manoj Kumar Sharma at 7535942407.",
       },
       {
         question: "Do you provide free site consultation in Shahdara and East Delhi?",
@@ -1392,7 +1392,7 @@ export const INITIAL_SEO_PAGES: SEOPage[] = [
     secondaryKeywords: ["vastu house design delhi", "3d elevation architect shahdara"],
     pageContent: `<h2>Harmonizing Modern Architecture with Positive Spatial Energy</h2>
 <p>At <strong>ARCH NEW ERA DESIGN (NRBL TECH)</strong>, our brand statement <em>"Spaces That Bring Good Energy"</em> is embedded in every floor plan we draw. We combine scientific sun-path orientation, natural cross-ventilation, and Vastu Shastra principles with contemporary architectural aesthetics.</p>
-<p>Speak directly with <strong>Nidhi Sharma (+91 7535942407)</strong> to plan your residential plot, villa, or commercial space.</p>`,
+<p>Speak directly with <strong>Manoj Kumar Sharma (+91 7535942407)</strong> to plan your residential plot, villa, or commercial space.</p>`,
     featuredImage:
       "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
     imageAltText: "Vastu compliant architectural floor planning by ARCH NEW ERA DESIGN",
@@ -1421,7 +1421,7 @@ export const INITIAL_TESTIMONIALS: Testimonial[] = [
     projectType: "Ready-to-Move Construction",
     rating: 5,
     content:
-      "Working with Nidhi Sharma and the ARCH NEW ERA DESIGN (NRBL TECH) team gave us complete clarity on our 2D/3D drawings, structural steel specifications, and stage-wise construction milestones.",
+      "Working with Manoj Kumar Sharma and the ARCH NEW ERA DESIGN (NRBL TECH) team gave us complete clarity on our 2D/3D drawings, structural steel specifications, and stage-wise construction milestones.",
     status: "Published",
     displayOrder: 1,
     createdAt: new Date().toISOString(),
@@ -1469,7 +1469,7 @@ export const INITIAL_FAQS: FAQItem[] = [
     id: "faq-2",
     question: "Who is the primary contact person at ARCH NEW ERA DESIGN (NRBL TECH)?",
     answer:
-      "Nidhi Sharma is the primary contact person. You can call or WhatsApp directly at +91 7535942407, email manoj712009@gmail.com, or visit our office at B-366, Ashok Nagar, Shahdara, Delhi – 110093.",
+      "Manoj Kumar Sharma is the primary contact person. You can call or WhatsApp directly at +91 7535942407, email manoj712009@gmail.com, or visit our office at B-366, Ashok Nagar, Shahdara, Delhi – 110093.",
     category: "General",
     displayOrder: 2,
     isPublished: true,

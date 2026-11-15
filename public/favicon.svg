@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" fill="none">
+  <defs>
+    <linearGradient id="goldGradFav" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F2D99B" />
+      <stop offset="50%" stop-color="#D6B36A" />
+      <stop offset="100%" stop-color="#B89246" />
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="80" height="80" rx="16" fill="#071A35" stroke="url(#goldGradFav)" stroke-width="3" />
+  <path d="M22 66V38L44 18L66 38V66" stroke="url(#goldGradFav)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M31 66V45C31 37.8203 36.8203 32 44 32C51.1797 32 57 37.8203 57 45V66" stroke="#F2D99B" stroke-width="2.5" />
+  <line x1="16" y1="66" x2="72" y2="66" stroke="url(#goldGradFav)" stroke-width="3" stroke-linecap="round" />
+</svg>

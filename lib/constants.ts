@@ -1,0 +1,1590 @@
+import {
+  SiteSettings,
+  HomepageSection,
+  AboutSection,
+  Service,
+  PricingPackage,
+  Project,
+  GalleryItem,
+  Blog,
+  BlogCategory,
+  SEOPage,
+  Testimonial,
+  FAQItem,
+  MediaAsset,
+  SocialLink,
+} from "@/types";
+
+export const INITIAL_SITE_SETTINGS: SiteSettings = {
+  id: "default",
+  companyName: "ARCH NEW ERA DESIGN",
+  brandIdentity: "NRBL TECH",
+  categoryText: "Architecture | Construction | Interior Designing | Turnkey Solutions",
+  contactPerson: "Nidhi Sharma",
+  phone: "7535942407",
+  whatsapp: "7535942407",
+  email: "manoj712009@gmail.com",
+  address: "B-366, Ashok Nagar, Shahdara, Delhi – 110093, India.",
+  tagline: "Your Dream Home, Our Expertise.",
+  supportingTagline: "Thoughtful Design. Stronger Structure. Brighter Lives.",
+  brandStatement: "Spaces That Bring Good Energy.",
+  logoUrl: "/logo.svg",
+  faviconUrl: "/favicon.svg",
+  heroTitle: "Your Dream Home, Our Expertise",
+  heroSubtitle: "Thoughtful Design. Stronger Structure. Brighter Lives.",
+  heroCtaPrimaryText: "Explore Our Services",
+  heroCtaPrimaryLink: "/services",
+  heroCtaSecondaryText: "Get Free Consultation",
+  heroImage:
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=85",
+  heroGallery: [
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=85",
+    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1920&q=85",
+    "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1920&q=85",
+  ],
+  introBadge: "ARCH NEW ERA DESIGN • NRBL TECH",
+  introTitle: "Crafting Enduring Architecture & Turnkey Living Spaces Across Delhi NCR",
+  introDescription:
+    "Led by Nidhi Sharma at B-366, Ashok Nagar, Shahdara, Delhi, ARCH NEW ERA DESIGN (NRBL TECH) brings together architectural precision, seismic-grade structural engineering, and bespoke luxury interiors under one unified roof. We design and build spaces that bring good energy, lasting strength, and timeless elegance.",
+  introHighlights: [
+    "Architect-Led Planning, 2D/3D Elevations & Structural Drawings",
+    "IS-Code Compliant RCC Structure & Transparent Material Specifications",
+    "Complete Turnkey Execution with Dedicated Site Supervision",
+    "Vastu-Harmonious Layouts & Bespoke Luxury Interior Craftsmanship",
+  ],
+  experienceYears: 12,
+  projectsCompleted: 185,
+  sqftDelivered: "4.5L+ Sq. Ft.",
+  clientSatisfaction: "99%",
+  footerAbout:
+    "ARCH NEW ERA DESIGN (NRBL TECH) is a premier Architecture, Construction, Interior Designing, and Turnkey Solutions company based in Shahdara, Delhi. Guided by Nidhi Sharma, we create spaces that bring good energy with thoughtful design and stronger structure.",
+  copyrightText: "© 2026 ARCH NEW ERA DESIGN (NRBL TECH). All rights reserved.",
+  googleMapsEmbedUrl:
+    "https://www.google.com/maps?q=Ashok+Nagar+Shahdara+Delhi+110093&output=embed",
+  workingHours: "Mon – Sat: 9:30 AM – 7:30 PM | Sun: By Appointment",
+  updatedAt: new Date().toISOString(),
+};
+
+export const INITIAL_HOMEPAGE_SECTIONS: HomepageSection[] = [
+  {
+    id: "sec-hero",
+    sectionKey: "hero",
+    title: "Your Dream Home, Our Expertise",
+    subtitle: "Thoughtful Design. Stronger Structure. Brighter Lives.",
+    badgeText: "SPACES THAT BRING GOOD ENERGY",
+    isEnabled: true,
+    orderIndex: 1,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-intro",
+    sectionKey: "introduction",
+    title: "Where Architectural Vision Meets Structural Excellence",
+    subtitle:
+      "From concept blueprints to final key handover, ARCH NEW ERA DESIGN – NRBL TECH delivers architectural clarity, engineering integrity, and refined interiors.",
+    badgeText: "ABOUT ARCH NEW ERA DESIGN",
+    isEnabled: true,
+    orderIndex: 2,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-services",
+    sectionKey: "services",
+    title: "Comprehensive Architecture, Construction & Interior Solutions",
+    subtitle:
+      "End-to-end expertise tailored for residential homes, luxury villas, commercial landmarks, and modern interiors.",
+    badgeText: "OUR CORE EXPERTISE",
+    isEnabled: true,
+    orderIndex: 3,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-why-us",
+    sectionKey: "why_choose_us",
+    title: "Why Discerning Homeowners & Builders Trust Us",
+    subtitle:
+      "Every project is personally guided with architectural rigor, transparent BOQs, and multi-stage quality audits.",
+    badgeText: "THE NRBL TECH ADVANTAGE",
+    contentJson: JSON.stringify([
+      {
+        title: "Architect Involved",
+        description:
+          "Direct architectural oversight on spatial flow, natural ventilation, Vastu compliance, and facade aesthetics from day one.",
+        icon: "Compass",
+      },
+      {
+        title: "Detailed Planning & Drawings",
+        description:
+          "Complete working drawings including 2D floor plans, 3D exterior elevations, structural RCC details, and MEP layouts before execution.",
+        icon: "FileCheck2",
+      },
+      {
+        title: "Quality Materials",
+        description:
+          "Strict adherence to top-tier brands for steel, cement, electricals, plumbing, and seasoned timber with zero compromise.",
+        icon: "ShieldCheck",
+      },
+      {
+        title: "Expert Team & Site Supervision",
+        description:
+          "Dedicated civil engineers, skilled craftsmen, and regular site inspections ensuring accuracy at every slab and finish stage.",
+        icon: "HardHat",
+      },
+      {
+        title: "Transparent Process",
+        description:
+          "Clear stage-wise payment schedules, itemized quotations, and regular milestone updates with no hidden surprises.",
+        icon: "Scale",
+      },
+      {
+        title: "On-Time Delivery",
+        description:
+          "Milestone-tracked project timelines with disciplined procurement and workforce scheduling for punctual handover.",
+        icon: "Clock",
+      },
+    ]),
+    isEnabled: true,
+    orderIndex: 4,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-packages",
+    sectionKey: "pricing_packages",
+    title: "Transparent Construction & Interior Packages",
+    subtitle:
+      "Indicative starting rates crafted for diverse budgets and luxury aspirations. Final quotations are customized post site evaluation.",
+    badgeText: "INVESTMENT & PACKAGES",
+    isEnabled: true,
+    orderIndex: 5,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-interior-highlight",
+    sectionKey: "interior_highlight",
+    title: "Bespoke Interior Designing Starting at ₹900/sq. ft.",
+    subtitle:
+      "Transform your bare shell into a warm, functional sanctuary with custom modular kitchens, wardrobes, false ceilings, and ambient lighting.",
+    badgeText: "LUXURY INTERIORS",
+    isEnabled: true,
+    orderIndex: 6,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-projects",
+    sectionKey: "featured_projects",
+    title: "Signature Architectural & Interior Portfolio",
+    subtitle:
+      "Explore our residential homes, luxury interiors, active construction sites, and bespoke villas across Delhi NCR.",
+    badgeText: "FEATURED PORTFOLIO",
+    isEnabled: true,
+    orderIndex: 7,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-process",
+    sectionKey: "our_process",
+    title: "Our 6-Step Turnkey Execution Methodology",
+    subtitle:
+      "A structured, stress-free journey from your initial consultation with Nidhi Sharma to moving into your completed space.",
+    badgeText: "HOW WE WORK",
+    contentJson: JSON.stringify([
+      {
+        step: "01",
+        title: "Consultation",
+        description:
+          "Personal discussion with Nidhi Sharma to understand your lifestyle, plot dimensions, aesthetic preferences, and target budget.",
+      },
+      {
+        step: "02",
+        title: "Site Visit",
+        description:
+          "Detailed on-site inspection, orientation analysis, soil & surroundings evaluation, and accurate laser measurements.",
+      },
+      {
+        step: "03",
+        title: "Planning & Design",
+        description:
+          "Creation of Vastu-aligned 2D layouts, structural drawings, 3D architectural elevations, and photorealistic interior renders.",
+      },
+      {
+        step: "04",
+        title: "Estimation",
+        description:
+          "Transparent Bill of Quantities (BOQ), brand specification sheet, and milestone-linked project schedule.",
+      },
+      {
+        step: "05",
+        title: "Construction",
+        description:
+          "Supervised civil execution, structural framing, MEP installations, and bespoke interior carpentry with quality checks.",
+      },
+      {
+        step: "06",
+        title: "Final Handover",
+        description:
+          "Deep cleaning, multi-point snag inspection, system testing, and ceremonial handover of your dream property.",
+      },
+    ]),
+    isEnabled: true,
+    orderIndex: 8,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-testimonials",
+    sectionKey: "testimonials",
+    title: "Client Experiences & Project Feedback",
+    subtitle:
+      "Read what property owners say about our architectural planning, construction quality, and interior execution.",
+    badgeText: "CLIENT STORIES",
+    isEnabled: true,
+    orderIndex: 9,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-faq",
+    sectionKey: "faq",
+    title: "Frequently Asked Questions",
+    subtitle:
+      "Clear answers regarding architectural drawings, construction rates per sq. ft., material brands, and turnkey timelines.",
+    badgeText: "KNOWLEDGE CENTER",
+    isEnabled: true,
+    orderIndex: 10,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-blog",
+    sectionKey: "latest_blogs",
+    title: "Architectural Insights & Construction Guides",
+    subtitle:
+      "Expert articles on home construction costs in Delhi NCR, modern facade trends, and interior material selection.",
+    badgeText: "EDITORIAL JOURNAL",
+    isEnabled: true,
+    orderIndex: 11,
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "sec-cta",
+    sectionKey: "final_cta",
+    title: "Ready to Build or Transform Your Space?",
+    subtitle:
+      "Schedule a direct consultation with Nidhi Sharma at ARCH NEW ERA DESIGN (NRBL TECH) for architectural planning, construction, or turnkey interiors.",
+    badgeText: "START YOUR JOURNEY",
+    isEnabled: true,
+    orderIndex: 12,
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_ABOUT_SECTION: AboutSection = {
+  id: "default-about",
+  sectionKey: "main_about",
+  title: "Designing With Purpose. Building With Uncompromising Strength.",
+  subtitle: "ARCH NEW ERA DESIGN – NRBL TECH | Spaces That Bring Good Energy.",
+  content:
+    "Headquartered at B-366, Ashok Nagar, Shahdara, Delhi – 110093, ARCH NEW ERA DESIGN (technical identity NRBL TECH) is a full-spectrum Architecture, Civil Construction, Interior Designing, and Turnkey Solutions firm. We believe that every residence and commercial space should be a harmonious blend of intelligent space planning, earthquake-resistant structural engineering, and uplifting interior aesthetics.\n\nWhether you are building a new residential home from the ground up, developing a luxury farmhouse, or revitalizing your living and workspace interiors, our multidisciplinary studio handles every detail under one accountable leadership.",
+  highlights: [
+    "Single-Point Accountability from Architectural Blueprint to Key Handover",
+    "Transparent Per Sq. Ft. Pricing with Verified Brand Specifications",
+    "Vastu-Compliant Spatial Design Tailored for Modern Urban Living",
+    "Dedicated Civil Engineers, Interior Designers & Site Supervisors",
+  ],
+  imageUrl:
+    "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=85",
+  founderName: "Nidhi Sharma",
+  founderRole: "Primary Contact & Principal Project Lead",
+  founderMessage:
+    "At ARCH NEW ERA DESIGN (NRBL TECH), our philosophy is simple: 'Thoughtful Design. Stronger Structure. Brighter Lives.' Every home we design and build is treated as a legacy for the family living inside it. We focus on natural light, structural longevity, honest materials, and spaces that bring good energy.",
+  mission:
+    "To deliver architect-designed, structurally superior, and transparently priced construction and interior solutions that elevate everyday living across Delhi NCR.",
+  vision:
+    "To be the most trusted name in modern architecture, turnkey construction, and luxury interior craftsmanship known for ethical practices and timeless design.",
+  valuesList: [
+    {
+      title: "Thoughtful Design",
+      desc: "Every square foot is optimized for natural light, cross-ventilation, ergonomics, and positive energy.",
+    },
+    {
+      title: "Stronger Structure",
+      desc: "IS-code compliant structural engineering and certified construction materials that stand strong for generations.",
+    },
+    {
+      title: "Complete Transparency",
+      desc: "Detailed stage-wise specifications, clear pricing, and honest guidance throughout your project lifecycle.",
+    },
+    {
+      title: "Brighter Lives",
+      desc: "Creating warm, inspiring homes and productive workplaces that enrich the lives of their occupants.",
+    },
+  ],
+  updatedAt: new Date().toISOString(),
+};
+
+export const INITIAL_SERVICES: Service[] = [
+  {
+    id: "srv-1",
+    name: "Architecture & Planning",
+    slug: "architecture-and-planning",
+    category: "Architecture & Planning",
+    shortDescription:
+      "Bespoke 2D floor plans, 3D exterior elevations, structural RCC drawings, Vastu layouts, and municipal sanction planning.",
+    fullDescription:
+      "Our Architecture & Planning studio at ARCH NEW ERA DESIGN (NRBL TECH) transforms raw plots into intelligent, inspiring architectural blueprints. We balance aesthetics, climate responsiveness, Vastu principles, and structural engineering so your building is both visually iconic and practically effortless to live in.\n\nEvery architectural package includes detailed 2D furniture layouts, working civil drawings, column-footing structural schedules, plumbing & electrical (MEP) blueprints, and photorealistic 3D front elevations.",
+    startingPrice: "₹45 / sq. ft.",
+    iconName: "Compass",
+    featuredImage:
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "Concept Master Planning & Vastu-Compliant 2D Floor Layouts",
+      "Photorealistic 3D Exterior Facade & Night-Lighting Elevations",
+      "Seismic-Safe RCC Structural Framing & Foundation Drawings",
+      "Detailed Electrical, Plumbing, Drainage & HVAC Working Drawings",
+      "Sun-Path, Natural Ventilation & Space Optimization Analysis",
+    ],
+    faqs: [
+      {
+        question: "What drawings are included in the Architecture & Planning package?",
+        answer:
+          "We provide 2D architectural floor plans, furniture layouts, 3D front/side elevations, structural column-beam-slab drawings, and complete electrical and plumbing execution drawings.",
+      },
+      {
+        question: "Do you design according to Vastu Shastra?",
+        answer:
+          "Yes, all our architectural layouts can be tailored to follow Vastu Shastra principles while maintaining modern aesthetics and cross-ventilation.",
+      },
+    ],
+    seoTitle: "Architecture & Planning Services in Delhi NCR | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Professional 2D/3D architectural design, structural drawings, and Vastu house planning in Shahdara, Delhi by ARCH NEW ERA DESIGN (NRBL TECH).",
+    status: "Published",
+    orderIndex: 1,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-2",
+    name: "Home Construction",
+    slug: "home-construction",
+    category: "Residential Construction",
+    shortDescription:
+      "End-to-end independent house construction with certified structural materials, architect supervision, and milestone tracking.",
+    fullDescription:
+      "Building an independent home requires deeply coordinated civil engineering, material quality control, and architectural fidelity. ARCH NEW ERA DESIGN (NRBL TECH) offers complete Home Construction packages starting at ₹1,099/sq. ft. designed to give homeowners peace of mind.\n\nFrom excavation, anti-termite treatment, and RCC frame construction to brickwork, plastering, waterproofing, flooring, and finishing, our dedicated site engineers supervise every stage.",
+    startingPrice: "₹1,099 / sq. ft.",
+    iconName: "Home",
+    featuredImage:
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1541888946425-d09bb18086f6?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "Complete Civil & Structural Execution (Excavation to Terrace)",
+      "IS-Certified Fe-500D/550D TMT Steel & Grade-A Cement",
+      "Multi-Layer Chemical & Membrane Waterproofing for Wet Areas",
+      "Concealed Fire-Retardant Wiring & High-Pressure CPVC Plumbing",
+      "Stage-Wise Quality Audits & Dedicated Engineer Supervision",
+    ],
+    faqs: [
+      {
+        question: "What is the starting rate for Home Construction?",
+        answer:
+          "Our Essential Home construction package starts at ₹1,099/sq. ft., Ready-to-Move starts at ₹1,399/sq. ft., and Premium Turnkey starts at ₹1,899/sq. ft.",
+      },
+      {
+        question: "How do I track the progress of my home construction?",
+        answer:
+          "Nidhi Sharma and our site engineering team provide milestone-wise updates, material test verifications, and scheduled on-site walkthroughs.",
+      },
+    ],
+    seoTitle: "Home Construction Company in Shahdara Delhi | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Build your dream home with ARCH NEW ERA DESIGN (NRBL TECH). Starting at ₹1,099/sq.ft with architect involvement and premium structure.",
+    status: "Published",
+    orderIndex: 2,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-3",
+    name: "Residential Construction",
+    slug: "residential-construction",
+    category: "Residential Construction",
+    shortDescription:
+      "Multi-storey builder floors, duplex residences, and modern urban family homes built with superior structural integrity.",
+    fullDescription:
+      "Our Residential Construction division specializes in multi-floor residential buildings, stilt-plus-four-floor apartments, and luxury duplexes across Delhi NCR. We optimize plot FAR, parking layouts, lift shafts, and structural load distribution.\n\nWhether you are constructing a family residence or a high-value residential development, we combine robust civil engineering with refined exterior facades.",
+    startingPrice: "₹1,099 / sq. ft.",
+    iconName: "Building2",
+    featuredImage:
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "Stilt Parking + Multi-Floor Residential Structure Execution",
+      "Lift Pit & Shaft Structural Engineering",
+      "Modern Stone, HPL, Louvers & Glass Front Elevation Execution",
+      "Sound-Insulated Flooring & Weather-Resistant Exterior Finishes",
+      "Complete Rainwater Harvesting & Underground Water Tank Systems",
+    ],
+    faqs: [
+      {
+        question: "Do you handle stilt + 4 floor residential construction in Delhi?",
+        answer:
+          "Yes, we specialize in multi-storey residential homes with stilt parking, lift provisions, and modern facade elevations.",
+      },
+    ],
+    seoTitle: "Residential Construction Services in Delhi | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Expert residential construction for independent houses, duplexes, and builder floors in Delhi NCR by ARCH NEW ERA DESIGN – NRBL TECH.",
+    status: "Published",
+    orderIndex: 3,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-4",
+    name: "Commercial Construction",
+    slug: "commercial-construction",
+    category: "Commercial Construction",
+    shortDescription:
+      "High-performance office buildings, retail showrooms, institutional spaces, and commercial complexes.",
+    fullDescription:
+      "ARCH NEW ERA DESIGN (NRBL TECH) delivers modern Commercial Construction engineered for high footfall, maximum floor plate efficiency, and striking brand presence. We construct retail complexes, corporate office buildings, clinics, and institutional facilities.\n\nOur commercial team prioritizes rapid structural turnaround, fire-safety compliance, structural glazing, and energy-efficient MEP infrastructure.",
+    startingPrice: "₹1,299 / sq. ft.",
+    iconName: "Landmark",
+    featuredImage:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "Column-Free Large Span Commercial Floor Plates",
+      "ACP, Structural Glazing & Architectural Facade Cladding",
+      "Fire Safety, Emergency Exit & Commercial HVAC Provisions",
+      "Heavy-Duty Industrial & Showroom Vitrified/Granite Flooring",
+      "Dedicated Project Management for Fast-Track Commercial Timelines",
+    ],
+    faqs: [
+      {
+        question: "Can you execute both civil structure and commercial facade glazing?",
+        answer:
+          "Yes, we execute complete commercial civil structures along with ACP cladding, toughened glass facades, and interior fit-outs.",
+      },
+    ],
+    seoTitle: "Commercial Construction Contractors in Delhi NCR | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Commercial building construction for showrooms, offices, and complexes in Delhi NCR by ARCH NEW ERA DESIGN (NRBL TECH).",
+    status: "Published",
+    orderIndex: 4,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-5",
+    name: "Interior Designing",
+    slug: "interior-designing",
+    category: "Interior Designing",
+    shortDescription:
+      "Complete residential and commercial interior designing starting at ₹900/sq. ft. with 3D renders and bespoke execution.",
+    fullDescription:
+      "Create spaces that bring good energy with our bespoke Interior Designing services starting at ₹900/sq. ft. At ARCH NEW ERA DESIGN (NRBL TECH), we blend luxury aesthetics with smart storage and ergonomic comfort.\n\nFrom mood boards and 3D photorealistic visualizations to custom woodwork, Italian-inspired wall paneling, designer false ceilings, and curated lighting, we transform empty structures into warm, magazine-worthy interiors.",
+    startingPrice: "₹900 / sq. ft.",
+    iconName: "Sparkles",
+    featuredImage:
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "3D Interior Visualization, Material Moodboards & Space Planning",
+      "Bespoke Modular Kitchens, Wardrobes & Walk-In Closets",
+      "TV Consoles, Fluted Wall Panels, Charcoal Louvers & Veneer Finishes",
+      "Designer Gypsum/POP False Ceilings with Cove & Profile Lighting",
+      "Complete Living Room, Bedroom, Dining & Workspace Interiors",
+    ],
+    faqs: [
+      {
+        question: "What is the starting price for Interior Designing?",
+        answer:
+          "Our interior designing and execution packages start at an indicative rate of ₹900/sq. ft., customized to your chosen finishes and scope.",
+      },
+    ],
+    seoTitle: "Luxury Interior Designers in Shahdara Delhi | Starting ₹900/sq.ft",
+    metaDescription:
+      "Transform your home or office with ARCH NEW ERA DESIGN (NRBL TECH). Complete interior designing starting at ₹900/sq.ft.",
+    status: "Published",
+    orderIndex: 5,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-6",
+    name: "Modular Kitchen",
+    slug: "modular-kitchen",
+    category: "Interior Designing",
+    shortDescription:
+      "Ergonomic L-shaped, U-shaped, parallel, and island modular kitchens with BWP marine ply and soft-close hardware.",
+    fullDescription:
+      "The kitchen is the heart of every home's energy. We design and install high-durability Modular Kitchens engineered around the golden work triangle, moisture resistance, and effortless organization.\n\nUsing Boiling Water Proof (BWP) marine-grade plywood, HDHMR shutters, acrylic/PU/laminate finishes, quartz countertops, and branded soft-close tandem drawers, our kitchens remain flawless for years.",
+    startingPrice: "₹900 / sq. ft.",
+    iconName: "UtensilsCrossed",
+    featuredImage:
+      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "L-Shape, U-Shape, Parallel & Island Kitchen Configurations",
+      "BWP Grade Marine Plywood & High-Density Moisture Resistant Boards",
+      "Soft-Close Tandem Boxes, Pantry Pull-Outs & Corner Magic Units",
+      "Acrylic, PU Lacquered, Membrane & Anti-Fingerprint Matte Finishes",
+      "Integrated Under-Cabinet LED Task Lighting & Chimney Ducting",
+    ],
+    faqs: [
+      {
+        question: "Which material do you recommend for wet kitchen zones?",
+        answer:
+          "We recommend BWP (Boiling Water Proof) IS:710 certified marine plywood for sink and wet carcass zones, paired with HDHMR or acrylic shutters.",
+      },
+    ],
+    seoTitle: "Modular Kitchen Designers in Shahdara Delhi | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Custom modular kitchens in acrylic, PU, and laminate finishes with soft-close hardware by ARCH NEW ERA DESIGN (NRBL TECH).",
+    status: "Published",
+    orderIndex: 6,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-7",
+    name: "Bedroom Interiors",
+    slug: "bedroom-interiors",
+    category: "Interior Designing",
+    shortDescription:
+      "Restful master bedrooms, kids' rooms, floor-to-ceiling sliding wardrobes, upholstered beds, and dressing units.",
+    fullDescription:
+      "Our Bedroom Interior solutions are crafted to create serene, clutter-free personal sanctuaries. We design custom master suites, guest bedrooms, and children's bedrooms with acoustic comfort, warm lighting layers, and maximized wardrobe storage.",
+    startingPrice: "₹900 / sq. ft.",
+    iconName: "BedDouble",
+    featuredImage:
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "Floor-to-Ceiling Sliding & Hinged Wardrobes with Loft Storage",
+      "Custom Upholstered Headboards & Hydraulic Storage Beds",
+      "Accent Bed-Back Wall Paneling with Reading Sconces",
+      "Integrated Dressing Vanities & Study Desks",
+      "Warm Dim-to-Warm Cove Lighting & Blackout Curtain Pelmets",
+    ],
+    faqs: [
+      {
+        question: "Can wardrobes be customized up to the ceiling height?",
+        answer:
+          "Yes, we build full-height wardrobes with seamless loft compartments to maximize storage without dust accumulation.",
+      },
+    ],
+    seoTitle: "Bedroom Interior Design & Custom Wardrobes | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Luxury bedroom interiors, sliding wardrobes, and custom bed-back wall designs in Delhi NCR by ARCH NEW ERA DESIGN.",
+    status: "Published",
+    orderIndex: 7,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-8",
+    name: "Living Room Interiors",
+    slug: "living-room-interiors",
+    category: "Interior Designing",
+    shortDescription:
+      "Grand living and dining spaces featuring marble-finish TV consoles, fluted wall panels, foyer partitions, and luxury lighting.",
+    fullDescription:
+      "Make an unforgettable first impression with our Living & Dining Room Interiors. We curate cohesive spatial layouts featuring bespoke media walls, CNC/fluted partitions, crockery units, and plush seating arrangements.",
+    startingPrice: "₹900 / sq. ft.",
+    iconName: "Sofa",
+    featuredImage:
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "Designer TV Media Walls with Concealed Wire Management",
+      "Entrance Foyer Console & Decorative Metal/Wood Partitions",
+      "Illuminated Bar & Crockery Display Units for Dining Zones",
+      "Italian Marble-Look Wall Cladding, Brass Inlays & Wallpapers",
+      "Chandelier Centerpieces & Multi-Scene Architectural Lighting",
+    ],
+    faqs: [],
+    seoTitle: "Living Room & Drawing Room Interior Designers | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Bespoke living room interiors, TV units, wall paneling, and dining area designs by ARCH NEW ERA DESIGN (NRBL TECH).",
+    status: "Published",
+    orderIndex: 8,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-9",
+    name: "Office Interiors",
+    slug: "office-interiors",
+    category: "Commercial Construction",
+    shortDescription:
+      "Productive corporate offices, MD cabins, conference rooms, acoustic glass partitions, and ergonomic workstations.",
+    fullDescription:
+      "Elevate your brand identity and team productivity with our turnkey Office & Commercial Interior solutions. We design executive cabins, boardrooms, reception lounges, and collaborative workstation floors with enterprise networking and acoustic control.",
+    startingPrice: "₹900 / sq. ft.",
+    iconName: "Briefcase",
+    featuredImage:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "Reception Lounges with Branded Architectural Backdrops",
+      "Acoustic Toughened Glass Partitions & Executive MD Cabins",
+      "Modular Workstations with Structured LAN & Power Raceways",
+      "AV-Ready Conference & Boardroom Tables with Acoustic Panels",
+      "Commercial HVAC, Fire Alarm & Glare-Free Linear Office Lighting",
+    ],
+    faqs: [],
+    seoTitle: "Corporate Office Interior Designers in Delhi NCR | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Turnkey office interiors, workstations, executive cabins, and commercial fit-outs in Delhi NCR by ARCH NEW ERA DESIGN.",
+    status: "Published",
+    orderIndex: 9,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-10",
+    name: "False Ceiling & Lighting",
+    slug: "false-ceiling-and-lighting",
+    category: "Interior Designing",
+    shortDescription:
+      "Gypsum, POP, wooden rafter ceilings, magnetic track lights, and architectural cove illumination.",
+    fullDescription:
+      "Lighting and ceiling geometry define the mood and perceived volume of any room. We design and execute precision Gypsum, POP, and wooden baffle ceilings paired with layered architectural lighting—ambient cove LEDs, magnetic track lights, and statement chandeliers.",
+    startingPrice: "₹115 / sq. ft.",
+    iconName: "Lightbulb",
+    featuredImage:
+      "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "Saint-Gobain / Branded Gypsum Board & Rust-Proof GI Framing",
+      "Seamless POP Molding, Floating Cove & Peripheral Pelmet Designs",
+      "Recessed Magnetic Track Lights, COB Spotlights & LED Profiles",
+      "Thermal & Acoustic Ceiling Insulation Options",
+      "Moisture-Resistant Grid & PVC Panels for Balconies and Bathrooms",
+    ],
+    faqs: [],
+    seoTitle: "False Ceiling & Architectural Lighting Specialists | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Modern gypsum and POP false ceiling designs with profile and magnetic track lighting in Delhi by ARCH NEW ERA DESIGN.",
+    status: "Published",
+    orderIndex: 10,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-11",
+    name: "Turnkey Construction",
+    slug: "turnkey-construction",
+    category: "Turnkey Solutions",
+    shortDescription:
+      "Single-window architecture, civil structure, luxury interiors, and final handover starting at ₹1,899/sq. ft.",
+    fullDescription:
+      "Our signature Turnkey Construction solution is designed for busy homeowners and NRI/outstation families who want zero coordination hassle. Starting at ₹1,899/sq. ft., we handle 100% of the journey—architectural blueprints, civil structure, premium finishing, modular woodwork, false ceilings, painting, and final cleaning.\n\nYou deal with one trusted team led by Nidhi Sharma, one unified timeline, and one transparent contract.",
+    startingPrice: "₹1,899 / sq. ft.",
+    iconName: "KeyRound",
+    featuredImage:
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "End-to-End Responsibility: Architecture + Structure + Complete Interiors",
+      "Customized Architectural Elevations & 3D Interior Visualizations",
+      "Premium Flooring, Designer Bathware, Modular Kitchen & Wardrobes",
+      "Dedicated Project Manager & Weekly Video/Photo Progress Reports",
+      "Ready-to-Move Key Handover with Zero Vendor Coordination Stress",
+    ],
+    faqs: [
+      {
+        question: "What is included in the Premium Turnkey package at ₹1,899/sq. ft.?",
+        answer:
+          "It covers architectural design, complete civil structure, premium flooring and bath fittings, false ceilings, modular kitchen, wardrobes, and interior finishes ready for move-in.",
+      },
+    ],
+    seoTitle: "Turnkey House Construction in Delhi NCR | Starting ₹1,899/sq.ft",
+    metaDescription:
+      "Complete turnkey house construction from blueprint to interiors starting at ₹1,899/sq.ft by ARCH NEW ERA DESIGN (NRBL TECH).",
+    status: "Published",
+    orderIndex: 11,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "srv-12",
+    name: "Villa & Farmhouse Construction",
+    slug: "villa-and-farmhouse-construction",
+    category: "Villas & Farmhouses",
+    shortDescription:
+      "Bespoke luxury villas, double-height courtyard homes, and landscaped farmhouses across Delhi NCR.",
+    fullDescription:
+      "Experience resort-style living with our bespoke Villa & Farmhouse Construction services. We design and build expansive private estates featuring double-height living lounges, cantilevered terraces, swimming pool decks, pergolas, and lush landscape integration.",
+    startingPrice: "₹1,899 / sq. ft.",
+    iconName: "Trees",
+    featuredImage:
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80",
+    ],
+    features: [
+      "Grand Double-Height Volumes & Cantilevered Architectural Slabs",
+      "Indoor-Outdoor Courtyard Planning, Gazebos & Landscape Decks",
+      "Natural Stone Cladding, Thermal Glazing & Weatherproof Facades",
+      "Home Automation, Solar Integration & Smart Security Provisions",
+      "Bespoke Luxury Interiors Tailored for Signature Estates",
+    ],
+    faqs: [],
+    seoTitle: "Luxury Villa & Farmhouse Construction in Delhi NCR | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Custom villa and farmhouse architecture, construction, and luxury interiors across Delhi NCR by ARCH NEW ERA DESIGN (NRBL TECH).",
+    status: "Published",
+    orderIndex: 12,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_PRICING_PACKAGES: PricingPackage[] = [
+  {
+    id: "pkg-essential",
+    name: "ESSENTIAL HOME",
+    slug: "essential-home",
+    packageType: "Construction",
+    startingPrice: "₹1,099",
+    priceUnit: "/ sq. ft.",
+    tagline: "Reliable, Value-Engineered Structural & Essential Construction",
+    description:
+      "Ideal for homeowners seeking a rock-solid earthquake-resistant structure with dependable quality materials and clean essential finishes at an economical budget.",
+    features: [
+      "Strong Structure (IS-Certified TMT Steel & RCC Framing)",
+      "Quality Materials (Grade-A Cement, Bricks & Aggregates)",
+      "Essential Finishes (Vitrified Flooring, Standard Wall Putty & Paint)",
+      "Budget-Friendly Construction with Stage-Wise Transparency",
+      "2D Architectural Floor Plan & Working Structural Drawings",
+      "Standard Concealed Electrical Wiring & CPVC Plumbing Network",
+      "Anti-Termite Foundation Treatment & Basic Waterproofing",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=900&q=80",
+    isPopular: false,
+    displayOrder: 1,
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "pkg-ready-to-move",
+    name: "READY-TO-MOVE",
+    slug: "ready-to-move",
+    packageType: "Construction",
+    startingPrice: "₹1,399",
+    priceUnit: "/ sq. ft.",
+    tagline: "Upgraded Specifications & Enhanced Modern Finishes",
+    description:
+      "Our most popular residential construction package offering upgraded material specifications, 3D front elevation design, modular kitchen provisions, and superior finishes.",
+    features: [
+      "Better Specifications (Upgraded Steel, Cement & Wire Brands)",
+      "Enhanced Finishes (Large-Format Vitrified Tiles & Granite Staircase)",
+      "Modular Provisions (Semi-Modular Kitchen & Wardrobe Niches)",
+      "Improved Quality and Value Across Doors, Windows & Sanitaryware",
+      "2D Floor Layouts + 3D Architectural Front Elevation Render",
+      "UPVC / Powder-Coated Aluminum Windows & Flush Teak-Finish Doors",
+      "Multi-Coat Chemical Waterproofing & Premium Exterior Weather Coat",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80",
+    isPopular: true,
+    displayOrder: 2,
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "pkg-premium-turnkey",
+    name: "PREMIUM TURNKEY",
+    slug: "premium-turnkey",
+    packageType: "Construction",
+    startingPrice: "₹1,899",
+    priceUnit: "/ sq. ft.",
+    tagline: "Bespoke Architecture, Luxury Finishes & Complete Interiors",
+    description:
+      "A comprehensive single-window turnkey solution from architectural concept to full interior woodwork, designer false ceilings, and luxury finishes ready for immediate living.",
+    features: [
+      "Customized Design (Complete 2D/3D Architecture + Interior 3D Views)",
+      "Premium Finishes (Italian-Style Marble/Tile, Veneer & Designer Paint)",
+      "Complete Interiors (Modular Kitchen, Wardrobes & TV Consoles)",
+      "Complete Turnkey Solution with Dedicated Architect & Site Engineer",
+      "Designer Gypsum/POP False Ceiling with Architectural Cove Lighting",
+      "Premium Branded Sanitaryware, Concealed Cisterns & Toughened Glass",
+      "Zero-Hassle Execution from Excavation to Final Move-In Handover",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80",
+    isPopular: false,
+    displayOrder: 3,
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "pkg-interior-designing",
+    name: "INTERIOR DESIGNING",
+    slug: "interior-designing-package",
+    packageType: "Interior",
+    startingPrice: "₹900",
+    priceUnit: "/ sq. ft.",
+    tagline: "Complete Custom Residential & Commercial Interior Transformation",
+    description:
+      "Tailored interior design and execution package covering modular cabinetry, wall paneling, false ceilings, ambient lighting, and turnkey spatial styling.",
+    features: [
+      "Modular Kitchen (BWP Marine Ply, Soft-Close Tandem & Accessories)",
+      "Wardrobe & Storage (Floor-to-Ceiling Sliding/Hinged Wardrobes)",
+      "TV Unit & Wall Panels (Fluted Panels, Louvers, Veneer & Mirrors)",
+      "False Ceiling & Lighting (Gypsum/POP Ceiling with LED Profiles)",
+      "Living Room (Foyer Console, Partition & Accent Wall Styling)",
+      "Bedroom (Custom Bed Backrest, Side Tables & Dressing Unit)",
+      "Dining Area (Crockery Unit, Bar Counter & Chandelier Provision)",
+      "Office & Commercial Interiors (Workstations, Cabins & Reception)",
+    ],
+    imageUrl:
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80",
+    isPopular: true,
+    displayOrder: 4,
+    isActive: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_PROJECTS: Project[] = [
+  {
+    id: "proj-1",
+    title: "Contemporary 4-Storey Residence & Facade",
+    slug: "contemporary-residence-shahdara-delhi",
+    location: "Shahdara, East Delhi",
+    category: "Residential Homes",
+    shortDescription:
+      "Architect-designed multi-level urban residence featuring warm HPL louvers, stone cladding, Vastu planning, and stilt parking.",
+    description:
+      "Designed and executed under ARCH NEW ERA DESIGN (NRBL TECH), this residential home showcases how urban plots in East Delhi can achieve abundant daylight, cross-ventilation, and a commanding street presence. The structure combines an IS-code compliant RCC frame with a balanced facade of natural stone textures, warm wooden-finish louvers, and frameless toughened glass railings.",
+    coverImage:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85",
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1200&q=80",
+    ],
+    completionDate: "2026",
+    areaSqFt: "3,600 sq. ft.",
+    architectLead: "Nidhi Sharma",
+    specifications: [
+      { label: "Project Scope", value: "Architecture, Structure & Turnkey Finishes" },
+      { label: "Built-up Area", value: "3,600 Sq. Ft. (Stilt + 3 Floors)" },
+      { label: "Structure Type", value: "Seismic Zone-IV Compliant RCC Frame" },
+      { label: "Facade Materials", value: "Natural Stone, Exterior HPL & Toughened Glass" },
+    ],
+    isFeatured: true,
+    status: "Published",
+    seoTitle: "Contemporary Residential Architecture in Shahdara Delhi | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Explore our contemporary multi-storey residential architecture and construction showcase in Shahdara, East Delhi.",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "proj-2",
+    title: "Bespoke Warm-Gold Living & Modular Kitchen Suite",
+    slug: "bespoke-luxury-interior-east-delhi",
+    location: "Vivek Vihar, Delhi",
+    category: "Luxury Interiors",
+    shortDescription:
+      "Complete turnkey interior transformation featuring fluted charcoal panels, brass inlays, acrylic modular kitchen, and layered cove lighting.",
+    description:
+      "This Luxury Interior showcase highlights our signature palette of warm neutral tones, brushed gold accents, and precision carpentry. The drawing room features an Italian-marble inspired TV console paired with vertical fluted panels and magnetic track illumination, flowing seamlessly into a dining zone and an ergonomic parallel modular kitchen.",
+    coverImage:
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=85",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=85",
+      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=80",
+    ],
+    completionDate: "2026",
+    areaSqFt: "2,400 sq. ft.",
+    architectLead: "Nidhi Sharma",
+    specifications: [
+      { label: "Project Scope", value: "Complete Turnkey Interior Designing" },
+      { label: "Carpet Area", value: "2,400 Sq. Ft. (4 BHK Residence)" },
+      { label: "Woodwork Specification", value: "BWP Marine Ply, HDHMR & PU/Acrylic Finishes" },
+      { label: "Lighting System", value: "Gypsum Cove + Recessed COB & Chandelier" },
+    ],
+    isFeatured: true,
+    status: "Published",
+    seoTitle: "Luxury Home Interior Showcase in Delhi | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Explore our bespoke luxury interior design project featuring modular kitchen, wardrobes, and living room styling.",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "proj-3",
+    title: "RCC Structural Framing & Civil Execution Site",
+    slug: "rcc-structural-construction-in-progress-delhi",
+    location: "Ashok Nagar, Shahdara, Delhi",
+    category: "Construction in Progress",
+    shortDescription:
+      "Active residential construction site demonstrating precision steel reinforcement, shuttering alignment, and engineer-supervised slab casting.",
+    description:
+      "Stronger structures begin below the surface. This active Construction in Progress showcase illustrates ARCH NEW ERA DESIGN (NRBL TECH)'s on-site engineering standards—including laser-leveled foundation footings, Fe-550D TMT steel reinforcement binding, watertight shuttering, and vibrated M25 grade concrete casting.",
+    coverImage:
+      "https://images.unsplash.com/photo-1541888946425-d09bb18086f6?auto=format&fit=crop&w=1400&q=85",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1541888946425-d09bb18086f6?auto=format&fit=crop&w=1400&q=85",
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+    ],
+    completionDate: "Ongoing",
+    areaSqFt: "4,200 sq. ft.",
+    architectLead: "Nidhi Sharma",
+    specifications: [
+      { label: "Current Stage", value: "RCC Superstructure & Brickwork" },
+      { label: "Total Built-up Area", value: "4,200 Sq. Ft." },
+      { label: "Concrete & Steel", value: "M25 Design Mix & Fe-550D TMT Bars" },
+      { label: "Quality Control", value: "Cube Testing, Slump Check & Architect Audit" },
+    ],
+    isFeatured: true,
+    status: "Published",
+    seoTitle: "Active Civil Construction Site in Shahdara Delhi | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "See how ARCH NEW ERA DESIGN (NRBL TECH) executes RCC structural construction with strict engineering supervision.",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "proj-4",
+    title: "Courtyard Pavilion Villa & Landscape Estate",
+    slug: "courtyard-pavilion-villa-farmhouse-ncr",
+    location: "Delhi NCR",
+    category: "Villas & Farmhouses",
+    shortDescription:
+      "Expansive luxury villa design with double-height glazing, cantilevered pergolas, Vastu courtyard, and indoor-outdoor living.",
+    description:
+      "Designed for serene family living, this Villa & Farmhouse architectural concept integrates expansive floor-to-ceiling thermal glass with natural travertine stone cladding and a central sunlit courtyard. Every bedroom opens onto a private landscaped deck while the double-height formal lounge anchors the estate.",
+    coverImage:
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1400&q=85",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1400&q=85",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
+    ],
+    completionDate: "2026",
+    areaSqFt: "6,800 sq. ft.",
+    architectLead: "Nidhi Sharma",
+    specifications: [
+      { label: "Project Category", value: "Luxury Villa & Landscape Architecture" },
+      { label: "Built-up Area", value: "6,800 Sq. Ft." },
+      { label: "Key Highlights", value: "Double-Height Lounge, Gazebo Deck & Vastu Courtyard" },
+      { label: "Package Tier", value: "Premium Turnkey Execution" },
+    ],
+    isFeatured: true,
+    status: "Published",
+    seoTitle: "Luxury Villa & Farmhouse Design in Delhi NCR | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Explore our luxury villa and farmhouse architectural portfolio by ARCH NEW ERA DESIGN (NRBL TECH).",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "proj-5",
+    title: "Modern Corporate Studio & Retail Showroom",
+    slug: "modern-corporate-studio-commercial-delhi",
+    location: "East Delhi / NCR",
+    category: "Commercial Projects",
+    shortDescription:
+      "Contemporary commercial elevation and executive office interior featuring acoustic glass cabins, linear lighting, and ergonomic workstations.",
+    description:
+      "A high-efficiency commercial architecture and interior fit-out designed to elevate brand authority and employee comfort. Features a sleek structural glazed exterior, a welcoming double-height reception lobby, sound-insulated boardrooms, and modular workstation zones.",
+    coverImage:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=85",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=85",
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+    ],
+    completionDate: "2026",
+    areaSqFt: "5,000 sq. ft.",
+    architectLead: "Nidhi Sharma",
+    specifications: [
+      { label: "Project Scope", value: "Commercial Facade & Turnkey Office Interiors" },
+      { label: "Floor Area", value: "5,000 Sq. Ft." },
+      { label: "Partitions", value: "12mm Toughened Acoustic Glass & Aluminium Profiles" },
+      { label: "MEP & Lighting", value: "Centralized VRF HVAC & Glare-Free Linear LEDs" },
+    ],
+    isFeatured: false,
+    status: "Published",
+    seoTitle: "Commercial Architecture & Office Interior Showcase | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Commercial building facade and turnkey office interior design showcase by ARCH NEW ERA DESIGN (NRBL TECH).",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_GALLERY_ITEMS: GalleryItem[] = [
+  {
+    id: "gal-1",
+    title: "Modern Front Elevation with Warm Louvers",
+    category: "Residential Homes",
+    imageUrl:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    altText: "Modern residential front elevation designed by ARCH NEW ERA DESIGN",
+    location: "Shahdara, Delhi",
+    displayOrder: 1,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "gal-2",
+    title: "Bespoke Living Room with Marble TV Wall",
+    category: "Luxury Interiors",
+    imageUrl:
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80",
+    altText: "Luxury living room interior with marble accent wall and warm cove lighting",
+    location: "East Delhi",
+    displayOrder: 2,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "gal-3",
+    title: "Island & Parallel Modular Kitchen Execution",
+    category: "Luxury Interiors",
+    imageUrl:
+      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80",
+    altText: "Modular kitchen in matte and wooden finish with quartz countertop",
+    location: "Delhi NCR",
+    displayOrder: 3,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "gal-4",
+    title: "Master Suite with Upholstered Headboard & Sliding Wardrobe",
+    category: "Luxury Interiors",
+    imageUrl:
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=80",
+    altText: "Master bedroom interior design with floor-to-ceiling wardrobe",
+    location: "Delhi",
+    displayOrder: 4,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "gal-5",
+    title: "On-Site Structural Engineering & RCC Framing",
+    category: "Construction in Progress",
+    imageUrl:
+      "https://images.unsplash.com/photo-1541888946425-d09bb18086f6?auto=format&fit=crop&w=1200&q=80",
+    altText: "Civil construction and structural supervision in progress",
+    location: "Shahdara, Delhi",
+    displayOrder: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "gal-6",
+    title: "Luxury Farmhouse Courtyard & Pavilion",
+    category: "Villas & Farmhouses",
+    imageUrl:
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80",
+    altText: "Luxury villa and farmhouse architecture with landscaped deck",
+    location: "Delhi NCR",
+    displayOrder: 6,
+    createdAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_BLOG_CATEGORIES: BlogCategory[] = [
+  {
+    id: "cat-1",
+    name: "Construction Cost & Planning",
+    slug: "construction-cost-and-planning",
+    description: "Guides on house construction rates, BOQs, and structural budgeting in Delhi NCR.",
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "cat-2",
+    name: "Architecture & Vastu",
+    slug: "architecture-and-vastu",
+    description: "Modern facade trends, space optimization, and Vastu-compliant house planning.",
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "cat-3",
+    name: "Interior Design Trends",
+    slug: "interior-design-trends",
+    description: "Modular kitchens, wardrobe materials, false ceilings, and luxury home styling.",
+    createdAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_BLOGS: Blog[] = [
+  {
+    id: "blog-1",
+    title: "Complete Guide to House Construction Cost per Sq. Ft. in Delhi NCR (2026)",
+    slug: "house-construction-cost-per-sq-ft-delhi-ncr-guide",
+    shortDescription:
+      "Understand the breakdown between Essential (₹1,099/sq.ft.), Ready-to-Move (₹1,399/sq.ft.), and Premium Turnkey (₹1,899/sq.ft.) residential construction packages.",
+    content: `<h2>Understanding Residential Construction Costs in Delhi NCR</h2>
+<p>Planning to build your dream home in Delhi NCR requires a clear understanding of where every rupee goes—from excavation and RCC structural framing to finishing materials and modular interiors. At <strong>ARCH NEW ERA DESIGN (NRBL TECH)</strong>, led by <strong>Nidhi Sharma</strong>, we believe in transparent, stage-wise cost planning.</p>
+
+<h3>1. Essential Home Construction (Starting at ₹1,099/sq. ft.)</h3>
+<p>Designed for homeowners who want an uncompromising, earthquake-resistant civil structure with reliable standard finishes. Roughly 55% of the budget is invested in the RCC frame, foundation, TMT steel, cement, and brickwork, while 45% covers essential flooring, doors, windows, plumbing, and electrical wiring.</p>
+
+<h3>2. Ready-to-Move Package (Starting at ₹1,399/sq. ft.)</h3>
+<p>Ideal for modern urban families looking for upgraded specifications, large-format vitrified tiles, granite staircases, 3D front elevation execution, UPVC windows, and modular kitchen provisions.</p>
+
+<h3>3. Premium Turnkey Package (Starting at ₹1,899/sq. ft.)</h3>
+<p>Our single-window flagship offering where our architects, civil engineers, and interior designers handle everything—from soil testing and 3D renders to complete modular kitchens, floor-to-ceiling wardrobes, false ceilings, and luxury bath fittings.</p>
+
+<h3>Key Factors That Influence Your Final Quotation</h3>
+<ul>
+  <li><strong>Plot Accessibility & Soil Conditions:</strong> Corner plots, narrow lanes, or deep foundation requirements.</li>
+  <li><strong>Stilt Parking & Lift Provisions:</strong> Multi-storey builder floor norms in Delhi.</li>
+  <li><strong>Brand Selections:</strong> Choice of sanitaryware, flooring marble/tile sizes, and woodwork finishes.</li>
+</ul>
+<p>Have a plot in Shahdara, East Delhi, or anywhere in NCR? Contact <strong>Nidhi Sharma at +91 7535942407</strong> for a free architectural and cost consultation.</p>`,
+    featuredImage:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Modern house construction cost guide in Delhi NCR",
+    author: "Nidhi Sharma",
+    authorRole: "Principal Project Lead – ARCH NEW ERA DESIGN",
+    category: "Construction Cost & Planning",
+    tags: ["Construction Cost", "Delhi NCR", "Turnkey Construction", "Home Building"],
+    readingTime: "5 min read",
+    metaTitle: "House Construction Cost per Sq. Ft. in Delhi NCR (2026 Guide) | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Detailed breakdown of house construction cost per sq. ft. in Delhi NCR. Compare ₹1,099 Essential, ₹1,399 Ready-to-Move, and ₹1,899 Turnkey packages.",
+    focusKeyword: "house construction cost per sq ft in delhi",
+    canonicalUrl: "http://localhost:3000/blog/house-construction-cost-per-sq-ft-delhi-ncr-guide",
+    ogImage:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    faqSchema: [
+      {
+        question: "What is the starting cost of house construction per sq. ft. in Delhi?",
+        answer:
+          "At ARCH NEW ERA DESIGN (NRBL TECH), residential construction packages start at ₹1,099/sq. ft. for Essential Home, ₹1,399/sq. ft. for Ready-to-Move, and ₹1,899/sq. ft. for Premium Turnkey.",
+      },
+    ],
+    publishDate: "2026-11-01",
+    status: "Published",
+    isFeatured: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "blog-2",
+    title: "7 Interior Design Elements That Bring Good Energy & Luxury to Modern Homes",
+    slug: "interior-design-elements-that-bring-good-energy-modern-homes",
+    shortDescription:
+      "How natural daylight, Vastu spatial flow, warm lighting layers, and bespoke woodwork transform everyday living spaces.",
+    content: `<h2>Spaces That Bring Good Energy</h2>
+<p>A truly luxurious interior is not just about expensive materials—it is about how a space makes you feel the moment you step inside. At <strong>ARCH NEW ERA DESIGN (NRBL TECH)</strong>, our guiding statement is <em>"Spaces That Bring Good Energy."</em></p>
+
+<h3>1. Unobstructed Entryways & Foyer Consoles</h3>
+<p>The entrance foyer sets the energetic tone of your residence. A clean wooden or metal louver partition paired with warm concealed lighting creates privacy while welcoming positive energy.</p>
+
+<h3>2. Layered Architectural Lighting</h3>
+<p>Instead of harsh overhead tubes, combine 3000K warm-white peripheral cove lighting, focused COB spotlights for artwork and textured walls, and statement chandeliers over dining zones.</p>
+
+<h3>3. Ergonomic Clutter-Free Modular Kitchens</h3>
+<p>Using BWP marine plywood, soft-close tandem drawers, and tall pantry pull-outs keeps countertops completely clear and effortless to maintain.</p>
+
+<h3>4. Full-Height Wardrobes & Warm Textures</h3>
+<p>Floor-to-ceiling wardrobes eliminate dust traps and visually heighten bedrooms, while fluted panels and cane/veneer accents add organic warmth.</p>
+<p>Our complete Interior Designing solutions start at <strong>₹900/sq. ft.</strong> Reach out to Nidhi Sharma at B-366, Ashok Nagar, Shahdara, Delhi for a personalized 3D design consultation.</p>`,
+    featuredImage:
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Luxury interior design living room with warm lighting",
+    author: "Nidhi Sharma",
+    authorRole: "Principal Project Lead – ARCH NEW ERA DESIGN",
+    category: "Interior Design Trends",
+    tags: ["Interior Designing", "Vastu Interiors", "Modular Kitchen", "False Ceiling"],
+    readingTime: "4 min read",
+    metaTitle: "7 Interior Design Elements That Bring Good Energy | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Discover how ARCH NEW ERA DESIGN (NRBL TECH) crafts luxury home interiors starting at ₹900/sq.ft that bring positive energy and functionality.",
+    focusKeyword: "luxury interior designers in delhi",
+    canonicalUrl:
+      "http://localhost:3000/blog/interior-design-elements-that-bring-good-energy-modern-homes",
+    ogImage:
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80",
+    faqSchema: [],
+    publishDate: "2026-11-08",
+    status: "Published",
+    isFeatured: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "blog-3",
+    title: "Why Architect-Led Turnkey Construction Saves Time, Money & Structural Risk",
+    slug: "why-architect-led-turnkey-construction-saves-time-and-money",
+    shortDescription:
+      "Discover why hiring an integrated architecture and construction firm prevents rework, cost overruns, and design compromises.",
+    content: `<h2>The Problem with Fragmented Construction</h2>
+<p>Many property owners hire an independent draughtsman for plans, a local contractor for civil work, and separate carpenters for interiors. Without unified supervision, structural columns clash with interior layouts, plumbing lines get chiselled repeatedly, and budgets spiral out of control.</p>
+
+<h3>The Architect-Led Turnkey Advantage at ARCH NEW ERA DESIGN</h3>
+<p>When your architect and structural team also lead the on-site execution:</p>
+<ul>
+  <li><strong>Zero Design-to-Site Translation Loss:</strong> The exact 3D elevation proportions and interior electrical points are built into the civil shuttering stage.</li>
+  <li><strong>Verified Material Quality:</strong> Every batch of TMT steel, cement, wiring, and marine plywood is checked against the agreed specification schedule.</li>
+  <li><strong>Predictable Handover Timeline:</strong> Civil, MEP, false ceiling, and modular carpentry teams work in a synchronized sequence.</li>
+</ul>`,
+    featuredImage:
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "Architectural blueprint and turnkey construction supervision",
+    author: "Nidhi Sharma",
+    authorRole: "Principal Project Lead – ARCH NEW ERA DESIGN",
+    category: "Architecture & Vastu",
+    tags: ["Turnkey Solutions", "Architecture", "Structural Engineering"],
+    readingTime: "4 min read",
+    metaTitle: "Benefits of Architect-Led Turnkey Construction | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Learn how architect-led turnkey construction by ARCH NEW ERA DESIGN (NRBL TECH) prevents rework and ensures on-time delivery.",
+    focusKeyword: "turnkey construction company in delhi",
+    canonicalUrl:
+      "http://localhost:3000/blog/why-architect-led-turnkey-construction-saves-time-and-money",
+    ogImage:
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+    faqSchema: [],
+    publishDate: "2026-11-12",
+    status: "Published",
+    isFeatured: false,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_SEO_PAGES: SEOPage[] = [
+  {
+    id: "seo-loc-1",
+    pageName: "Architects & Construction Company in Shahdara, Delhi",
+    slug: "architects-and-construction-in-shahdara-delhi",
+    routePrefix: "/locations",
+    metaTitle: "Best Architects, Construction & Interior Designers in Shahdara Delhi | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Looking for architects, home construction, or interior designers in Shahdara, Delhi? Visit ARCH NEW ERA DESIGN (NRBL TECH) at B-366, Ashok Nagar, Shahdara.",
+    h1Heading: "Premier Architecture, Construction & Interior Designing in Shahdara, Delhi",
+    focusKeyword: "architects in shahdara delhi",
+    secondaryKeywords: [
+      "home construction in shahdara",
+      "interior designers in ashok nagar shahdara",
+      "turnkey construction east delhi",
+    ],
+    pageContent: `<h2>Your Local Architecture & Turnkey Construction Partner in Shahdara, Delhi</h2>
+<p>Located right at <strong>B-366, Ashok Nagar, Shahdara, Delhi – 110093</strong>, <strong>ARCH NEW ERA DESIGN (NRBL TECH)</strong> is East Delhi's trusted destination for complete architectural planning, residential & commercial construction, and luxury interior designing.</p>
+<p>Under the personal guidance of <strong>Nidhi Sharma (+91 7535942407)</strong>, we serve homeowners and commercial builders across Ashok Nagar, Jyoti Nagar, Vivek Vihar, Dilshad Garden, Ram Nagar, Rohtash Nagar, and Yamuna Vihar.</p>
+<h3>Our Key Services in Shahdara & East Delhi</h3>
+<ul>
+  <li><strong>2D/3D Architecture & Structural Drawings:</strong> Vastu-friendly floor plans, front elevations, and RCC drawings.</li>
+  <li><strong>Residential Construction Packages:</strong> Essential Home (₹1,099/sq.ft.), Ready-to-Move (₹1,399/sq.ft.), and Premium Turnkey (₹1,899/sq.ft.).</li>
+  <li><strong>Interior Designing (Starting ₹900/sq.ft.):</strong> Modular kitchens, sliding wardrobes, TV units, false ceilings, and office interiors.</li>
+</ul>`,
+    featuredImage:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    imageAltText: "ARCH NEW ERA DESIGN Architecture and Construction in Shahdara Delhi",
+    canonicalUrl: "http://localhost:3000/locations/architects-and-construction-in-shahdara-delhi",
+    ogTitle: "Architects & Turnkey Construction in Shahdara, Delhi | ARCH NEW ERA DESIGN",
+    ogDescription:
+      "Visit ARCH NEW ERA DESIGN (NRBL TECH) at B-366, Ashok Nagar, Shahdara, Delhi for architecture, construction, and interior design.",
+    ogImage:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    robotsIndex: true,
+    robotsFollow: true,
+    faqContent: [
+      {
+        question: "Where is ARCH NEW ERA DESIGN located in Shahdara?",
+        answer:
+          "Our office is located at B-366, Ashok Nagar, Shahdara, Delhi – 110093, India. You can call or WhatsApp Nidhi Sharma at 7535942407.",
+      },
+      {
+        question: "Do you provide free site consultation in Shahdara and East Delhi?",
+        answer:
+          "Yes, we provide initial project consultations and site visits across Shahdara and East Delhi.",
+      },
+    ],
+    breadcrumbTitle: "Shahdara, Delhi",
+    locationCity: "Delhi",
+    locationArea: "Shahdara & East Delhi",
+    status: "Published",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "seo-loc-2",
+    pageName: "Turnkey Home Construction & Interior Designers in Delhi NCR",
+    slug: "turnkey-home-construction-delhi-ncr",
+    routePrefix: "/locations",
+    metaTitle: "Turnkey Home Construction & Luxury Interior Designers in Delhi NCR | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "End-to-end architecture, house construction starting at ₹1,099/sq.ft, and interior designing starting at ₹900/sq.ft across Delhi, Noida, Ghaziabad, and Gurugram.",
+    h1Heading: "Turnkey Home Construction & Interior Designing Across Delhi NCR",
+    focusKeyword: "turnkey home construction delhi ncr",
+    secondaryKeywords: [
+      "house construction company delhi ncr",
+      "luxury interior designers ncr",
+      "villa construction delhi ncr",
+    ],
+    pageContent: `<h2>Building Stronger Structures & Brighter Lives Across Delhi NCR</h2>
+<p><strong>ARCH NEW ERA DESIGN – NRBL TECH</strong> provides end-to-end architectural design, civil construction, and turnkey interiors across East Delhi, South Delhi, North Delhi, Noida, Greater Noida, Indirapuram, Ghaziabad, and Gurugram.</p>
+<p>With packages starting at <strong>₹1,099/sq. ft.</strong> for construction and <strong>₹900/sq. ft.</strong> for interior designing, our engineering and design teams deliver transparent BOQs, certified material quality, and punctual project completion.</p>`,
+    featuredImage:
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
+    imageAltText: "Turnkey Home Construction in Delhi NCR by ARCH NEW ERA DESIGN",
+    canonicalUrl: "http://localhost:3000/locations/turnkey-home-construction-delhi-ncr",
+    ogTitle: "Turnkey Home Construction in Delhi NCR | ARCH NEW ERA DESIGN",
+    ogDescription:
+      "Architecture, construction, and interior designing across Delhi NCR by ARCH NEW ERA DESIGN (NRBL TECH).",
+    ogImage:
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
+    robotsIndex: true,
+    robotsFollow: true,
+    faqContent: [
+      {
+        question: "Which areas in Delhi NCR do you serve?",
+        answer:
+          "We serve Shahdara, East Delhi, Central/North/South/West Delhi, Noida, Greater Noida, Ghaziabad, and Gurugram.",
+      },
+    ],
+    breadcrumbTitle: "Delhi NCR",
+    locationCity: "Delhi NCR",
+    locationArea: "Delhi, Noida, Ghaziabad & Gurugram",
+    status: "Published",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: "seo-page-1",
+    pageName: "Vastu Compliant Architectural Planning & Structural Design",
+    slug: "vastu-compliant-architectural-planning",
+    routePrefix: "/pages",
+    metaTitle: "Vastu Compliant Architectural Planning & 3D Elevation Design | ARCH NEW ERA DESIGN",
+    metaDescription:
+      "Create spaces that bring good energy with Vastu-compliant 2D floor plans, structural engineering, and 3D elevations by ARCH NEW ERA DESIGN (NRBL TECH).",
+    h1Heading: "Vastu-Compliant Architectural Planning: Spaces That Bring Good Energy",
+    focusKeyword: "vastu compliant architectural planning",
+    secondaryKeywords: ["vastu house design delhi", "3d elevation architect shahdara"],
+    pageContent: `<h2>Harmonizing Modern Architecture with Positive Spatial Energy</h2>
+<p>At <strong>ARCH NEW ERA DESIGN (NRBL TECH)</strong>, our brand statement <em>"Spaces That Bring Good Energy"</em> is embedded in every floor plan we draw. We combine scientific sun-path orientation, natural cross-ventilation, and Vastu Shastra principles with contemporary architectural aesthetics.</p>
+<p>Speak directly with <strong>Nidhi Sharma (+91 7535942407)</strong> to plan your residential plot, villa, or commercial space.</p>`,
+    featuredImage:
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+    imageAltText: "Vastu compliant architectural floor planning by ARCH NEW ERA DESIGN",
+    canonicalUrl: "http://localhost:3000/pages/vastu-compliant-architectural-planning",
+    ogTitle: "Vastu Compliant Architectural Planning | ARCH NEW ERA DESIGN",
+    ogDescription:
+      "Thoughtful Design. Stronger Structure. Brighter Lives. Vastu-aligned architectural design in Delhi NCR.",
+    ogImage:
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80",
+    robotsIndex: true,
+    robotsFollow: true,
+    faqContent: [],
+    breadcrumbTitle: "Vastu Architectural Planning",
+    status: "Published",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_TESTIMONIALS: Testimonial[] = [
+  {
+    id: "test-1",
+    clientName: "Homeowner Consultation Feedback",
+    clientRole: "Residential Architecture & Construction (Editable via Admin)",
+    location: "Shahdara, East Delhi",
+    projectType: "Ready-to-Move Construction",
+    rating: 5,
+    content:
+      "Working with Nidhi Sharma and the ARCH NEW ERA DESIGN (NRBL TECH) team gave us complete clarity on our 2D/3D drawings, structural steel specifications, and stage-wise construction milestones.",
+    status: "Published",
+    displayOrder: 1,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "test-2",
+    clientName: "Interior Design Client Review",
+    clientRole: "Modular Kitchen & Full Home Interiors (Editable via Admin)",
+    location: "Vivek Vihar, Delhi",
+    projectType: "Interior Designing Package",
+    rating: 5,
+    content:
+      "From the modular kitchen layout and floor-to-ceiling wardrobes to the warm gypsum cove lighting, every detail was thoughtfully planned. Truly spaces that bring good energy.",
+    status: "Published",
+    displayOrder: 2,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "test-3",
+    clientName: "Turnkey Project Feedback",
+    clientRole: "Turnkey Residence Execution (Editable via Admin)",
+    location: "Delhi NCR",
+    projectType: "Premium Turnkey Package",
+    rating: 5,
+    content:
+      "Having a single team manage the architectural design, civil structure, and interior finishes saved us months of vendor coordination. Transparent pricing and regular site supervision throughout.",
+    status: "Published",
+    displayOrder: 3,
+    createdAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_FAQS: FAQItem[] = [
+  {
+    id: "faq-1",
+    question: "What are your starting rates for house construction and interior designing?",
+    answer:
+      "Our indicative starting rates are ₹1,099/sq. ft. for the Essential Home construction package, ₹1,399/sq. ft. for Ready-to-Move construction, ₹1,899/sq. ft. for Premium Turnkey construction, and ₹900/sq. ft. for Interior Designing. Final quotations are confirmed after evaluating your plot/site and exact specifications.",
+    category: "Pricing & Packages",
+    displayOrder: 1,
+    isPublished: true,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "faq-2",
+    question: "Who is the primary contact person at ARCH NEW ERA DESIGN (NRBL TECH)?",
+    answer:
+      "Nidhi Sharma is the primary contact person. You can call or WhatsApp directly at +91 7535942407, email manoj712009@gmail.com, or visit our office at B-366, Ashok Nagar, Shahdara, Delhi – 110093.",
+    category: "General",
+    displayOrder: 2,
+    isPublished: true,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "faq-3",
+    question: "Do you provide 2D floor plans, 3D elevations, and structural drawings before construction?",
+    answer:
+      "Yes! Every project begins with comprehensive architectural planning—including Vastu-aligned 2D floor layouts, photorealistic 3D front elevations, RCC structural drawings, and electrical/plumbing layouts.",
+    category: "Architecture",
+    displayOrder: 3,
+    isPublished: true,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "faq-4",
+    question: "Can I hire you only for Interior Designing or Modular Kitchens in an existing flat/house?",
+    answer:
+      "Absolutely. Our Interior Designing vertical (starting at ₹900/sq. ft.) executes standalone residential and commercial interiors—including modular kitchens, wardrobes, TV panels, false ceilings, lighting, and office interiors.",
+    category: "Interiors",
+    displayOrder: 4,
+    isPublished: true,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "faq-5",
+    question: "How are payments structured during a construction or turnkey project?",
+    answer:
+      "We follow a transparent, milestone-linked payment schedule tied to actual on-site progress (such as foundation, plinth, slab casting, brickwork, plastering, flooring, and interior woodwork) so you only pay as each stage progresses.",
+    category: "Process",
+    displayOrder: 5,
+    isPublished: true,
+    createdAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_MEDIA_ASSETS: MediaAsset[] = [
+  {
+    id: "med-logo",
+    title: "ARCH NEW ERA DESIGN – NRBL TECH Official Logo",
+    url: "/logo.svg",
+    altText: "ARCH NEW ERA DESIGN NRBL TECH Logo",
+    category: "Brand",
+    mimeType: "image/svg+xml",
+    sizeKb: 4,
+    displayOrder: 1,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "med-hero-1",
+    title: "Luxury Modern Architectural Residence Exterior",
+    url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=85",
+    altText: "Luxury residential house architecture by ARCH NEW ERA DESIGN",
+    category: "Hero",
+    mimeType: "image/jpeg",
+    sizeKb: 240,
+    displayOrder: 2,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "med-int-1",
+    title: "Bespoke Living Room Interior with Warm Gold Accents",
+    url: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=85",
+    altText: "Bespoke living room interior design",
+    category: "Project",
+    mimeType: "image/jpeg",
+    sizeKb: 195,
+    displayOrder: 3,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: "med-kit-1",
+    title: "Modern Modular Kitchen with Quartz Countertop",
+    url: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80",
+    altText: "Modular kitchen design by ARCH NEW ERA DESIGN",
+    category: "Service",
+    mimeType: "image/jpeg",
+    sizeKb: 180,
+    displayOrder: 4,
+    createdAt: new Date().toISOString(),
+  },
+];
+
+export const INITIAL_SOCIAL_LINKS: SocialLink[] = [
+  {
+    id: "soc-whatsapp",
+    platform: "WhatsApp",
+    url: "https://wa.me/917535942407",
+    icon: "MessageCircle",
+    isActive: true,
+    displayOrder: 1,
+  },
+  {
+    id: "soc-instagram",
+    platform: "Instagram",
+    url: "https://instagram.com/archneweradesign",
+    icon: "Instagram",
+    isActive: true,
+    displayOrder: 2,
+  },
+  {
+    id: "soc-facebook",
+    platform: "Facebook",
+    url: "https://facebook.com/archneweradesign",
+    icon: "Facebook",
+    isActive: true,
+    displayOrder: 3,
+  },
+  {
+    id: "soc-linkedin",
+    platform: "LinkedIn",
+    url: "https://linkedin.com/company/arch-new-era-design",
+    icon: "Linkedin",
+    isActive: true,
+    displayOrder: 4,
+  },
+];

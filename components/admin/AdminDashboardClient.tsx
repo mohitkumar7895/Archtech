@@ -183,15 +183,58 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
   const [newMediaUrl, setNewMediaUrl] = useState("");
   const [newMediaCategory, setNewMediaCategory] = useState<MediaAsset["category"]>("General");
 
-  // Service media management state
+  // Universal media management state
   const [uploadingServiceFeatured, setUploadingServiceFeatured] = useState(false);
   const [uploadingServiceGallery, setUploadingServiceGallery] = useState(false);
   const [serviceGalleryUrlInput, setServiceGalleryUrlInput] = useState("");
   const [mediaPickerTarget, setMediaPickerTarget] = useState<
-    "serviceFeatured" | "serviceGallery" | null
+    | "serviceFeatured"
+    | "serviceGallery"
+    | "projectCover"
+    | "projectGallery"
+    | "heroImage"
+    | "logoUrl"
+    | "galleryItem"
+    | "blogFeatured"
+    | "aboutImage"
+    | null
   >(null);
   const [mediaPickerSearch, setMediaPickerSearch] = useState("");
   const [mediaPickerCategory, setMediaPickerCategory] = useState<string>("All");
+
+  // Profile edit & password change state
+  const [profileName, setProfileName] = useState(currentUser.name);
+  const [profileEmail, setProfileEmail] = useState(currentUser.email);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [updatingProfile, setUpdatingProfile] = useState(false);
+
+  // Generic direct image uploader
+  const uploadImageFile = async (file: File, title = ""): Promise<string | null> => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("title", title || file.name.replace(/\.[^/.]+$/, ""));
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        toast.error(json.error || "File upload failed");
+        return null;
+      }
+      if (json.asset) {
+        setMedia((prev) => [json.asset, ...prev]);
+      }
+      toast.success("Image uploaded successfully!");
+      return json.url;
+    } catch {
+      toast.error("Upload network error");
+      return null;
+    }
+  };
 
   // Responsive mobile sidebar state
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -473,6 +516,38 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
         };
       });
       toast.success("Added photo to service gallery!");
+    } else if (mediaPickerTarget === "projectCover") {
+      setEditingProject((prev) => (prev ? { ...prev, coverImage: asset.url } : null));
+      toast.success("Project cover photo updated!");
+    } else if (mediaPickerTarget === "projectGallery") {
+      setEditingProject((prev) => {
+        if (!prev) return null;
+        const currentGallery = prev.galleryImages || [];
+        if (currentGallery.includes(asset.url)) {
+          toast.info("Image already in project gallery");
+          return prev;
+        }
+        return {
+          ...prev,
+          galleryImages: [...currentGallery, asset.url],
+        };
+      });
+      toast.success("Added photo to project gallery!");
+    } else if (mediaPickerTarget === "heroImage") {
+      setSiteSettings((prev) => ({ ...prev, heroImage: asset.url }));
+      toast.success("Homepage hero image updated!");
+    } else if (mediaPickerTarget === "logoUrl") {
+      setSiteSettings((prev) => ({ ...prev, logoUrl: asset.url }));
+      toast.success("Website logo updated!");
+    } else if (mediaPickerTarget === "galleryItem") {
+      setEditingGallery((prev) => (prev ? { ...prev, imageUrl: asset.url } : null));
+      toast.success("Gallery photo updated!");
+    } else if (mediaPickerTarget === "blogFeatured") {
+      setEditingBlog((prev) => (prev ? { ...prev, featuredImage: asset.url } : null));
+      toast.success("Blog featured image updated!");
+    } else if (mediaPickerTarget === "aboutImage") {
+      setAboutSection((prev) => ({ ...prev, imageUrl: asset.url }));
+      toast.success("About page image updated!");
     }
     setMediaPickerTarget(null);
   };
@@ -906,13 +981,50 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-bold uppercase block mb-1">Website Logo URL</label>
-                  <input
-                    type="text"
-                    value={siteSettings.logoUrl}
-                    onChange={(e) => setSiteSettings({ ...siteSettings, logoUrl: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm"
-                  />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-xs font-bold uppercase block text-[#071A35] dark:text-white">
+                      Website Logo
+                    </label>
+                    <div className="flex items-center gap-1.5">
+                      <label className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-[#071A35] text-[#F2D99B] text-[11px] font-bold hover:bg-[#10284A] cursor-pointer">
+                        <Upload className="w-3 h-3" />
+                        <span>Upload Logo</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            const url = await uploadImageFile(file, "Website Official Logo");
+                            if (url) setSiteSettings((s) => ({ ...s, logoUrl: url }));
+                          }}
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setMediaPickerTarget("logoUrl")}
+                        className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded border border-[#D6B36A] text-[#B89246] hover:bg-[#D6B36A]/10 text-[11px] font-bold"
+                      >
+                        <Images className="w-3 h-3" />
+                        <span>Library</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {siteSettings.logoUrl && (
+                      <div className="w-14 h-10 p-1 rounded bg-[#071A35] flex items-center justify-center shrink-0 border border-slate-300">
+                        <img src={siteSettings.logoUrl} alt="Logo" className="max-h-full max-w-full object-contain" />
+                      </div>
+                    )}
+                    <input
+                      type="text"
+                      placeholder="Logo URL or upload from PC"
+                      value={siteSettings.logoUrl}
+                      onChange={(e) => setSiteSettings({ ...siteSettings, logoUrl: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="text-xs font-bold uppercase block mb-1">Hero Heading</label>
@@ -923,14 +1035,53 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                     className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm"
                   />
                 </div>
-                <div>
-                  <label className="text-xs font-bold uppercase block mb-1">Hero Background Image URL</label>
-                  <input
-                    type="text"
-                    value={siteSettings.heroImage}
-                    onChange={(e) => setSiteSettings({ ...siteSettings, heroImage: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm"
-                  />
+                <div className="md:col-span-2">
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-xs font-bold uppercase block text-[#071A35] dark:text-white">
+                      Hero Background Image
+                    </label>
+                    <div className="flex items-center gap-1.5">
+                      <label className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-[#071A35] text-[#F2D99B] text-[11px] font-bold hover:bg-[#10284A] cursor-pointer">
+                        <Upload className="w-3 h-3" />
+                        <span>Upload Hero Image from PC</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            const url = await uploadImageFile(file, "Homepage Hero Background");
+                            if (url) setSiteSettings((s) => ({ ...s, heroImage: url }));
+                          }}
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setMediaPickerTarget("heroImage")}
+                        className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded border border-[#D6B36A] text-[#B89246] hover:bg-[#D6B36A]/10 text-[11px] font-bold"
+                      >
+                        <Images className="w-3 h-3" />
+                        <span>Pick from Media Library</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {siteSettings.heroImage && (
+                      <img
+                        src={siteSettings.heroImage}
+                        alt="Hero preview"
+                        className="w-20 h-12 rounded-lg object-cover border border-slate-300 shrink-0"
+                      />
+                    )}
+                    <input
+                      type="text"
+                      placeholder="Hero image URL or upload from PC"
+                      value={siteSettings.heroImage}
+                      onChange={(e) => setSiteSettings({ ...siteSettings, heroImage: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -1105,13 +1256,52 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-bold uppercase block mb-1">Featured Image URL</label>
-                  <input
-                    type="text"
-                    value={aboutSection.imageUrl}
-                    onChange={(e) => setAboutSection({ ...aboutSection, imageUrl: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
-                  />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-xs font-bold uppercase block text-[#071A35] dark:text-white">
+                      Featured About Image
+                    </label>
+                    <div className="flex items-center gap-1.5">
+                      <label className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-[#071A35] text-[#F2D99B] text-[11px] font-bold hover:bg-[#10284A] cursor-pointer">
+                        <Upload className="w-3 h-3" />
+                        <span>Upload from PC</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            const url = await uploadImageFile(file, "About Page Image");
+                            if (url) setAboutSection((a) => ({ ...a, imageUrl: url }));
+                          }}
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setMediaPickerTarget("aboutImage")}
+                        className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded border border-[#D6B36A] text-[#B89246] hover:bg-[#D6B36A]/10 text-[11px] font-bold"
+                      >
+                        <Images className="w-3 h-3" />
+                        <span>Pick from Library</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {aboutSection.imageUrl && (
+                      <img
+                        src={aboutSection.imageUrl}
+                        alt="About preview"
+                        className="w-16 h-11 rounded-lg object-cover border border-slate-300 shrink-0"
+                      />
+                    )}
+                    <input
+                      type="text"
+                      placeholder="Image URL or upload from PC"
+                      value={aboutSection.imageUrl}
+                      onChange={(e) => setAboutSection({ ...aboutSection, imageUrl: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -2020,18 +2210,141 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Project Cover & Gallery Management */}
+                  <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-4">
                     <div>
-                      <label className="text-xs font-bold uppercase block mb-1">Cover Image URL</label>
-                      <input
-                        type="text"
-                        value={editingProject.coverImage || ""}
-                        onChange={(e) =>
-                          setEditingProject({ ...editingProject, coverImage: e.target.value })
-                        }
-                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
-                      />
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="text-xs font-bold uppercase text-[#071A35] dark:text-white">
+                          Project Cover Photo *
+                        </label>
+                        <div className="flex items-center gap-2">
+                          <label className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#071A35] text-[#F2D99B] text-xs font-bold hover:bg-[#10284A] cursor-pointer">
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>Upload Cover from PC</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={async (e) => {
+                                const file = e.target.files?.[0];
+                                if (!file) return;
+                                const url = await uploadImageFile(file, `${editingProject.title || "Project"} Cover`);
+                                if (url) {
+                                  setEditingProject((p) => (p ? { ...p, coverImage: url } : null));
+                                }
+                              }}
+                            />
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => setMediaPickerTarget("projectCover")}
+                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-[#D6B36A] text-[#B89246] hover:bg-[#D6B36A]/10 text-xs font-bold"
+                          >
+                            <Images className="w-3.5 h-3.5" />
+                            <span>Pick from Media Library</span>
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        {editingProject.coverImage && (
+                          <img
+                            src={editingProject.coverImage}
+                            alt="Cover preview"
+                            className="w-16 h-12 rounded-lg object-cover border border-slate-300 shrink-0"
+                          />
+                        )}
+                        <input
+                          type="text"
+                          required
+                          placeholder="Cover image URL or upload above"
+                          value={editingProject.coverImage || ""}
+                          onChange={(e) =>
+                            setEditingProject({ ...editingProject, coverImage: e.target.value })
+                          }
+                          className="flex-1 px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                        />
+                      </div>
                     </div>
+
+                    {/* Project Multi-Image Gallery */}
+                    <div className="pt-2 border-t border-slate-200 dark:border-slate-700">
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <div>
+                          <label className="text-xs font-bold uppercase text-[#071A35] dark:text-white block">
+                            Project Photo Gallery ({editingProject.galleryImages?.length || 0} photos)
+                          </label>
+                          <span className="text-[11px] text-slate-500">
+                            Upload site photos, plans, and completion renders for the project lightbox.
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <label className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#071A35] text-[#F2D99B] text-xs font-bold hover:bg-[#10284A] cursor-pointer">
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>Upload Photos from PC</span>
+                            <input
+                              type="file"
+                              multiple
+                              accept="image/*"
+                              className="hidden"
+                              onChange={async (e) => {
+                                const files = e.target.files;
+                                if (!files || files.length === 0) return;
+                                const urls: string[] = [];
+                                for (let i = 0; i < files.length; i++) {
+                                  const url = await uploadImageFile(files[i], `${editingProject.title || "Project"} Photo ${i + 1}`);
+                                  if (url) urls.push(url);
+                                }
+                                if (urls.length > 0) {
+                                  setEditingProject((p) => {
+                                    if (!p) return null;
+                                    const existing = p.galleryImages || [];
+                                    return { ...p, galleryImages: [...existing, ...urls] };
+                                  });
+                                  toast.success(`Uploaded ${urls.length} photos to project gallery!`);
+                                }
+                              }}
+                            />
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => setMediaPickerTarget("projectGallery")}
+                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-[#D6B36A] text-[#B89246] hover:bg-[#D6B36A]/10 text-xs font-bold"
+                          >
+                            <Images className="w-3.5 h-3.5" />
+                            <span>Pick from Media Library</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      {editingProject.galleryImages && editingProject.galleryImages.length > 0 ? (
+                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5 pt-1">
+                          {editingProject.galleryImages.map((imgUrl, gIdx) => (
+                            <div key={gIdx} className="relative group rounded-lg overflow-hidden border border-slate-300 h-20 bg-slate-100">
+                              <img src={imgUrl} alt={`Photo ${gIdx + 1}`} className="w-full h-full object-cover" />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setEditingProject((p) => {
+                                    if (!p) return null;
+                                    const next = (p.galleryImages || []).filter((_, i) => i !== gIdx);
+                                    return { ...p, galleryImages: next };
+                                  });
+                                  toast.info("Removed photo from gallery");
+                                }}
+                                className="absolute top-1 right-1 p-1 rounded-md bg-red-600/90 text-white opacity-0 group-hover:opacity-100 transition shadow"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-xs text-slate-400 italic">No gallery photos added yet.</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="text-xs font-bold uppercase block mb-1">Area (Sq. Ft.)</label>
                       <input
@@ -2180,7 +2493,10 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    if (!editingGallery.title || !editingGallery.imageUrl) return;
+                    if (!editingGallery.title || !editingGallery.imageUrl) {
+                      toast.error("Please provide both title and image.");
+                      return;
+                    }
                     const res = await postCMS("gallery", editingGallery);
                     if (res?.success && res.data) {
                       setGallery((prev) => [...prev.filter((g) => g.id !== res.data.id), res.data]);
@@ -2188,51 +2504,105 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                       toast.success("Gallery photo saved!");
                     }
                   }}
-                  className="rounded-2xl bg-white dark:bg-slate-900 p-6 border-2 border-[#D6B36A] grid grid-cols-1 md:grid-cols-4 gap-4"
+                  className="rounded-2xl bg-white dark:bg-slate-900 p-6 border-2 border-[#D6B36A] space-y-4"
                 >
-                  <input
-                    type="text"
-                    required
-                    placeholder="Photo Title *"
-                    value={editingGallery.title || ""}
-                    onChange={(e) => setEditingGallery({ ...editingGallery, title: e.target.value })}
-                    className="px-3 py-2 rounded-lg border border-slate-300 text-sm"
-                  />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Image URL *"
-                    value={editingGallery.imageUrl || ""}
-                    onChange={(e) =>
-                      setEditingGallery({ ...editingGallery, imageUrl: e.target.value })
-                    }
-                    className="px-3 py-2 rounded-lg border border-slate-300 text-sm"
-                  />
-                  <select
-                    value={editingGallery.category || "Residential Homes"}
-                    onChange={(e) =>
-                      setEditingGallery({ ...editingGallery, category: e.target.value })
-                    }
-                    className="px-3 py-2 rounded-lg border border-slate-300 text-sm"
-                  >
-                    <option value="Residential Homes">Residential Homes</option>
-                    <option value="Luxury Interiors">Luxury Interiors</option>
-                    <option value="Construction in Progress">Construction in Progress</option>
-                    <option value="Villas & Farmhouses">Villas & Farmhouses</option>
-                  </select>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="submit"
-                      className="flex-1 py-2 rounded-lg bg-[#071A35] text-[#F2D99B] text-xs font-bold"
-                    >
-                      Save
-                    </button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Photo Title *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Modern Residential Elevation"
+                        value={editingGallery.title || ""}
+                        onChange={(e) => setEditingGallery({ ...editingGallery, title: e.target.value })}
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Category *</label>
+                      <select
+                        value={editingGallery.category || "Residential Homes"}
+                        onChange={(e) =>
+                          setEditingGallery({ ...editingGallery, category: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      >
+                        <option value="Residential Homes">Residential Homes</option>
+                        <option value="Luxury Interiors">Luxury Interiors</option>
+                        <option value="Construction in Progress">Construction in Progress</option>
+                        <option value="Villas & Farmhouses">Villas & Farmhouses</option>
+                        <option value="Commercial Projects">Commercial Projects</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-xs font-bold uppercase text-[#071A35] dark:text-white">
+                        Photo Image *
+                      </label>
+                      <div className="flex items-center gap-2">
+                        <label className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#071A35] text-[#F2D99B] text-xs font-bold hover:bg-[#10284A] cursor-pointer">
+                          <Upload className="w-3.5 h-3.5" />
+                          <span>Upload from PC</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={async (e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              const url = await uploadImageFile(file, editingGallery.title || "Gallery Photo");
+                              if (url) {
+                                setEditingGallery((p) => (p ? { ...p, imageUrl: url } : null));
+                              }
+                            }}
+                          />
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => setMediaPickerTarget("galleryItem")}
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border border-[#D6B36A] text-[#B89246] hover:bg-[#D6B36A]/10 text-xs font-bold"
+                        >
+                          <Images className="w-3.5 h-3.5" />
+                          <span>Pick from Media Library</span>
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      {editingGallery.imageUrl && (
+                        <img
+                          src={editingGallery.imageUrl}
+                          alt="Preview"
+                          className="w-16 h-12 rounded-lg object-cover border border-slate-300 shrink-0"
+                        />
+                      )}
+                      <input
+                        type="text"
+                        required
+                        placeholder="Image URL or upload from PC"
+                        value={editingGallery.imageUrl || ""}
+                        onChange={(e) =>
+                          setEditingGallery({ ...editingGallery, imageUrl: e.target.value })
+                        }
+                        className="flex-1 px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
                     <button
                       type="button"
                       onClick={() => setEditingGallery(null)}
-                      className="px-3 py-2 rounded-lg border border-slate-300 text-xs"
+                      className="px-4 py-2 rounded-lg border border-slate-300 text-xs font-bold"
                     >
                       Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-5 py-2 rounded-lg bg-[#071A35] text-[#F2D99B] text-xs font-bold hover:bg-[#10284A]"
+                    >
+                      Save Gallery Photo
                     </button>
                   </div>
                 </form>
@@ -2390,16 +2760,57 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                         className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
                       />
                     </div>
-                    <div>
-                      <label className="text-xs font-bold uppercase block mb-1">Featured Image URL</label>
-                      <input
-                        type="text"
-                        value={editingBlog.featuredImage || ""}
-                        onChange={(e) =>
-                          setEditingBlog({ ...editingBlog, featuredImage: e.target.value })
-                        }
-                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
-                      />
+                    <div className="md:col-span-2">
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="text-xs font-bold uppercase text-[#071A35] dark:text-white">
+                          Featured Image
+                        </label>
+                        <div className="flex items-center gap-1.5">
+                          <label className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-[#071A35] text-[#F2D99B] text-[11px] font-bold hover:bg-[#10284A] cursor-pointer">
+                            <Upload className="w-3 h-3" />
+                            <span>PC Upload</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={async (e) => {
+                                const file = e.target.files?.[0];
+                                if (!file) return;
+                                const url = await uploadImageFile(file, `${editingBlog.title || "Blog"} Cover`);
+                                if (url) {
+                                  setEditingBlog((b) => (b ? { ...b, featuredImage: url } : null));
+                                }
+                              }}
+                            />
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => setMediaPickerTarget("blogFeatured")}
+                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded border border-[#D6B36A] text-[#B89246] hover:bg-[#D6B36A]/10 text-[11px] font-bold"
+                          >
+                            <Images className="w-3 h-3" />
+                            <span>Library</span>
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {editingBlog.featuredImage && (
+                          <img
+                            src={editingBlog.featuredImage}
+                            alt="Cover"
+                            className="w-12 h-9 rounded object-cover border border-slate-300 shrink-0"
+                          />
+                        )}
+                        <input
+                          type="text"
+                          placeholder="Image URL or upload"
+                          value={editingBlog.featuredImage || ""}
+                          onChange={(e) =>
+                            setEditingBlog({ ...editingBlog, featuredImage: e.target.value })
+                          }
+                          className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                        />
+                      </div>
                     </div>
                     <div>
                       <label className="text-xs font-bold uppercase block mb-1">Publish Date</label>
@@ -3905,31 +4316,190 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
             </div>
           )}
 
-          {/* 19. PROFILE */}
+          {/* 19. PROFILE & SECURITY */}
           {activeTab === "profile" && (
-            <div className="rounded-2xl bg-white dark:bg-slate-900 p-7 border border-slate-200 max-w-xl space-y-5">
-              <h2 className="font-serif text-2xl font-bold">Active Admin Profile</h2>
-              <div className="space-y-2 text-sm">
-                <p>
-                  <strong>Name:</strong> {currentUser.name}
-                </p>
-                <p>
-                  <strong>Email:</strong> {currentUser.email}
-                </p>
-                <p>
-                  <strong>Role:</strong> {currentUser.roleName}
-                </p>
-                <p>
-                  <strong>MySQL Database:</strong> <code>arch_tech</code>
-                </p>
+            <div className="max-w-2xl space-y-6">
+              <div className="rounded-2xl bg-white dark:bg-slate-900 p-6 sm:p-7 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
+                <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B89246]">
+                      ADMIN CREDENTIALS & SECURITY
+                    </span>
+                    <h2 className="font-serif text-2xl font-bold text-[#071A35] dark:text-white mt-0.5">
+                      Admin Profile & Password
+                    </h2>
+                  </div>
+                  <span className="px-3 py-1 rounded-full bg-[#D6B36A]/20 text-[#071A35] dark:text-[#F2D99B] text-xs font-bold">
+                    {currentUser.roleName}
+                  </span>
+                </div>
+
+                {/* Edit Personal Details */}
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    if (!profileName.trim() || !profileEmail.trim()) {
+                      toast.error("Name and Email are required.");
+                      return;
+                    }
+                    setUpdatingProfile(true);
+                    const res = await postCMS("profile", {
+                      name: profileName.trim(),
+                      email: profileEmail.trim(),
+                    });
+                    setUpdatingProfile(false);
+                    if (res?.success) {
+                      toast.success("Profile details updated successfully!");
+                      setUsers((prev) =>
+                        prev.map((u) =>
+                          u.email.toLowerCase() === currentUser.email.toLowerCase()
+                            ? { ...u, name: profileName.trim(), email: profileEmail.trim() }
+                            : u
+                        )
+                      );
+                    }
+                  }}
+                  className="space-y-4"
+                >
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-[#071A35] dark:text-white">
+                    1. Edit Admin Details
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Full Name *</label>
+                      <input
+                        type="text"
+                        required
+                        value={profileName}
+                        onChange={(e) => setProfileName(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Email Address *</label>
+                      <input
+                        type="email"
+                        required
+                        value={profileEmail}
+                        onChange={(e) => setProfileEmail(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm"
+                      />
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={updatingProfile}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#071A35] text-[#F2D99B] text-xs font-bold hover:bg-[#10284A] transition cursor-pointer touch-manipulation active:scale-95"
+                  >
+                    <Save className="w-4 h-4" />
+                    {updatingProfile ? "Saving Details..." : "Save Details"}
+                  </button>
+                </form>
+
+                <hr className="border-slate-200 dark:border-slate-800" />
+
+                {/* Change Password Form */}
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    if (!newPassword) {
+                      toast.error("Please enter a new password.");
+                      return;
+                    }
+                    if (newPassword.length < 5) {
+                      toast.error("New password must be at least 5 characters.");
+                      return;
+                    }
+                    if (newPassword !== confirmPassword) {
+                      toast.error("New password and confirm password do not match!");
+                      return;
+                    }
+                    setUpdatingProfile(true);
+                    const res = await postCMS("profile", {
+                      currentPassword,
+                      newPassword,
+                    });
+                    setUpdatingProfile(false);
+                    if (res?.success) {
+                      toast.success("Password changed successfully! Keep your new password safe.");
+                      setCurrentPassword("");
+                      setNewPassword("");
+                      setConfirmPassword("");
+                    }
+                  }}
+                  className="space-y-4"
+                >
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-[#071A35] dark:text-white">
+                    2. Change Account Password
+                  </h3>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">
+                        Current Password (Optional if forgotten)
+                      </label>
+                      <input
+                        type="password"
+                        placeholder="Current admin password"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm"
+                      />
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-bold uppercase block mb-1">
+                          New Password (Min 5 chars) *
+                        </label>
+                        <input
+                          type="password"
+                          required
+                          placeholder="New password"
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold uppercase block mb-1">
+                          Confirm New Password *
+                        </label>
+                        <input
+                          type="password"
+                          required
+                          placeholder="Confirm new password"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:bg-slate-800 dark:border-slate-700 text-sm"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={updatingProfile}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D6B36A] to-[#F2D99B] text-[#071A35] text-xs font-bold hover:brightness-105 transition cursor-pointer touch-manipulation active:scale-95 shadow-gold"
+                  >
+                    <Save className="w-4 h-4" />
+                    {updatingProfile ? "Updating Password..." : "Update Password Now"}
+                  </button>
+                </form>
+
+                <hr className="border-slate-200 dark:border-slate-800" />
+
+                {/* Session Sign Out */}
+                <div className="pt-2 flex items-center justify-between">
+                  <div className="text-xs text-slate-500">
+                    Active login session for <strong>{currentUser.email}</strong>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-600 text-white text-xs font-bold hover:bg-red-700 transition cursor-pointer touch-manipulation active:scale-95"
+                  >
+                    <LogOut className="w-4 h-4" /> Sign Out
+                  </button>
+                </div>
               </div>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 text-white text-xs font-bold"
-              >
-                <LogOut className="w-4 h-4" /> Sign Out of Admin Session
-              </button>
             </div>
           )}
         </main>
@@ -3956,7 +4526,23 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                 <p className="text-xs text-slate-500">
                   {mediaPickerTarget === "serviceFeatured"
                     ? "Click an image to set as the Service Cover / Featured Image"
-                    : "Click an image to add it to the Service Photo Gallery"}
+                    : mediaPickerTarget === "serviceGallery"
+                    ? "Click an image to add it to the Service Photo Gallery"
+                    : mediaPickerTarget === "projectCover"
+                    ? "Click an image to set as the Project Cover Photo"
+                    : mediaPickerTarget === "projectGallery"
+                    ? "Click an image to add it to the Project Photo Gallery"
+                    : mediaPickerTarget === "heroImage"
+                    ? "Click an image to set as the Homepage Hero Background"
+                    : mediaPickerTarget === "logoUrl"
+                    ? "Click an image to set as the Website Logo"
+                    : mediaPickerTarget === "galleryItem"
+                    ? "Click an image to set as the Portfolio Gallery Photo"
+                    : mediaPickerTarget === "blogFeatured"
+                    ? "Click an image to set as the Blog Article Cover"
+                    : mediaPickerTarget === "aboutImage"
+                    ? "Click an image to set as the About Page Image"
+                    : "Click an image to select from library"}
                 </p>
               </div>
               <button

@@ -93,8 +93,8 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const auth = await requireAdminAuth();
-  if (!auth.authorized) {
-    return NextResponse.json({ error: auth.error }, { status: 401 });
+  if (!auth.authorized || !auth.user) {
+    return NextResponse.json({ error: auth.error || "Unauthorized" }, { status: 401 });
   }
 
   try {
@@ -269,6 +269,33 @@ export async function POST(req: NextRequest) {
         const saved = await db.saveUser(payload);
         const { password, ...safeUser } = saved;
         return NextResponse.json({ success: true, data: safeUser });
+      }
+
+      case "profile": {
+        const currentUser = await db.getUserByEmail(auth.user.email);
+        if (!currentUser) {
+          return NextResponse.json({ error: "User account not found." }, { status: 404 });
+        }
+        const { name, email, currentPassword, newPassword } = data || {};
+        if (newPassword && newPassword.trim()) {
+          if (newPassword.trim().length < 5) {
+            return NextResponse.json({ error: "New password must be at least 5 characters." }, { status: 400 });
+          }
+          if (currentPassword) {
+            const { comparePassword } = await import("@/lib/auth");
+            const isValid = await comparePassword(currentPassword, currentUser.password || "");
+            if (!isValid) {
+              return NextResponse.json({ error: "Current password is incorrect." }, { status: 400 });
+            }
+          }
+          currentUser.password = await hashPassword(newPassword.trim());
+        }
+        if (name && name.trim()) currentUser.name = name.trim();
+        if (email && email.trim()) currentUser.email = email.trim().toLowerCase();
+        currentUser.updatedAt = new Date().toISOString();
+        const saved = await db.saveUser(currentUser);
+        const { password, ...safeUser } = saved;
+        return NextResponse.json({ success: true, data: safeUser, message: "Profile and password updated successfully!" });
       }
 
       default:

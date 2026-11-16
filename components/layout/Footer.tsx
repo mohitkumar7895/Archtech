@@ -120,6 +120,11 @@ export function Footer({ settings, services, socialLinks, seoPages = [] }: Foote
               </Link>
             </li>
             <li>
+              <Link href="/real-estate" className="hover:text-[#F2D99B] transition text-[#F2D99B]">
+                Real Estate & Plots
+              </Link>
+            </li>
+            <li>
               <Link href="/pricing" className="hover:text-[#F2D99B] transition">
                 Construction Packages
               </Link>

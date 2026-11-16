@@ -20,6 +20,8 @@ import {
   EnquiryNote,
   MediaAsset,
   SocialLink,
+  RealEstateSection,
+  RealEstateProperty,
 } from "@/types";
 
 export function generateId(prefix = "id"): string {
@@ -1551,5 +1553,102 @@ export const db = {
   async getRoles(): Promise<Role[]> {
     const store = readStore();
     return store.roles;
+  },
+
+  // 17. REAL ESTATE SECTION & PROPERTIES
+  async getRealEstateSection(): Promise<RealEstateSection> {
+    const store = readStore();
+    return store.realEstateSection;
+  },
+
+  async updateRealEstateSection(data: Partial<RealEstateSection>): Promise<RealEstateSection> {
+    const store = readStore();
+    const updated: RealEstateSection = {
+      ...store.realEstateSection,
+      ...data,
+      updatedAt: new Date().toISOString(),
+    };
+    store.realEstateSection = updated;
+    writeStore(store);
+    return updated;
+  },
+
+  async getRealEstateProperties(onlyAvailable = false): Promise<RealEstateProperty[]> {
+    const store = readStore();
+    const list = [...(store.realEstateProperties || [])];
+    list.sort((a, b) => (a.orderIndex || 0) - (b.orderIndex || 0));
+    if (onlyAvailable) {
+      return list.filter((p) => p.status !== "Sold Out");
+    }
+    return list;
+  },
+
+  async getRealEstatePropertyBySlug(slug: string): Promise<RealEstateProperty | null> {
+    const store = readStore();
+    const found = (store.realEstateProperties || []).find((p) => p.slug === slug);
+    return found || null;
+  },
+
+  async saveRealEstateProperty(property: Partial<RealEstateProperty>): Promise<RealEstateProperty> {
+    const store = readStore();
+    if (!store.realEstateProperties) {
+      store.realEstateProperties = [];
+    }
+    const idx = property.id ? store.realEstateProperties.findIndex((p) => p.id === property.id) : -1;
+    const now = new Date().toISOString();
+
+    const item: RealEstateProperty =
+      idx >= 0
+        ? {
+            ...store.realEstateProperties[idx],
+            ...property,
+            updatedAt: now,
+          }
+        : {
+            id: property.id || generateId("prop"),
+            title: property.title || "New Property Listing",
+            slug: property.slug || (property.title ? property.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") : generateId("prop")),
+            propertyType: property.propertyType || "Buy",
+            category: property.category || "Builder Floor",
+            price: property.price || "Contact for Price",
+            priceUnit: property.priceUnit || "Negotiable",
+            location: property.location || "Shahdara, Delhi",
+            address: property.address || "",
+            areaSqFt: property.areaSqFt || "1,200 sq. ft.",
+            bedrooms: property.bedrooms || "3 BHK",
+            bathrooms: property.bathrooms || "2 Baths",
+            furnishing: property.furnishing || "Semi-Furnished",
+            possessionDate: property.possessionDate || "Ready to Move",
+            status: property.status || "Available",
+            featuredImage:
+              property.featuredImage ||
+              "/uploads/service-5-storey-elevation-manoj-kumar-sharma.jpg",
+            galleryImages: property.galleryImages || [property.featuredImage || "/uploads/service-5-storey-elevation-manoj-kumar-sharma.jpg"],
+            shortDescription: property.shortDescription || "",
+            description: property.description || "",
+            features: property.features || [],
+            contactPerson: property.contactPerson || "Manoj Kumar Sharma",
+            contactPhone: property.contactPhone || "7535942407",
+            isFeatured: property.isFeatured ?? true,
+            orderIndex: property.orderIndex ?? (store.realEstateProperties.length + 1),
+            createdAt: now,
+            updatedAt: now,
+          };
+
+    if (idx >= 0) {
+      store.realEstateProperties[idx] = item;
+    } else {
+      store.realEstateProperties.push(item);
+    }
+    writeStore(store);
+    return item;
+  },
+
+  async deleteRealEstateProperty(id: string): Promise<boolean> {
+    const store = readStore();
+    if (!store.realEstateProperties) return false;
+    store.realEstateProperties = store.realEstateProperties.filter((p) => p.id !== id);
+    writeStore(store);
+    return true;
   },
 };

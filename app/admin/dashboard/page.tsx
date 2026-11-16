@@ -29,6 +29,8 @@ export default async function AdminDashboardPage() {
     media,
     socialLinks,
     users,
+    realEstateSection,
+    realEstateProperties,
   ] = await Promise.all([
     db.getSiteSettings(),
     db.getHomepageSections(),
@@ -46,6 +48,8 @@ export default async function AdminDashboardPage() {
     db.getMedia(),
     db.getSocialLinks(),
     db.getUsers(),
+    db.getRealEstateSection(),
+    db.getRealEstateProperties(false),
   ]);
 
   return (
@@ -67,6 +71,8 @@ export default async function AdminDashboardPage() {
         enquiries,
         media,
         socialLinks,
+        realEstateSection,
+        realEstateProperties,
         users: users.map(({ password, ...rest }) => rest),
       }}
     />

@@ -41,6 +41,11 @@ import {
   Images,
   Loader2,
   Menu,
+  Building2,
+  Handshake,
+  Bed,
+  Bath,
+  Maximize2,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -61,6 +66,11 @@ import {
   SocialLink,
   User,
   LeadStatus,
+  RealEstateSection,
+  RealEstateProperty,
+  RealEstateCategory,
+  RealEstateStatus,
+  RealEstateListingType,
 } from "@/types";
 import { RichTextEditor } from "./RichTextEditor";
 import { SeoValidator } from "./SeoValidator";
@@ -76,6 +86,7 @@ type AdminTab =
   | "services"
   | "pricing"
   | "projects"
+  | "real-estate"
   | "gallery"
   | "blogs"
   | "blog_categories"
@@ -113,6 +124,8 @@ interface AdminBootstrapProps {
     enquiries: Enquiry[];
     media: MediaAsset[];
     socialLinks: SocialLink[];
+    realEstateSection?: RealEstateSection;
+    realEstateProperties?: RealEstateProperty[];
     users: Omit<User, "password">[];
   };
 }
@@ -154,11 +167,35 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
   const [media, setMedia] = useState<MediaAsset[]>(initialData.media);
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>(initialData.socialLinks);
   const [users, setUsers] = useState<Omit<User, "password">[]>(initialData.users);
+  const [realEstateSection, setRealEstateSection] = useState<RealEstateSection>(
+    initialData.realEstateSection || {
+      id: "default-real-estate",
+      badgeText: "REAL ESTATE & PROPERTY SOLUTIONS",
+      title: "Buy, Sell, Collaborate & Invest in Verified Properties Across Delhi NCR",
+      subtitle:
+        "Under the guidance of Manoj Kumar Sharma (ARCH NEW ERA DESIGN – NRBL TECH) — 100% Freehold Registry Plots, Luxury Builder Floors, Joint Venture Collaborations & High-Yield Commercial Assets.",
+      description: "",
+      highlights: [],
+      stats: [],
+      servicesOffered: [],
+      collaborationCtaTitle: "Have a Plot or Old House? Let's Build Together with Zero Investment from You!",
+      collaborationCtaSubtitle: "Partner with Manoj Kumar Sharma for a 50:50 Builder Collaboration.",
+      isEnabled: true,
+      updatedAt: new Date().toISOString(),
+    }
+  );
+  const [realEstateProperties, setRealEstateProperties] = useState<RealEstateProperty[]>(
+    initialData.realEstateProperties || []
+  );
 
   // Active editor states
   const [editingService, setEditingService] = useState<Partial<Service> | null>(null);
   const [editingPackage, setEditingPackage] = useState<Partial<PricingPackage> | null>(null);
   const [editingProject, setEditingProject] = useState<Partial<Project> | null>(null);
+  const [editingProperty, setEditingProperty] = useState<Partial<RealEstateProperty> | null>(null);
+  const [realEstateSubTab, setRealEstateSubTab] = useState<"listings" | "settings">("listings");
+  const [propertyCategoryFilter, setPropertyCategoryFilter] = useState("All");
+  const [propertyFeatureInput, setPropertyFeatureInput] = useState("");
   const [editingGallery, setEditingGallery] = useState<Partial<GalleryItem> | null>(null);
   const [editingBlog, setEditingBlog] = useState<Partial<Blog> | null>(null);
   const [editingCategory, setEditingCategory] = useState<Partial<BlogCategory> | null>(null);
@@ -197,6 +234,8 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
     | "galleryItem"
     | "blogFeatured"
     | "aboutImage"
+    | "propertyFeatured"
+    | "propertyGallery"
     | null
   >(null);
   const [mediaPickerSearch, setMediaPickerSearch] = useState("");
@@ -254,6 +293,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
     { id: "services", label: "Services", icon: Compass, badge: services.length },
     { id: "pricing", label: "Pricing & Packages", icon: Layers, badge: pricingPackages.length },
     { id: "projects", label: "Projects", icon: Briefcase, badge: projects.length },
+    { id: "real-estate", label: "Real Estate & Plots", icon: Building2, badge: realEstateProperties.length },
     { id: "gallery", label: "Gallery", icon: ImageIcon, badge: gallery.length },
     { id: "blogs", label: "Blog Management", icon: FileText, badge: blogs.length },
     { id: "blog_categories", label: "Blog Categories", icon: FolderKanban },
@@ -326,6 +366,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
       if (module === "services") setServices((p) => p.filter((x) => x.id !== id));
       if (module === "pricingPackages") setPricingPackages((p) => p.filter((x) => x.id !== id));
       if (module === "projects") setProjects((p) => p.filter((x) => x.id !== id));
+      if (module === "realEstateProperties") setRealEstateProperties((p) => p.filter((x) => x.id !== id));
       if (module === "gallery") setGallery((p) => p.filter((x) => x.id !== id));
       if (module === "blogs") setBlogs((p) => p.filter((x) => x.id !== id));
       if (module === "blogCategories") setBlogCategories((p) => p.filter((x) => x.id !== id));
@@ -548,6 +589,23 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
     } else if (mediaPickerTarget === "aboutImage") {
       setAboutSection((prev) => ({ ...prev, imageUrl: asset.url }));
       toast.success("About page image updated!");
+    } else if (mediaPickerTarget === "propertyFeatured") {
+      setEditingProperty((prev) => (prev ? { ...prev, featuredImage: asset.url } : null));
+      toast.success("Property featured image updated!");
+    } else if (mediaPickerTarget === "propertyGallery") {
+      setEditingProperty((prev) => {
+        if (!prev) return null;
+        const currentGallery = prev.galleryImages || [];
+        if (currentGallery.includes(asset.url)) {
+          toast.info("Image already in property gallery");
+          return prev;
+        }
+        return {
+          ...prev,
+          galleryImages: [...currentGallery, asset.url],
+        };
+      });
+      toast.success("Added photo to property gallery!");
     }
     setMediaPickerTarget(null);
   };
@@ -2465,6 +2523,784 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
             </div>
           )}
 
+          {/* 7.5 REAL ESTATE & PROPERTY MANAGEMENT MODULE */}
+          {activeTab === "real-estate" && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h2 className="font-serif text-2xl font-bold text-[#071A35] dark:text-white flex items-center gap-2">
+                    <Building2 className="w-6 h-6 text-[#D6B36A]" />
+                    Real Estate & Property Management ({realEstateProperties.length})
+                  </h2>
+                  <p className="text-xs text-slate-500">
+                    Manage Builder Floors, Freehold Plots, 50:50 Builder Collaborations, Commercial/PG assets, and Section settings.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="p-1 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center gap-1 text-xs font-bold">
+                    <button
+                      type="button"
+                      onClick={() => setRealEstateSubTab("listings")}
+                      className={`px-3 py-1.5 rounded-lg transition ${
+                        realEstateSubTab === "listings"
+                          ? "bg-white dark:bg-slate-900 text-[#071A35] dark:text-[#F2D99B] shadow-sm"
+                          : "text-slate-600 dark:text-slate-400"
+                      }`}
+                    >
+                      Properties ({realEstateProperties.length})
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setRealEstateSubTab("settings")}
+                      className={`px-3 py-1.5 rounded-lg transition ${
+                        realEstateSubTab === "settings"
+                          ? "bg-white dark:bg-slate-900 text-[#071A35] dark:text-[#F2D99B] shadow-sm"
+                          : "text-slate-600 dark:text-slate-400"
+                      }`}
+                    >
+                      Section Settings
+                    </button>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setRealEstateSubTab("listings");
+                      setEditingProperty({
+                        title: "",
+                        slug: "",
+                        propertyType: "Buy",
+                        category: "Builder Floor",
+                        price: "₹75 Lakhs",
+                        priceUnit: "All-Inclusive",
+                        location: "Shahdara, East Delhi",
+                        address: "Ashok Nagar / Shahdara, Delhi – 110093",
+                        areaSqFt: "1,450 sq. ft.",
+                        bedrooms: "3 BHK",
+                        bathrooms: "3 Baths",
+                        furnishing: "Semi-Furnished",
+                        possessionDate: "Ready to Move",
+                        status: "Available",
+                        featuredImage: "/uploads/service-5-storey-elevation-manoj-kumar-sharma.jpg",
+                        galleryImages: [
+                          "/uploads/service-5-storey-elevation-manoj-kumar-sharma.jpg",
+                          "/uploads/service-5-storey-night-lighting-elevation.jpg",
+                        ],
+                        shortDescription: "",
+                        description: "",
+                        features: [
+                          "High-Speed Automatic Passenger Lift",
+                          "Covered Stilt Car Parking",
+                          "Freehold Registry with Mutation",
+                          "80% Bank Loan Approved",
+                        ],
+                        contactPerson: "Manoj Kumar Sharma",
+                        contactPhone: "7535942407",
+                        isFeatured: true,
+                        orderIndex: realEstateProperties.length + 1,
+                      });
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#071A35] text-[#F2D99B] font-bold text-xs hover:bg-[#10284A] transition shadow-md"
+                  >
+                    <Plus className="w-4 h-4" /> Add New Property
+                  </button>
+                </div>
+              </div>
+
+              {/* PROPERTY EDITOR FORM */}
+              {editingProperty && (
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    if (!editingProperty.title) return;
+                    const payload = {
+                      ...editingProperty,
+                      slug: editingProperty.slug || slugify(editingProperty.title),
+                    };
+                    const res = await postCMS("realEstateProperties", payload);
+                    if (res?.success && res.data) {
+                      setRealEstateProperties((prev) => {
+                        const idx = prev.findIndex((p) => p.id === res.data.id);
+                        if (idx >= 0) {
+                          const copy = [...prev];
+                          copy[idx] = res.data;
+                          return copy;
+                        }
+                        return [res.data, ...prev];
+                      });
+                      setEditingProperty(null);
+                      toast.success("Property listing saved successfully!");
+                    }
+                  }}
+                  className="rounded-2xl bg-white dark:bg-slate-900 p-6 sm:p-7 border-2 border-[#D6B36A] shadow-xl space-y-6 animate-fadeIn"
+                >
+                  <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+                    <h3 className="font-serif text-xl font-bold text-[#071A35] dark:text-white">
+                      {editingProperty.id ? `Edit Property: ${editingProperty.title}` : "Add New Property Listing"}
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={() => setEditingProperty(null)}
+                      className="p-1 rounded-lg text-slate-400 hover:text-slate-600"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  {/* Row 1: Title, Slug, Listing Type */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Property Title *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Ultra-Luxury 3 BHK Builder Floor with Lift & Parking"
+                        value={editingProperty.title || ""}
+                        onChange={(e) =>
+                          setEditingProperty({
+                            ...editingProperty,
+                            title: e.target.value,
+                            slug: editingProperty.id ? editingProperty.slug : slugify(e.target.value),
+                          })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">URL Slug</label>
+                      <input
+                        type="text"
+                        value={editingProperty.slug || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, slug: slugify(e.target.value) })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Listing Type</label>
+                      <select
+                        value={editingProperty.propertyType || "Buy"}
+                        onChange={(e) =>
+                          setEditingProperty({
+                            ...editingProperty,
+                            propertyType: e.target.value as RealEstateListingType,
+                          })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      >
+                        <option value="Buy">Buy (सेल / बिक्री)</option>
+                        <option value="Sell">Sell (खरीद)</option>
+                        <option value="Collaboration">Collaboration (50:50 कोलैबोरेशन)</option>
+                        <option value="Investment">Investment (निवेश / पीजी)</option>
+                        <option value="Rent">Rent (किराया)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Row 2: Category, Status, Featured */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Property Category</label>
+                      <select
+                        value={editingProperty.category || "Builder Floor"}
+                        onChange={(e) =>
+                          setEditingProperty({
+                            ...editingProperty,
+                            category: e.target.value as RealEstateCategory,
+                          })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      >
+                        <option value="Builder Floor">Builder Floor (बिल्डर फ्लोर)</option>
+                        <option value="Residential Plot">Residential Plot (आवासीय प्लॉट)</option>
+                        <option value="Commercial Plot">Commercial Plot (कमर्शियल प्लॉट)</option>
+                        <option value="Commercial Shop / Office">Commercial Shop / Office (दुकान / ऑफिस)</option>
+                        <option value="PG / Hostel Building">PG / Hostel Building (पीजी / हॉस्टल)</option>
+                        <option value="Joint Venture / Collaboration">Joint Venture / Collaboration (कोलैबोरेशन)</option>
+                        <option value="Luxury Villa / Farmhouse">Luxury Villa / Farmhouse (विला / फार्महाउस)</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Availability Status</label>
+                      <select
+                        value={editingProperty.status || "Available"}
+                        onChange={(e) =>
+                          setEditingProperty({
+                            ...editingProperty,
+                            status: e.target.value as RealEstateStatus,
+                          })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      >
+                        <option value="Available">Available (उपलब्ध)</option>
+                        <option value="Ready to Move">Ready to Move (तुरंत रहने योग्य)</option>
+                        <option value="Under Construction">Under Construction (निर्माणाधीन)</option>
+                        <option value="Booking Open">Booking Open (बुकिंग शुरू)</option>
+                        <option value="Sold Out">Sold Out (बिक चुका)</option>
+                      </select>
+                    </div>
+
+                    <div className="flex items-center gap-2 pt-6">
+                      <input
+                        type="checkbox"
+                        id="prop-featured"
+                        checked={Boolean(editingProperty.isFeatured)}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, isFeatured: e.target.checked })
+                        }
+                        className="w-4 h-4 rounded text-[#D6B36A] focus:ring-[#D6B36A]"
+                      />
+                      <label htmlFor="prop-featured" className="text-xs font-bold cursor-pointer">
+                        Mark as Featured on Homepage
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Row 3: Price & Price Unit, Location, Area */}
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Price *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. ₹75 Lakhs onwards"
+                        value={editingProperty.price || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, price: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Price Unit / Remark</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. All-Inclusive / per Gaj"
+                        value={editingProperty.priceUnit || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, priceUnit: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Location *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Shahdara, East Delhi"
+                        value={editingProperty.location || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, location: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Area / Dimensions</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 1,450 sq. ft. or 100 Gaj"
+                        value={editingProperty.areaSqFt || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, areaSqFt: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Row 4: Bedrooms, Bathrooms, Furnishing, Possession */}
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Bedrooms</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 3 BHK / 4 BHK / N/A"
+                        value={editingProperty.bedrooms || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, bedrooms: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Bathrooms</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 3 Baths / N/A"
+                        value={editingProperty.bathrooms || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, bathrooms: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Furnishing</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Semi-Furnished / Fully Furnished"
+                        value={editingProperty.furnishing || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, furnishing: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Possession Date</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Ready to Move / Immediate"
+                        value={editingProperty.possessionDate || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, possessionDate: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Row 5: Featured Image with Universal Media Picker & Uploader */}
+                  <div className="space-y-2 p-4 rounded-xl bg-[#F6F7FA] dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                    <label className="text-xs font-bold uppercase block text-[#071A35] dark:text-white">
+                      Property Cover / Featured Image *
+                    </label>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                      <div className="w-24 h-16 rounded-lg bg-slate-200 dark:bg-slate-700 overflow-hidden shrink-0 border">
+                        {editingProperty.featuredImage ? (
+                          <img
+                            src={editingProperty.featuredImage}
+                            alt="Preview"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs">
+                            No image
+                          </div>
+                        )}
+                      </div>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Enter image URL or pick from library"
+                        value={editingProperty.featuredImage || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, featuredImage: e.target.value })
+                        }
+                        className="flex-1 w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setMediaPickerTarget("propertyFeatured")}
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#071A35] text-[#F2D99B] text-xs font-bold shrink-0 hover:bg-[#10284A] transition"
+                      >
+                        <Images className="w-3.5 h-3.5" /> Pick from Library
+                      </button>
+                      <label className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-emerald-600 text-white text-xs font-bold shrink-0 hover:bg-emerald-700 transition cursor-pointer">
+                        <Upload className="w-3.5 h-3.5" /> Upload Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            const url = await uploadImageFile(file, editingProperty.title || "property");
+                            if (url) {
+                              setEditingProperty((prev) => (prev ? { ...prev, featuredImage: url } : null));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Row 6: Features Tags */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase block">
+                      Property Amenities & Highlights (Tags)
+                    </label>
+                    <div className="flex flex-wrap gap-2 mb-2">
+                      {(editingProperty.features || []).map((feat, idx) => (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#071A35] text-white text-xs font-medium"
+                        >
+                          <span>{feat}</span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setEditingProperty({
+                                ...editingProperty,
+                                features: (editingProperty.features || []).filter((_, i) => i !== idx),
+                              })
+                            }
+                            className="text-red-400 hover:text-white"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        placeholder="Add feature (e.g. Lift & Parking, Freehold Registry, 80% Loan Approved)"
+                        value={propertyFeatureInput}
+                        onChange={(e) => setPropertyFeatureInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            if (propertyFeatureInput.trim()) {
+                              setEditingProperty({
+                                ...editingProperty,
+                                features: [...(editingProperty.features || []), propertyFeatureInput.trim()],
+                              });
+                              setPropertyFeatureInput("");
+                            }
+                          }
+                        }}
+                        className="flex-1 px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (propertyFeatureInput.trim()) {
+                            setEditingProperty({
+                              ...editingProperty,
+                              features: [...(editingProperty.features || []), propertyFeatureInput.trim()],
+                            });
+                            setPropertyFeatureInput("");
+                          }
+                        }}
+                        className="px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 text-xs font-bold"
+                      >
+                        Add Tag
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Row 7: Descriptions */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Short Summary (Card View)</label>
+                      <textarea
+                        rows={3}
+                        placeholder="Brief 2-line summary shown on property cards..."
+                        value={editingProperty.shortDescription || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, shortDescription: e.target.value })
+                        }
+                        className="w-full p-3 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Detailed Description</label>
+                      <textarea
+                        rows={3}
+                        placeholder="Detailed legal, architectural & construction specifications..."
+                        value={editingProperty.description || ""}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, description: e.target.value })
+                        }
+                        className="w-full p-3 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Row 8: Contact Details */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Contact Person</label>
+                      <input
+                        type="text"
+                        value={editingProperty.contactPerson || "Manoj Kumar Sharma"}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, contactPerson: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Contact Phone / WhatsApp</label>
+                      <input
+                        type="text"
+                        value={editingProperty.contactPhone || "7535942407"}
+                        onChange={(e) =>
+                          setEditingProperty({ ...editingProperty, contactPhone: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+                    <button
+                      type="button"
+                      onClick={() => setEditingProperty(null)}
+                      className="px-4 py-2.5 rounded-lg border border-slate-300 text-xs font-bold"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={saving}
+                      className="px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#D6B36A] to-[#F2D99B] text-[#071A35] text-xs font-bold hover:brightness-105 transition shadow-gold"
+                    >
+                      Save Property Listing
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* SUB-TAB 1: PROPERTY LISTINGS GRID */}
+              {realEstateSubTab === "listings" && !editingProperty && (
+                <div className="space-y-6">
+                  {/* Category Filter Pills */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    {["All", "Builder Floor", "Residential Plot", "PG / Hostel Building", "Joint Venture / Collaboration", "Commercial Shop / Office"].map((cat) => (
+                      <button
+                        key={cat}
+                        type="button"
+                        onClick={() => setPropertyCategoryFilter(cat)}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+                          propertyCategoryFilter === cat
+                            ? "bg-[#071A35] text-[#F2D99B]"
+                            : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Properties Cards Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {realEstateProperties
+                      .filter((p) => propertyCategoryFilter === "All" || p.category === propertyCategoryFilter)
+                      .map((prop) => (
+                        <div
+                          key={prop.id}
+                          className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col justify-between group hover:border-[#D6B36A] transition"
+                        >
+                          <div>
+                            <div className="relative h-48 w-full bg-slate-900">
+                              <img
+                                src={prop.featuredImage || "/uploads/service-5-storey-elevation-manoj-kumar-sharma.jpg"}
+                                alt={prop.title}
+                                className="w-full h-full object-cover"
+                              />
+                              <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1">
+                                <span className="px-2 py-0.5 rounded bg-[#071A35]/90 text-white text-[10px] font-bold">
+                                  {prop.category}
+                                </span>
+                                <span className="px-2 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">
+                                  {prop.status}
+                                </span>
+                              </div>
+                              <span className="absolute bottom-2.5 left-2.5 px-3 py-1 rounded-lg bg-[#071A35]/95 text-[#F2D99B] font-serif font-bold text-sm border border-[#D6B36A]/50">
+                                {prop.price}
+                              </span>
+                            </div>
+
+                            <div className="p-4 space-y-2">
+                              <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                                <MapPin className="w-3.5 h-3.5 text-[#D6B36A] shrink-0" />
+                                <span className="truncate">{prop.location}</span>
+                              </div>
+                              <h3 className="font-serif text-base font-bold text-[#071A35] dark:text-white line-clamp-2">
+                                {prop.title}
+                              </h3>
+                              <p className="text-xs text-slate-500 line-clamp-2">
+                                {prop.shortDescription}
+                              </p>
+                              <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-800">
+                                <span>Area: {prop.areaSqFt}</span>
+                                <span>{prop.bedrooms || "N/A"}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="px-4 py-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50">
+                            <span className="text-xs font-semibold text-[#B89246]">
+                              {prop.isFeatured ? "★ Featured" : "Standard"}
+                            </span>
+                            <div className="flex items-center gap-1.5">
+                              <a
+                                href={formatWhatsAppUrl(
+                                  prop.contactPhone || "7535942407",
+                                  `Inquiry regarding ${prop.title} (${prop.location})`
+                                )}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 rounded-lg bg-[#25D366] text-white"
+                                title="Test WhatsApp Link"
+                              >
+                                <MessageCircle className="w-3.5 h-3.5" />
+                              </a>
+                              <button
+                                type="button"
+                                onClick={() => setEditingProperty(prop)}
+                                className="p-2 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-white hover:bg-[#D6B36A] hover:text-[#071A35] transition"
+                                title="Edit Property"
+                              >
+                                <Edit3 className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setDeleteTarget({
+                                    module: "realEstateProperties",
+                                    id: prop.id,
+                                    name: prop.title,
+                                  })
+                                }
+                                className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition"
+                                title="Delete Property"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+
+              {/* SUB-TAB 2: REAL ESTATE SECTION SETTINGS */}
+              {realEstateSubTab === "settings" && (
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const res = await postCMS("realEstateSection", realEstateSection);
+                    if (res?.success && res.data) {
+                      setRealEstateSection(res.data);
+                      toast.success("Real Estate section settings updated successfully!");
+                    }
+                  }}
+                  className="rounded-2xl bg-white dark:bg-slate-900 p-6 sm:p-8 border border-slate-200 dark:border-slate-800 space-y-6 shadow-sm"
+                >
+                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <div>
+                      <h3 className="font-serif text-xl font-bold text-[#071A35] dark:text-white">
+                        Real Estate Homepage Section Controls
+                      </h3>
+                      <p className="text-xs text-slate-500">
+                        Customize the text, badge, stats, and 50:50 Builder Collaboration spotlight.
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        id="re-enabled"
+                        checked={Boolean(realEstateSection.isEnabled)}
+                        onChange={(e) =>
+                          setRealEstateSection({ ...realEstateSection, isEnabled: e.target.checked })
+                        }
+                        className="w-4 h-4 rounded text-[#D6B36A] focus:ring-[#D6B36A]"
+                      />
+                      <label htmlFor="re-enabled" className="text-xs font-bold cursor-pointer">
+                        Enable Section on Homepage
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Badge Text</label>
+                      <input
+                        type="text"
+                        value={realEstateSection.badgeText || ""}
+                        onChange={(e) =>
+                          setRealEstateSection({ ...realEstateSection, badgeText: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1">Main Heading / Title</label>
+                      <input
+                        type="text"
+                        value={realEstateSection.title || ""}
+                        onChange={(e) =>
+                          setRealEstateSection({ ...realEstateSection, title: e.target.value })
+                        }
+                        className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs font-bold uppercase block mb-1">Section Subtitle</label>
+                    <textarea
+                      rows={2}
+                      value={realEstateSection.subtitle || ""}
+                      onChange={(e) =>
+                        setRealEstateSection({ ...realEstateSection, subtitle: e.target.value })
+                      }
+                      className="w-full p-3 rounded-lg border border-slate-300 dark:bg-slate-800 text-sm"
+                    />
+                  </div>
+
+                  <div className="p-5 rounded-xl bg-[#071A35] text-white space-y-4">
+                    <h4 className="font-serif text-lg font-bold text-[#F2D99B]">
+                      50:50 Builder Collaboration Banner Texts
+                    </h4>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1 text-slate-300">
+                        Collaboration Title
+                      </label>
+                      <input
+                        type="text"
+                        value={realEstateSection.collaborationCtaTitle || ""}
+                        onChange={(e) =>
+                          setRealEstateSection({
+                            ...realEstateSection,
+                            collaborationCtaTitle: e.target.value,
+                          })
+                        }
+                        className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-white/20 text-white text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase block mb-1 text-slate-300">
+                        Collaboration Subtitle
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={realEstateSection.collaborationCtaSubtitle || ""}
+                        onChange={(e) =>
+                          setRealEstateSection({
+                            ...realEstateSection,
+                            collaborationCtaSubtitle: e.target.value,
+                          })
+                        }
+                        className="w-full p-3 rounded-lg bg-slate-900 border border-white/20 text-white text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="submit"
+                      disabled={saving}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D6B36A] to-[#F2D99B] text-[#071A35] text-xs font-bold hover:brightness-105 transition shadow-gold"
+                    >
+                      <Save className="w-4 h-4" /> Save Section Settings
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          )}
+
           {/* 8. GALLERY MODULE */}
           {activeTab === "gallery" && (
             <div className="space-y-6">
@@ -3710,6 +4546,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                   className="px-3 py-2 rounded-xl border border-slate-300 text-xs font-bold"
                 >
                   <option value="All">All Services</option>
+                  <option value="Real Estate">Real Estate & Property</option>
                   {services.map((s) => (
                     <option key={s.id} value={s.name}>
                       {s.name}

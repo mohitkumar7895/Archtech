@@ -18,6 +18,7 @@ import { FAQAccordion } from "@/components/FAQAccordion";
 import { BlogCard } from "@/components/BlogCard";
 import { IconRenderer } from "@/components/ui/IconRenderer";
 import { FeaturedProjectsSection, FinalCTABanner } from "@/components/HomepageClientSections";
+import { RealEstateSection } from "@/components/RealEstateSection";
 import { generateFAQSchema } from "@/lib/seo";
 import { buildPageMetadata } from "@/lib/metadata";
 
@@ -45,6 +46,8 @@ export default async function HomePage() {
     blogs,
     socialLinks,
     seoPages,
+    realEstateSection,
+    realEstateProperties,
   } = await cmsService.getPublicBootstrapData();
 
   const secMap = new Map(homepageSections.map((s) => [s.sectionKey, s]));
@@ -383,6 +386,15 @@ export default async function HomePage() {
             "Explore our residential homes, luxury interiors, active construction sites, and villas."
           }
           badgeText={secMap.get("featured_projects")?.badgeText}
+        />
+      )}
+
+      {/* 8. REAL ESTATE, BUILDER FLOORS & LAND INVESTMENTS */}
+      {isSectionEnabled("real_estate") && (
+        <RealEstateSection
+          sectionData={realEstateSection}
+          properties={realEstateProperties}
+          settings={settings}
         />
       )}
 

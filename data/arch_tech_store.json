@@ -205,6 +205,16 @@
       "isEnabled": true,
       "orderIndex": 12,
       "updatedAt": "2026-11-15T07:50:05.069Z"
+    },
+    {
+      "id": "sec-real-estate",
+      "sectionKey": "real_estate",
+      "title": "Prime Real Estate, Builder Floors & Land Investments",
+      "subtitle": "Verified Registry Properties, 50:50 Builder Collaborations & High-Yield PG Buildings in Delhi NCR.",
+      "badgeText": "REAL ESTATE & PROPERTY EXPERTS",
+      "isEnabled": true,
+      "orderIndex": 7.5,
+      "updatedAt": "2026-11-16T04:20:38.416Z"
     }
   ],
   "aboutSection": {
@@ -1671,6 +1681,365 @@
       "icon": "Linkedin",
       "isActive": true,
       "displayOrder": 4
+    }
+  ],
+  "realEstateSection": {
+    "id": "default-real-estate",
+    "badgeText": "REAL ESTATE & PROPERTY SOLUTIONS",
+    "title": "Buy, Sell, Collaborate & Invest in Verified Properties Across Delhi NCR",
+    "subtitle": "Under the expert leadership of Manoj Kumar Sharma (ARCH NEW ERA DESIGN – NRBL TECH) — 100% Freehold Registry Plots, Luxury Builder Floors, Joint Venture Collaborations & High-Yield PG Buildings with End-to-End Legal Transparency.",
+    "description": "We bridge the gap between architectural excellence and prime real estate. Whether you are looking to purchase a modern builder floor with lift and car parking, buy a freehold registry plot, redevelop your ancestral property under a 50:50 builder collaboration, or invest in pre-leased commercial & PG complexes, we handle everything from site verification and legal documentation to architectural design, construction, and key handover.",
+    "highlights": [
+      "100% Clear Title Verification & Freehold Registry with Sub-Registrar",
+      "Zero-Investment Builder Collaboration (JV) for Old House Redevelopment",
+      "Architect-Designed 2, 3 & 4 BHK Builder Floors with Lift & Stilt Parking",
+      "80% to 90% Easy Bank Loan Approvals with SBI, HDFC, ICICI, PNB",
+      "Turnkey 'Plot-to-Handover' Package: Buying, Map Sanction, Civil Work & Interiors",
+      "High Rental Yield Commercial Assets & Student/Executive PG Complexes"
+    ],
+    "stats": [
+      {
+        "label": "Verified Property Deals",
+        "value": "150+"
+      },
+      {
+        "label": "Builder Collaborations (JV)",
+        "value": "35+"
+      },
+      {
+        "label": "Bank Loan Assistance",
+        "value": "80%–90%"
+      },
+      {
+        "label": "Title Due Diligence",
+        "value": "100% Clear"
+      }
+    ],
+    "servicesOffered": [
+      {
+        "id": "res-srv-1",
+        "title": "Property Buy & Sell",
+        "subtitle": "Verified Residential & Commercial Properties",
+        "description": "Direct verified deals in Shahdara, Vivek Vihar, Ashok Nagar, Dilshad Garden, and NCR. Free from middleman disputes with 100% legal title clearance.",
+        "iconName": "Home",
+        "highlights": [
+          "Freehold Registry",
+          "Clear 30-Year Title Search",
+          "Direct Price Transparency"
+        ]
+      },
+      {
+        "id": "res-srv-2",
+        "title": "Builder Collaboration (Joint Venture)",
+        "subtitle": "50:50 Sharing — Zero Upfront Cost for Plot Owner",
+        "description": "Own an old house or vacant plot? Manoj Kumar Sharma finances 100% of the construction cost, builds a 4–5 storey luxury complex, and shares premium floors or profits with you.",
+        "iconName": "Handshake",
+        "highlights": [
+          "Zero Out-of-Pocket Investment",
+          "Owner Retains Key Floors",
+          "Registered Legal JV Agreement"
+        ]
+      },
+      {
+        "id": "res-srv-3",
+        "title": "Luxury Builder Floors",
+        "subtitle": "2, 3 & 4 BHK Floors with Lift & Stilt Parking",
+        "description": "Modern builder floors built with seismic-resistant RCC frames, high-speed passenger elevators, reserved stilt parking, modular kitchens, and Vastu-compliant layouts.",
+        "iconName": "Building2",
+        "highlights": [
+          "High-Speed Lift & Stilt Parking",
+          "Italian-Finish Vitrified Flooring",
+          "Ready-to-Move & Under Construction"
+        ]
+      },
+      {
+        "id": "res-srv-4",
+        "title": "Freehold Land & Plots",
+        "subtitle": "Residential & Commercial Plots (50 to 500 Gaj)",
+        "description": "Immediate registry plots in gated colonies and prime arterial roads. Ready for immediate construction with municipal water, wide roads, and electricity connections.",
+        "iconName": "MapPin",
+        "highlights": [
+          "50 Gaj to 500 Gaj Options",
+          "Wide Roads & Clear Demarcation",
+          "Immediate Bank Loan Available"
+        ]
+      },
+      {
+        "id": "res-srv-5",
+        "title": "High-Yield PG & Commercial Assets",
+        "subtitle": "Turnkey Student & Executive PG Complexes",
+        "description": "Institutional PG buildings and retail shops generating ₹1.5 Lakh to ₹3.5 Lakh monthly assured rental income, planned with in-house architectural blueprints and full occupancy models.",
+        "iconName": "TrendingUp",
+        "highlights": [
+          "Assured Monthly Rental Cashflow",
+          "Turnkey Furniture & Mess Setup",
+          "Institutional Grade Floor Plans"
+        ]
+      },
+      {
+        "id": "res-srv-6",
+        "title": "Map Sanction & Registry Assistance",
+        "subtitle": "Legal Paperwork & Sub-Registrar Registration",
+        "description": "Complete government liaison: MCD/DDA map approvals, structural safety certificates, chain document verification, mutation, and seamless sub-registrar deed registration.",
+        "iconName": "FileCheck2",
+        "highlights": [
+          "MCD/DDA Sanctions",
+          "Chain Title Verification",
+          "Deed Drafting & Sub-Registrar Support"
+        ]
+      },
+      {
+        "id": "res-srv-7",
+        "title": "Home Loan & Project Finance",
+        "subtitle": "80% to 90% Bank Loan Facilitation",
+        "description": "Dedicated tie-ups with leading nationalized and private banks (SBI, HDFC, ICICI, PNB) providing smooth loan processing, lowest interest rates, and minimal documentation.",
+        "iconName": "Landmark",
+        "highlights": [
+          "Up to 90% Loan Approval",
+          "Low Interest Rates",
+          "Fast Disbursement Assistance"
+        ]
+      },
+      {
+        "id": "res-srv-8",
+        "title": "Turnkey 'Plot-to-Key' Model",
+        "subtitle": "Buy Plot + Build House + Luxury Interiors",
+        "description": "The ultimate stress-free investment model: we source the plot, draft architectural blueprints, execute civil construction, install luxury interiors, and hand over the keys.",
+        "iconName": "KeyRound",
+        "highlights": [
+          "Single Point of Contact",
+          "Architect-Led Civil Construction",
+          "Guaranteed Handover Timelines"
+        ]
+      }
+    ],
+    "collaborationCtaTitle": "Have a Plot or Old House? Let's Build Together with Zero Investment from You!",
+    "collaborationCtaSubtitle": "Partner with Manoj Kumar Sharma for a 50:50 Builder Collaboration. We invest 100% construction funds and build a state-of-the-art multi-storey luxury complex on your land.",
+    "isEnabled": true,
+    "updatedAt": "2026-11-16T04:20:38.397Z"
+  },
+  "realEstateProperties": [
+    {
+      "id": "prop-1",
+      "title": "Ultra-Luxury 3 BHK & 4 BHK Builder Floors with Lift & Stilt Parking",
+      "slug": "ultra-luxury-builder-floors-lift-parking-shahdara",
+      "propertyType": "Buy",
+      "category": "Builder Floor",
+      "price": "₹75 Lakhs onwards",
+      "priceUnit": "All-Inclusive",
+      "location": "Shahdara / Ashok Nagar, East Delhi",
+      "address": "Prime Sector Road, Near Ashok Nagar, Shahdara, Delhi – 110093",
+      "areaSqFt": "1,450 – 1,850 sq. ft.",
+      "bedrooms": "3 BHK / 4 BHK",
+      "bathrooms": "3 Luxury Baths",
+      "furnishing": "Semi-Furnished with Modular Kitchen & Wardrobes",
+      "possessionDate": "Ready to Move & Immediate Registry",
+      "status": "Ready to Move",
+      "featuredImage": "/uploads/service-5-storey-elevation-manoj-kumar-sharma.jpg",
+      "galleryImages": [
+        "/uploads/service-5-storey-elevation-manoj-kumar-sharma.jpg",
+        "/uploads/service-5-storey-night-lighting-elevation.jpg",
+        "/uploads/service-dining-lounge-area.jpg"
+      ],
+      "shortDescription": "Architect-designed corner builder floors with high-speed passenger lift, reserved stilt car parking, Italian-look vitrified tiles, false ceiling with warm lighting, and 80% bank loan approval.",
+      "description": "Experience elevated living at ARCH NEW ERA DESIGN's flagship builder floor project. Each floor is engineered with seismic-grade RCC framing, floor-to-ceiling glass ventilation, branded acrylic modular kitchens, and private balconies overlooking wide roads. Complete freehold registry with mutation and home loan approval from leading banks.",
+      "features": [
+        "High-Speed Automatic Passenger Lift",
+        "Covered Stilt Car Parking & EV Charging Point",
+        "Freehold Registry with Title Mutation",
+        "80% Bank Loan Approved from SBI & HDFC",
+        "Branded Acrylic Modular Kitchen & Chimney",
+        "Vastu-Harmonious North-East Entryway",
+        "Video Door Phone & 3-Tier Security"
+      ],
+      "contactPerson": "Manoj Kumar Sharma",
+      "contactPhone": "7535942407",
+      "isFeatured": true,
+      "orderIndex": 1,
+      "createdAt": "2026-11-16T04:20:38.416Z",
+      "updatedAt": "2026-11-16T04:20:38.416Z"
+    },
+    {
+      "id": "prop-2",
+      "title": "Commercial PG & Hostel Building Complex (Assured ₹2.25L/mo Rental Yield)",
+      "slug": "commercial-pg-hostel-building-high-rental-yield",
+      "propertyType": "Investment",
+      "category": "PG / Hostel Building",
+      "price": "₹2.65 Cr",
+      "priceUnit": "Turnkey Operational",
+      "location": "Near Institutional Hub & Metro, Delhi NCR",
+      "address": "Prime Commercial Access Road, Delhi NCR",
+      "areaSqFt": "5,400 sq. ft. Built-up (G+4 Storey)",
+      "bedrooms": "28 Fully Furnished Rooms (Twin Sharing)",
+      "bathrooms": "28 Attached Bathrooms",
+      "furnishing": "Fully Furnished with Bunk Beds, Desks & ACs",
+      "possessionDate": "Immediate Handover",
+      "status": "Available",
+      "featuredImage": "/uploads/service-pg-proposal-plan.jpg",
+      "galleryImages": [
+        "/uploads/service-pg-proposal-plan.jpg",
+        "/uploads/service-hotel-pg-corridor.jpg",
+        "/uploads/service-twin-sharing-bedroom.jpg",
+        "/uploads/service-rooftop-pool-gym-terrace.jpg"
+      ],
+      "shortDescription": "High-ROI commercial asset designed by Manoj Kumar Sharma with 28 self-contained student/executive rooms, dining lounge, rooftop recreational deck, and pre-leased booking support.",
+      "description": "A purpose-built turnkey income generator for investors looking for steady monthly returns. Features institutional 3D layout, commercial electric sub-metering for each room, high-speed Wi-Fi conduits, dedicated cafeteria/dining lounge, rooftop gym deck, and fire-safety compliance.",
+      "features": [
+        "Estimated Rental ₹2.25L – ₹2.50L / Month",
+        "28 En-Suite Bathrooms with Geysers",
+        "Dedicated Dining Mess & Common Lounge",
+        "Rooftop Gym, Swimming Pool & Relax Deck",
+        "Commercial Power Backup & Sub-metering",
+        "Pre-leased Tenant Acquisition Support"
+      ],
+      "contactPerson": "Manoj Kumar Sharma",
+      "contactPhone": "7535942407",
+      "isFeatured": true,
+      "orderIndex": 2,
+      "createdAt": "2026-11-16T04:20:38.416Z",
+      "updatedAt": "2026-11-16T04:20:38.416Z"
+    },
+    {
+      "id": "prop-3",
+      "title": "Freehold Residential & Commercial Corner Plots (50, 100 & 200 Gaj)",
+      "slug": "freehold-residential-commercial-plots-shahdara-delhi",
+      "propertyType": "Buy",
+      "category": "Residential Plot",
+      "price": "₹42,000 / sq. yd. onwards",
+      "priceUnit": "per Gaj",
+      "location": "Shahdara & East Delhi Periphery",
+      "address": "Gated Enclave, Shahdara Periphery, Delhi NCR",
+      "areaSqFt": "50 Gaj (450 sq.ft.) to 250 Gaj (2,250 sq.ft.)",
+      "bedrooms": "N/A (Plot)",
+      "bathrooms": "N/A",
+      "status": "Available",
+      "featuredImage": "/uploads/service-building-day-elevation.jpg",
+      "galleryImages": [
+        "/uploads/service-building-day-elevation.jpg",
+        "/uploads/service-building-night-elevation.jpg"
+      ],
+      "shortDescription": "100% verified registry plots ready for immediate home construction with municipal water, wide 30ft road, electricity connection, and direct architectural planning support by our in-house team.",
+      "description": "Clear-title freehold plots situated in developed residential sectors. Immediate registry at Sub-Registrar office with verified 30-year lineage. ARCH NEW ERA DESIGN offers bundled architectural blueprint approval and construction packages at subsidized rates with plot purchase.",
+      "features": [
+        "Immediate Freehold Registry & Possession",
+        "Wide 30 Ft Front Road with Street Lights",
+        "Clear 30-Year Title Search & Zero Encumbrance",
+        "Municipal Water, Sewerage & Electricity Ready",
+        "In-House Map Sanction & Construction Support",
+        "Bank Loan Up to 75% Available"
+      ],
+      "contactPerson": "Manoj Kumar Sharma",
+      "contactPhone": "7535942407",
+      "isFeatured": true,
+      "orderIndex": 3,
+      "createdAt": "2026-11-16T04:20:38.416Z",
+      "updatedAt": "2026-11-16T04:20:38.416Z"
+    },
+    {
+      "id": "prop-4",
+      "title": "Joint Venture / Builder Collaboration: Reconstruct Your Old House (50:50 Sharing)",
+      "slug": "joint-venture-builder-collaboration-old-house-reconstruction",
+      "propertyType": "Collaboration",
+      "category": "Joint Venture / Collaboration",
+      "price": "Zero Investment by Plot Owner",
+      "priceUnit": "Floor / Profit Sharing",
+      "location": "Shahdara, Vivek Vihar, Dilshad Garden & East Delhi",
+      "address": "Any Residential Plot in East Delhi & Delhi NCR",
+      "areaSqFt": "Plots 100 Gaj to 500 Gaj",
+      "bedrooms": "Multi-Storey Luxury Floors",
+      "possessionDate": "12 – 14 Months Guaranteed Delivery",
+      "status": "Booking Open",
+      "featuredImage": "/uploads/featured-5-storey-luxury-building.jpg",
+      "galleryImages": [
+        "/uploads/featured-5-storey-luxury-building.jpg",
+        "/uploads/service-5-storey-elevation-manoj-kumar-sharma.jpg"
+      ],
+      "shortDescription": "If you own an old house or plot, Manoj Kumar Sharma and ARCH NEW ERA DESIGN will invest 100% construction funds to build a 4 to 5-storey luxury apartment complex with lift and stilt parking on collaboration basis.",
+      "description": "Unlock the maximum value of your ancestral property without spending a single rupee. We finance all architectural approvals, demolition, civil construction, luxury finishes, and elevator installations. You retain the preferred floors (e.g., Ground & 1st Floor) while remaining floors are sold or retained as per mutually registered JV agreement.",
+      "features": [
+        "Zero Financial Investment Needed by Plot Owner",
+        "100% Construction Financed by Manoj Kumar Sharma",
+        "Registered Legal Collaboration Agreement with Bank Guarantee",
+        "MCD/DDA Sanctioned Maps & Certified Structural Safety",
+        "Owner Retains Desired Luxury Floors with Stilt Parking",
+        "Full Rental Subsidy Provided During Construction Phase"
+      ],
+      "contactPerson": "Manoj Kumar Sharma",
+      "contactPhone": "7535942407",
+      "isFeatured": true,
+      "orderIndex": 4,
+      "createdAt": "2026-11-16T04:20:38.416Z",
+      "updatedAt": "2026-11-16T04:20:38.416Z"
+    },
+    {
+      "id": "prop-5",
+      "title": "Prime High-Street Retail Commercial Shops & Showrooms",
+      "slug": "prime-high-street-retail-commercial-shops-east-delhi",
+      "propertyType": "Buy",
+      "category": "Commercial Shop / Office",
+      "price": "₹35 Lakhs onwards",
+      "priceUnit": "Fixed",
+      "location": "Main Market Road, Shahdara, Delhi",
+      "address": "Commercial High Street, Shahdara, Delhi – 110093",
+      "areaSqFt": "220 – 650 sq. ft.",
+      "status": "Under Construction",
+      "featuredImage": "/uploads/service-hostel-commercial-building.jpg",
+      "galleryImages": [
+        "/uploads/service-hostel-commercial-building.jpg"
+      ],
+      "shortDescription": "High-footfall commercial retail spaces suitable for clinics, jewelers, boutiques, and corporate offices with high rental return potential and separate commercial power meters.",
+      "description": "Strategically positioned retail shops in a bustling East Delhi commercial corridor. Features double-height glass frontage, ample customer parking, fire sprinklers, and heavy daily footfall ensuring consistent capital growth and high rental yields.",
+      "features": [
+        "Main Arterial Road Facing with High Footfall",
+        "Individual Commercial Electric & Water Meters",
+        "Modern Toughened Glass Facade & Heavy Rolling Shutters",
+        "High Expected Rental Yield (8%–10% Annual)",
+        "Clear Title Registry & Municipal Sanctions"
+      ],
+      "contactPerson": "Manoj Kumar Sharma",
+      "contactPhone": "7535942407",
+      "isFeatured": false,
+      "orderIndex": 5,
+      "createdAt": "2026-11-16T04:20:38.416Z",
+      "updatedAt": "2026-11-16T04:20:38.416Z"
+    },
+    {
+      "id": "prop-6",
+      "title": "Bespoke Modern 4-Storey Builder Floor Residence with Smart Lighting",
+      "slug": "modern-4-storey-builder-floor-smart-lighting",
+      "propertyType": "Buy",
+      "category": "Builder Floor",
+      "price": "₹88 Lakhs",
+      "priceUnit": "Negotiable",
+      "location": "Jyoti Nagar / Ashok Nagar, Delhi",
+      "address": "Near Metro Corridor, Ashok Nagar, Shahdara, Delhi",
+      "areaSqFt": "1,600 sq. ft.",
+      "bedrooms": "3 BHK + Study",
+      "bathrooms": "3 Baths",
+      "furnishing": "Fully Furnished Luxury Interior",
+      "status": "Ready to Move",
+      "featuredImage": "/uploads/service-building-night-elevation.jpg",
+      "galleryImages": [
+        "/uploads/service-building-night-elevation.jpg",
+        "/uploads/service-modern-staircase.jpg",
+        "/uploads/service-luxury-bathroom.jpg"
+      ],
+      "shortDescription": "Turnkey luxury floor featuring designer warm LED strip facade, sound-insulated UPVC glazing, BWP modular carpentry, and automated video door phone.",
+      "description": "A masterclass in contemporary architecture and lighting design. This 3 BHK residence comes with custom wooden paneling, designer gypsum ceilings, branded bathware, independent terrace rights, and dedicated covered car parking on stilt floor.",
+      "features": [
+        "Smart Video Door Phone & Biometric Digital Lock",
+        "Gypsum Cove & Warm 3000K LED Illumination Throughout",
+        "Spacious Balcony with Toughened Glass Railing",
+        "Vastu Compliant Temple Space & North-Facing Balcony",
+        "Branded Kohler/Jaquar CP & Sanitary Fittings",
+        "Ready for Immediate Registry & Moving In"
+      ],
+      "contactPerson": "Manoj Kumar Sharma",
+      "contactPhone": "7535942407",
+      "isFeatured": true,
+      "orderIndex": 6,
+      "createdAt": "2026-11-16T04:20:38.416Z",
+      "updatedAt": "2026-11-16T04:20:38.416Z"
     }
   ]
 }

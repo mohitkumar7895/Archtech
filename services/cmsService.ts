@@ -14,6 +14,8 @@ export const cmsService = {
       blogs,
       socialLinks,
       seoPages,
+      realEstateSection,
+      realEstateProperties,
     ] = await Promise.all([
       db.getSiteSettings(),
       db.getHomepageSections(),
@@ -26,6 +28,8 @@ export const cmsService = {
       db.getBlogs(true),
       db.getSocialLinks(),
       db.getSEOPages(true),
+      db.getRealEstateSection(),
+      db.getRealEstateProperties(false),
     ]);
 
     return {
@@ -40,16 +44,19 @@ export const cmsService = {
       blogs,
       socialLinks,
       seoPages,
+      realEstateSection,
+      realEstateProperties,
     };
   },
 
   async getAdminDashboardStats() {
-    const [enquiries, projects, services, blogs, seoPages] = await Promise.all([
+    const [enquiries, projects, services, blogs, seoPages, properties] = await Promise.all([
       db.getEnquiries(),
       db.getProjects(false),
       db.getServices(false),
       db.getBlogs(false),
       db.getSEOPages(false),
+      db.getRealEstateProperties(false),
     ]);
 
     return {
@@ -60,6 +67,7 @@ export const cmsService = {
       publishedBlogs: blogs.filter((b) => b.status === "Published").length,
       draftBlogs: blogs.filter((b) => b.status !== "Published").length,
       totalSEOPages: seoPages.length,
+      totalProperties: properties.length,
       recentEnquiries: enquiries.slice(0, 8),
     };
   },

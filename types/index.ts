@@ -313,3 +313,80 @@ export interface SocialLink {
   isActive: boolean;
   displayOrder: number;
 }
+
+export type RealEstateListingType =
+  | "Buy"
+  | "Sell"
+  | "Collaboration"
+  | "Investment"
+  | "Rent";
+
+export type RealEstateCategory =
+  | "Builder Floor"
+  | "Residential Plot"
+  | "Commercial Plot"
+  | "Commercial Shop / Office"
+  | "PG / Hostel Building"
+  | "Luxury Villa / Farmhouse"
+  | "Joint Venture / Collaboration";
+
+export type RealEstateStatus =
+  | "Available"
+  | "Ready to Move"
+  | "Under Construction"
+  | "Sold Out"
+  | "Booking Open";
+
+export interface RealEstateProperty {
+  id: string;
+  title: string;
+  slug: string;
+  propertyType: RealEstateListingType;
+  category: RealEstateCategory;
+  price: string;
+  priceUnit?: string;
+  location: string;
+  address?: string;
+  areaSqFt: string;
+  bedrooms?: string;
+  bathrooms?: string;
+  furnishing?: string;
+  possessionDate?: string;
+  status: RealEstateStatus;
+  featuredImage: string;
+  galleryImages: string[];
+  shortDescription: string;
+  description: string;
+  features: string[];
+  contactPerson?: string;
+  contactPhone?: string;
+  isFeatured: boolean;
+  orderIndex: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RealEstateServiceItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  iconName: string;
+  highlights: string[];
+}
+
+export interface RealEstateSection {
+  id: string;
+  badgeText: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  highlights: string[];
+  stats: { label: string; value: string }[];
+  servicesOffered: RealEstateServiceItem[];
+  collaborationCtaTitle: string;
+  collaborationCtaSubtitle: string;
+  isEnabled: boolean;
+  updatedAt: string;
+}
+

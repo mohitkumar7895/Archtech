@@ -27,6 +27,8 @@ export async function GET(req: NextRequest) {
     socialLinks,
     users,
     roles,
+    realEstateSection,
+    realEstateProperties,
   ] = await Promise.all([
     db.getSiteSettings(),
     db.getHomepageSections(),
@@ -45,6 +47,8 @@ export async function GET(req: NextRequest) {
     db.getSocialLinks(),
     db.getUsers(),
     db.getRoles(),
+    db.getRealEstateSection(),
+    db.getRealEstateProperties(false),
   ]);
 
   if (moduleName === "public") {
@@ -62,6 +66,8 @@ export async function GET(req: NextRequest) {
       testimonials: testimonials.filter((t) => t.status === "Published"),
       faqs: faqs.filter((f) => f.isPublished),
       socialLinks: socialLinks.filter((l) => l.isActive),
+      realEstateSection,
+      realEstateProperties,
     });
   }
 
@@ -86,6 +92,8 @@ export async function GET(req: NextRequest) {
     enquiries,
     media,
     socialLinks,
+    realEstateSection,
+    realEstateProperties,
     users: users.map(({ password, ...rest }) => rest),
     roles,
   });
@@ -248,6 +256,26 @@ export async function POST(req: NextRequest) {
       case "socialLinks": {
         const saved = await db.saveSocialLinks(data);
         revalidatePath("/", "layout");
+        return NextResponse.json({ success: true, data: saved });
+      }
+
+      case "realEstateSection": {
+        const updated = await db.updateRealEstateSection(data);
+        revalidatePath("/");
+        revalidatePath("/real-estate");
+        return NextResponse.json({ success: true, data: updated });
+      }
+
+      case "realEstateProperties": {
+        if (action === "delete" && id) {
+          await db.deleteRealEstateProperty(id);
+          revalidatePath("/");
+          revalidatePath("/real-estate");
+          return NextResponse.json({ success: true });
+        }
+        const saved = await db.saveRealEstateProperty(data);
+        revalidatePath("/");
+        revalidatePath("/real-estate");
         return NextResponse.json({ success: true, data: saved });
       }
 

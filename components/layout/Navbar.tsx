@@ -32,6 +32,7 @@ export function Navbar({ settings, services }: NavbarProps) {
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Services", href: "/services", hasDropdown: true },
+    { label: "Real Estate", href: "/real-estate" },
     { label: "Projects", href: "/projects" },
     { label: "Pricing", href: "/pricing" },
     { label: "Blog", href: "/blog" },

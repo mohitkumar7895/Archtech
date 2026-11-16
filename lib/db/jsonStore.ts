@@ -19,6 +19,8 @@ import {
   Enquiry,
   MediaAsset,
   SocialLink,
+  RealEstateSection,
+  RealEstateProperty,
 } from "@/types";
 import {
   INITIAL_SITE_SETTINGS,
@@ -35,6 +37,8 @@ import {
   INITIAL_FAQS,
   INITIAL_MEDIA_ASSETS,
   INITIAL_SOCIAL_LINKS,
+  INITIAL_REAL_ESTATE_SECTION,
+  INITIAL_REAL_ESTATE_PROPERTIES,
 } from "@/lib/constants";
 
 export interface DatabaseStore {
@@ -55,6 +59,8 @@ export interface DatabaseStore {
   enquiries: Enquiry[];
   media: MediaAsset[];
   socialLinks: SocialLink[];
+  realEstateSection: RealEstateSection;
+  realEstateProperties: RealEstateProperty[];
 }
 
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -139,6 +145,8 @@ function createInitialStore(): DatabaseStore {
     ],
     media: INITIAL_MEDIA_ASSETS,
     socialLinks: INITIAL_SOCIAL_LINKS,
+    realEstateSection: INITIAL_REAL_ESTATE_SECTION,
+    realEstateProperties: INITIAL_REAL_ESTATE_PROPERTIES,
   };
 }
 
@@ -181,6 +189,8 @@ export function readStore(): DatabaseStore {
       enquiries: parsed.enquiries || defaults.enquiries,
       media: parsed.media || defaults.media,
       socialLinks: parsed.socialLinks || defaults.socialLinks,
+      realEstateSection: { ...defaults.realEstateSection, ...(parsed.realEstateSection || {}) },
+      realEstateProperties: parsed.realEstateProperties || defaults.realEstateProperties,
     };
     memoryCache = result;
     lastMtime = stat.mtimeMs;

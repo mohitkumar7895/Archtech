@@ -325,18 +325,25 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
       const res = await fetch("/api/cms", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ module, action, data: payload, id }),
       });
       const json = await res.json();
       if (!res.ok) {
-        toast.error(json.error || "Operation failed");
+        if (res.status === 401) {
+          toast.error("Admin session expired. Please log in again.");
+          router.push("/admin/login");
+        } else {
+          toast.error(json.error || "Operation failed");
+        }
         setSaving(false);
         return null;
       }
       setSaving(false);
+      router.refresh();
       return json;
     } catch {
-      toast.error("Network error while communicating with MySQL CMS API");
+      toast.error("Network communication error. Please check your connection.");
       setSaving(false);
       return null;
     }
@@ -4395,8 +4402,15 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
           {/* 14. FAQ MANAGEMENT */}
           {activeTab === "faqs" && (
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="font-serif text-2xl font-bold">FAQ Management ({faqs.length})</h2>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h2 className="font-serif text-2xl font-bold text-[#071A35] dark:text-white">
+                    FAQ Management ({faqs.length})
+                  </h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    Add, edit, reorder, or publish frequently asked questions shown across the website and knowledge sections.
+                  </p>
+                </div>
                 <button
                   type="button"
                   onClick={() =>
@@ -4404,12 +4418,14 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                       question: "",
                       answer: "",
                       category: "General",
+                      displayOrder: faqs.length + 1,
                       isPublished: true,
                     })
                   }
-                  className="px-4 py-2 rounded-xl bg-[#071A35] text-[#F2D99B] text-xs font-bold"
+                  className="px-4 py-2.5 rounded-xl bg-[#071A35] text-[#F2D99B] text-xs font-bold hover:bg-[#10284A] transition shadow-md flex items-center justify-center gap-1.5 shrink-0"
                 >
-                  + Add FAQ
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>+ Add New FAQ</span>
                 </button>
               </div>
 
@@ -4417,84 +4433,213 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    if (!editingFAQ.question || !editingFAQ.answer) return;
-                    const res = await postCMS("faqs", editingFAQ);
+                    if (!editingFAQ.question?.trim() || !editingFAQ.answer?.trim()) {
+                      toast.error("Please enter both FAQ question and answer.");
+                      return;
+                    }
+                    const payload = {
+                      ...editingFAQ,
+                      question: editingFAQ.question.trim(),
+                      answer: editingFAQ.answer.trim(),
+                      category: editingFAQ.category || "General",
+                      displayOrder: Number(editingFAQ.displayOrder ?? faqs.length + 1),
+                      isPublished: editingFAQ.isPublished ?? true,
+                    };
+                    const res = await postCMS("faqs", payload);
                     if (res?.success && res.data) {
-                      setFaqs((p) => [...p.filter((f) => f.id !== res.data.id), res.data]);
+                      setFaqs((p) => {
+                        const filtered = p.filter((f) => f.id !== res.data.id);
+                        return [...filtered, res.data].sort(
+                          (a, b) => (a.displayOrder ?? 999) - (b.displayOrder ?? 999)
+                        );
+                      });
                       setEditingFAQ(null);
-                      toast.success("FAQ saved!");
+                      toast.success("FAQ saved successfully!");
+                      router.refresh();
+                    } else {
+                      toast.error(res?.error || "Failed to save FAQ. Please try again.");
                     }
                   }}
-                  className="p-6 rounded-2xl bg-white border-2 border-[#D6B36A] space-y-4"
+                  className="p-6 rounded-2xl bg-white dark:bg-slate-900 border-2 border-[#D6B36A] shadow-xl space-y-4"
                 >
-                  <input
-                    type="text"
-                    required
-                    placeholder="Question *"
-                    value={editingFAQ.question || ""}
-                    onChange={(e) => setEditingFAQ({ ...editingFAQ, question: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm font-bold"
-                  />
-                  <textarea
-                    rows={3}
-                    required
-                    placeholder="Answer *"
-                    value={editingFAQ.answer || ""}
-                    onChange={(e) => setEditingFAQ({ ...editingFAQ, answer: e.target.value })}
-                    className="w-full p-3 rounded-lg border border-slate-300 text-sm"
-                  />
-                  <div className="flex justify-end gap-2">
+                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                    <h3 className="font-serif font-bold text-base text-[#071A35] dark:text-white">
+                      {editingFAQ.id ? "Edit FAQ" : "Create New FAQ"}
+                    </h3>
                     <button
                       type="button"
                       onClick={() => setEditingFAQ(null)}
-                      className="px-4 py-2 rounded-lg border border-slate-300 text-xs"
+                      className="text-slate-400 hover:text-slate-600 dark:hover:text-white text-xs font-bold"
+                    >
+                      ✕ Close
+                    </button>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#071A35] dark:text-slate-200">
+                      Question *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g., What are your starting rates for house construction?"
+                      value={editingFAQ.question || ""}
+                      onChange={(e) => setEditingFAQ({ ...editingFAQ, question: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-semibold focus:ring-2 focus:ring-[#D6B36A] focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#071A35] dark:text-slate-200">
+                      Answer *
+                    </label>
+                    <textarea
+                      rows={4}
+                      required
+                      placeholder="e.g., Our construction packages start at ₹1,099/sq. ft. for Essential Home and ₹1,399/sq. ft. for Ready-to-Move..."
+                      value={editingFAQ.answer || ""}
+                      onChange={(e) => setEditingFAQ({ ...editingFAQ, answer: e.target.value })}
+                      className="w-full p-3.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm leading-relaxed focus:ring-2 focus:ring-[#D6B36A] focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold uppercase tracking-wider text-[#071A35] dark:text-slate-200">
+                        Category
+                      </label>
+                      <select
+                        value={editingFAQ.category || "General"}
+                        onChange={(e) => setEditingFAQ({ ...editingFAQ, category: e.target.value })}
+                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-medium focus:ring-2 focus:ring-[#D6B36A] focus:outline-none"
+                      >
+                        <option value="General">General</option>
+                        <option value="Architecture">Architecture & Planning</option>
+                        <option value="Construction">Construction & Civil</option>
+                        <option value="Interiors">Interior Designing</option>
+                        <option value="Pricing & Packages">Pricing & Packages</option>
+                        <option value="Real Estate">Real Estate & Plots</option>
+                        <option value="Process">Turnkey Process</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold uppercase tracking-wider text-[#071A35] dark:text-slate-200">
+                        Display Order
+                      </label>
+                      <input
+                        type="number"
+                        min={1}
+                        value={editingFAQ.displayOrder ?? faqs.length + 1}
+                        onChange={(e) =>
+                          setEditingFAQ({
+                            ...editingFAQ,
+                            displayOrder: parseInt(e.target.value, 10) || 1,
+                          })
+                        }
+                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-medium focus:ring-2 focus:ring-[#D6B36A] focus:outline-none"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold uppercase tracking-wider text-[#071A35] dark:text-slate-200">
+                        Status
+                      </label>
+                      <select
+                        value={editingFAQ.isPublished ? "published" : "draft"}
+                        onChange={(e) =>
+                          setEditingFAQ({
+                            ...editingFAQ,
+                            isPublished: e.target.value === "published",
+                          })
+                        }
+                        className="w-full px-3 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-medium focus:ring-2 focus:ring-[#D6B36A] focus:outline-none"
+                      >
+                        <option value="published">Published (Visible on Website)</option>
+                        <option value="draft">Draft (Hidden)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <button
+                      type="button"
+                      onClick={() => setEditingFAQ(null)}
+                      className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-5 py-2 rounded-lg bg-[#071A35] text-[#F2D99B] text-xs font-bold"
+                      disabled={saving}
+                      className="px-6 py-2.5 rounded-xl bg-[#071A35] text-[#F2D99B] text-xs font-bold hover:bg-[#10284A] disabled:opacity-50 transition shadow-md flex items-center gap-1.5"
                     >
-                      Save FAQ
+                      <Save className="w-3.5 h-3.5" />
+                      <span>{saving ? "Saving FAQ..." : "Save FAQ"}</span>
                     </button>
                   </div>
                 </form>
               )}
 
               <div className="space-y-3">
-                {faqs.map((f) => (
-                  <div
-                    key={f.id}
-                    className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 flex items-start justify-between gap-4"
-                  >
-                    <div>
-                      <h4 className="font-serif font-bold text-base text-[#071A35] dark:text-white">
-                        {f.question}
-                      </h4>
-                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">{f.answer}</p>
-                    </div>
-                    <div className="flex gap-1.5 shrink-0">
-                      <button
-                        type="button"
-                        onClick={() => setEditingFAQ(f)}
-                        aria-label={`Edit FAQ`}
-                        className="p-2 rounded bg-slate-100"
-                      >
-                        <Edit3 className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setDeleteTarget({ module: "faqs", id: f.id, name: f.question })
-                        }
-                        aria-label={`Delete FAQ`}
-                        className="p-2 rounded bg-red-50 text-red-600"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
+                {faqs.length === 0 ? (
+                  <div className="p-12 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-500">
+                    No FAQs added yet. Click "+ Add New FAQ" above to add your first question.
                   </div>
-                ))}
+                ) : (
+                  faqs.map((f) => (
+                    <div
+                      key={f.id}
+                      className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4 hover:border-[#D6B36A]/50 transition shadow-sm"
+                    >
+                      <div className="space-y-1.5 flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#D6B36A]/15 text-[#071A35] dark:text-[#F2D99B]">
+                            {f.category || "General"}
+                          </span>
+                          <span className="text-[11px] font-semibold text-slate-400">
+                            Order #{f.displayOrder ?? 1}
+                          </span>
+                          <span
+                            className={`text-[11px] font-bold px-2 py-0.5 rounded-md ${
+                              f.isPublished
+                                ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300"
+                                : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400"
+                            }`}
+                          >
+                            {f.isPublished ? "Published" : "Draft"}
+                          </span>
+                        </div>
+                        <h4 className="font-serif font-bold text-base text-[#071A35] dark:text-white">
+                          {f.question}
+                        </h4>
+                        <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
+                          {f.answer}
+                        </p>
+                      </div>
+                      <div className="flex gap-1.5 shrink-0 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => setEditingFAQ(f)}
+                          aria-label={`Edit FAQ ${f.question}`}
+                          className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-[#D6B36A]/20 transition"
+                        >
+                          <Edit3 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setDeleteTarget({ module: "faqs", id: f.id, name: f.question })
+                          }
+                          aria-label={`Delete FAQ ${f.question}`}
+                          className="p-2 rounded-lg bg-red-50 dark:bg-red-950/40 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/50 transition"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           )}

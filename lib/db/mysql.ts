@@ -48,7 +48,7 @@ if (process.env.NODE_ENV !== "production") {
 let isMysqlOnline = false;
 let lastCheckTime = 0;
 let connectionCheckPromise: Promise<boolean> | null = null;
-const CHECK_INTERVAL_MS = 120000; // 2 minutes cooldown when offline to prevent any hangs
+const CHECK_INTERVAL_MS = 300000; // 5 minutes cooldown when offline to prevent any hangs
 
 export async function checkMysqlConnection(): Promise<boolean> {
   const now = Date.now();
@@ -78,13 +78,13 @@ export async function checkMysqlConnection(): Promise<boolean> {
 }
 
 export function isMysqlAvailable(): boolean {
-  if (Date.now() - lastCheckTime < CHECK_INTERVAL_MS) {
-    return isMysqlOnline;
-  }
-  return true;
+  return isMysqlOnline;
 }
 
 export async function query<T = any>(sql: string, params: any[] = []): Promise<T[]> {
+  if (!isMysqlOnline && Date.now() - lastCheckTime < CHECK_INTERVAL_MS) {
+    throw new Error("MySQL offline");
+  }
   const online = await checkMysqlConnection();
   if (!online) {
     throw new Error("MySQL offline");
@@ -105,6 +105,9 @@ export async function queryOne<T = any>(sql: string, params: any[] = []): Promis
 }
 
 export async function execute(sql: string, params: any[] = []): Promise<mysql.ResultSetHeader> {
+  if (!isMysqlOnline && Date.now() - lastCheckTime < CHECK_INTERVAL_MS) {
+    throw new Error("MySQL offline");
+  }
   const online = await checkMysqlConnection();
   if (!online) {
     throw new Error("MySQL offline");

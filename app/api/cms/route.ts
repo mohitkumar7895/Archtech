@@ -99,6 +99,21 @@ export async function GET(req: NextRequest) {
   });
 }
 
+function revalidateAll() {
+  try {
+    revalidatePath("/", "layout");
+    revalidatePath("/");
+    revalidatePath("/about");
+    revalidatePath("/services");
+    revalidatePath("/pricing");
+    revalidatePath("/projects");
+    revalidatePath("/real-estate");
+    revalidatePath("/blog");
+    revalidatePath("/contact");
+    revalidatePath("/admin/dashboard");
+  } catch {}
+}
+
 export async function POST(req: NextRequest) {
   const auth = await requireAdminAuth();
   if (!auth.authorized || !auth.user) {
@@ -112,170 +127,155 @@ export async function POST(req: NextRequest) {
     switch (module) {
       case "siteSettings": {
         const updated = await db.updateSiteSettings(data);
-        revalidatePath("/", "layout");
+        revalidateAll();
         return NextResponse.json({ success: true, data: updated });
       }
 
       case "homepageSections": {
         const updated = await db.updateHomepageSections(data);
-        revalidatePath("/");
+        revalidateAll();
         return NextResponse.json({ success: true, data: updated });
       }
 
       case "aboutSection": {
         const updated = await db.updateAboutSection(data);
-        revalidatePath("/");
-        revalidatePath("/about");
+        revalidateAll();
         return NextResponse.json({ success: true, data: updated });
       }
 
       case "services": {
         if (action === "delete" && id) {
           await db.deleteService(id);
-          revalidatePath("/");
-          revalidatePath("/services");
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const saved = await db.saveService(data);
-        revalidatePath("/");
-        revalidatePath("/services");
-        revalidatePath(`/services/${saved.slug}`);
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 
       case "pricingPackages": {
         if (action === "delete" && id) {
           await db.deletePricingPackage(id);
-          revalidatePath("/");
-          revalidatePath("/pricing");
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const saved = await db.savePricingPackage(data);
-        revalidatePath("/");
-        revalidatePath("/pricing");
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 
       case "projects": {
         if (action === "delete" && id) {
           await db.deleteProject(id);
-          revalidatePath("/");
-          revalidatePath("/projects");
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const saved = await db.saveProject(data);
-        revalidatePath("/");
-        revalidatePath("/projects");
-        revalidatePath(`/projects/${saved.slug}`);
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 
       case "gallery": {
         if (action === "delete" && id) {
           await db.deleteGalleryItem(id);
-          revalidatePath("/projects");
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const saved = await db.saveGalleryItem(data);
-        revalidatePath("/projects");
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 
       case "blogs": {
         if (action === "delete" && id) {
           await db.deleteBlog(id);
-          revalidatePath("/");
-          revalidatePath("/blog");
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const saved = await db.saveBlog(data);
-        revalidatePath("/");
-        revalidatePath("/blog");
-        revalidatePath(`/blog/${saved.slug}`);
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 
       case "blogCategories": {
         if (action === "delete" && id) {
           await db.deleteBlogCategory(id);
-          revalidatePath("/blog");
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const saved = await db.saveBlogCategory(data);
-        revalidatePath("/blog");
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 
       case "seoPages": {
         if (action === "delete" && id) {
           await db.deleteSEOPage(id);
-          revalidatePath("/sitemap.xml");
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const allPages = await db.getSEOPages(false);
         const otherSlugs = allPages.filter((p) => p.id !== data.id).map((p) => p.slug);
         const warnings = validateSEOPageInput(data, otherSlugs);
         const saved = await db.saveSEOPage(data);
-        revalidatePath(`/locations/${saved.slug}`);
-        revalidatePath(`/pages/${saved.slug}`);
-        revalidatePath("/sitemap.xml");
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved, warnings });
       }
 
       case "testimonials": {
         if (action === "delete" && id) {
           await db.deleteTestimonial(id);
-          revalidatePath("/");
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const saved = await db.saveTestimonial(data);
-        revalidatePath("/");
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 
       case "faqs": {
         if (action === "delete" && id) {
           await db.deleteFAQ(id);
-          revalidatePath("/");
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const saved = await db.saveFAQ(data);
-        revalidatePath("/");
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 
       case "media": {
         if (action === "delete" && id) {
           await db.deleteMedia(id);
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const saved = await db.saveMedia(data);
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 
       case "socialLinks": {
         const saved = await db.saveSocialLinks(data);
-        revalidatePath("/", "layout");
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 
       case "realEstateSection": {
         const updated = await db.updateRealEstateSection(data);
-        revalidatePath("/");
-        revalidatePath("/real-estate");
+        revalidateAll();
         return NextResponse.json({ success: true, data: updated });
       }
 
       case "realEstateProperties": {
         if (action === "delete" && id) {
           await db.deleteRealEstateProperty(id);
-          revalidatePath("/");
-          revalidatePath("/real-estate");
+          revalidateAll();
           return NextResponse.json({ success: true });
         }
         const saved = await db.saveRealEstateProperty(data);
-        revalidatePath("/");
-        revalidatePath("/real-estate");
+        revalidateAll();
         return NextResponse.json({ success: true, data: saved });
       }
 

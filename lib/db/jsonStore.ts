@@ -158,13 +158,14 @@ export function readStore(): DatabaseStore {
     if (!fs.existsSync(STORE_PATH)) {
       const initial = createInitialStore();
       fs.writeFileSync(STORE_PATH, JSON.stringify(initial, null, 2), "utf8");
+      const stat = fs.statSync(STORE_PATH);
       memoryCache = initial;
-      lastMtime = Date.now();
+      lastMtime = stat.mtimeMs;
       return initial;
     }
 
     const stat = fs.statSync(STORE_PATH);
-    if (memoryCache && stat.mtimeMs <= lastMtime) {
+    if (memoryCache && stat.mtimeMs === lastMtime) {
       return memoryCache;
     }
 
@@ -207,8 +208,9 @@ export function writeStore(store: DatabaseStore): void {
       fs.mkdirSync(DATA_DIR, { recursive: true });
     }
     fs.writeFileSync(STORE_PATH, JSON.stringify(store, null, 2), "utf8");
+    const stat = fs.statSync(STORE_PATH);
     memoryCache = store;
-    lastMtime = Date.now();
+    lastMtime = stat.mtimeMs;
   } catch (err) {
     console.warn("Failed to write store:", err);
   }

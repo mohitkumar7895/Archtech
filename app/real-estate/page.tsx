@@ -74,9 +74,15 @@ export default async function RealEstatePage() {
     seoPages,
     realEstateSection,
     realEstateProperties,
+    faqs,
   } = await cmsService.getPublicBootstrapData();
 
-  const faqSchema = generateFAQSchema(REAL_ESTATE_FAQS);
+  const realEstateCmsFaqs = faqs.filter(
+    (f) => f.category === "Real Estate" || f.category === "Real Estate & Plots"
+  );
+  const displayFaqs = realEstateCmsFaqs.length > 0 ? realEstateCmsFaqs : REAL_ESTATE_FAQS;
+
+  const faqSchema = generateFAQSchema(displayFaqs);
 
   return (
     <PublicShell
@@ -158,9 +164,9 @@ export default async function RealEstatePage() {
           </div>
 
           <div className="space-y-4">
-            {REAL_ESTATE_FAQS.map((faq, idx) => (
+            {displayFaqs.map((faq, idx) => (
               <div
-                key={idx}
+                key={'id' in faq && (faq as any).id ? (faq as any).id : `re-faq-${idx}`}
                 className="rounded-2xl bg-[#F6F7FA] border border-slate-200/90 p-6 space-y-2 hover:border-[#D6B36A] transition"
               >
                 <h3 className="font-serif text-base sm:text-lg font-bold text-[#071A35] flex items-start gap-2.5">

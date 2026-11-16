@@ -382,7 +382,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
       if (module === "faqs") setFaqs((p) => p.filter((x) => x.id !== id));
       if (module === "media") setMedia((p) => p.filter((x) => x.id !== id));
       if (module === "users") setUsers((p) => p.filter((x) => x.id !== id));
-      toast.success(`Deleted "${name}" from MySQL database.`);
+      toast.success(`Deleted "${name}" successfully.`);
     }
     setDeleteTarget(null);
   };
@@ -657,7 +657,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
         if (selectedLead?.id === enquiryId) {
           setSelectedLead(json.enquiry);
         }
-        toast.success("Lead record updated in MySQL!");
+        toast.success("Lead record updated successfully!");
         setNoteInput("");
       } else {
         toast.error(json.error || "Failed to update lead");
@@ -965,7 +965,8 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                 e.preventDefault();
                 const res = await postCMS("siteSettings", siteSettings);
                 if (res?.success) {
-                  toast.success("Website branding & hero settings saved to MySQL!");
+                  if (res.data) setSiteSettings(res.data);
+                  toast.success("Website branding & hero settings saved successfully!");
                 }
               }}
               className="rounded-2xl bg-white dark:bg-slate-900 p-7 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6"
@@ -1193,7 +1194,10 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                   disabled={saving}
                   onClick={async () => {
                     const res = await postCMS("homepageSections", homepageSections);
-                    if (res?.success) toast.success("Homepage sections updated in MySQL!");
+                    if (res?.success) {
+                      if (res.data) setHomepageSections(res.data);
+                      toast.success("Homepage sections updated successfully!");
+                    }
                   }}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#071A35] text-[#F2D99B] font-bold text-xs"
                 >
@@ -1271,7 +1275,10 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
               onSubmit={async (e) => {
                 e.preventDefault();
                 const res = await postCMS("aboutSection", aboutSection);
-                if (res?.success) toast.success("About page content updated in MySQL!");
+                if (res?.success) {
+                  if (res.data) setAboutSection(res.data);
+                  toast.success("About page content updated successfully!");
+                }
               }}
               className="rounded-2xl bg-white dark:bg-slate-900 p-7 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5"
             >
@@ -1444,7 +1451,10 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    if (!editingService.name) return;
+                    if (!editingService.name?.trim()) {
+                      toast.error("Please enter a service name.");
+                      return;
+                    }
                     const payload = {
                       ...editingService,
                       gallery: editingService.gallery || [],
@@ -1462,7 +1472,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                         return [...prev, res.data];
                       });
                       setEditingService(null);
-                      toast.success("Service saved to MySQL!");
+                      toast.success("Service saved successfully!");
                     }
                   }}
                   className="rounded-2xl bg-white dark:bg-slate-900 p-6 border-2 border-[#D6B36A] space-y-6"
@@ -1957,7 +1967,10 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    if (!editingPackage.name) return;
+                    if (!editingPackage.name?.trim()) {
+                      toast.error("Please enter a package name.");
+                      return;
+                    }
                     const res = await postCMS("pricingPackages", editingPackage);
                     if (res?.success && res.data) {
                       setPricingPackages((prev) => {
@@ -1970,7 +1983,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                         return [...prev, res.data];
                       });
                       setEditingPackage(null);
-                      toast.success("Pricing package updated in MySQL!");
+                      toast.success("Pricing package saved successfully!");
                     }
                   }}
                   className="rounded-2xl bg-white dark:bg-slate-900 p-6 border-2 border-[#D6B36A] space-y-4"
@@ -2201,7 +2214,10 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    if (!editingProject.title) return;
+                    if (!editingProject.title?.trim()) {
+                      toast.error("Please enter a project title.");
+                      return;
+                    }
                     const payload = {
                       ...editingProject,
                       slug: editingProject.slug || slugify(editingProject.title),
@@ -2218,7 +2234,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                         return [res.data, ...prev];
                       });
                       setEditingProject(null);
-                      toast.success("Project saved to MySQL!");
+                      toast.success("Project saved successfully!");
                     }
                   }}
                   className="rounded-2xl bg-white dark:bg-slate-900 p-6 border-2 border-[#D6B36A] space-y-4"
@@ -2620,7 +2636,10 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    if (!editingProperty.title) return;
+                    if (!editingProperty.title?.trim()) {
+                      toast.error("Please enter a property title.");
+                      return;
+                    }
                     const payload = {
                       ...editingProperty,
                       slug: editingProperty.slug || slugify(editingProperty.title),
@@ -3522,7 +3541,10 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
-                    if (!editingBlog.title) return;
+                    if (!editingBlog.title?.trim()) {
+                      toast.error("Please enter a blog title.");
+                      return;
+                    }
                     const slug = editingBlog.slug || slugify(editingBlog.title);
                     const res = await postCMS("blogs", { ...editingBlog, slug });
                     if (res?.success && res.data) {
@@ -3536,7 +3558,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                         return [res.data, ...prev];
                       });
                       setEditingBlog(null);
-                      toast.success("Blog article saved to MySQL!");
+                      toast.success("Blog article saved successfully!");
                     }
                   }}
                   className="rounded-2xl bg-white dark:bg-slate-900 p-6 border-2 border-[#D6B36A] space-y-4"
@@ -5095,7 +5117,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
                 e.preventDefault();
                 await postCMS("siteSettings", siteSettings);
                 await postCMS("socialLinks", socialLinks);
-                toast.success("Contact details & social links updated in MySQL!");
+                toast.success("Contact details & social links saved successfully!");
               }}
               className="rounded-2xl bg-white dark:bg-slate-900 p-7 border border-slate-200 space-y-6"
             >

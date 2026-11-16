@@ -828,7 +828,7 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
               <div className="rounded-2xl bg-gradient-to-r from-[#071A35] to-[#10284A] text-white p-7 border border-[#D6B36A]/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
                   <span className="text-xs font-bold uppercase tracking-widest text-[#D6B36A]">
-                    MYSQL DATABASE: arch_tech (ACTIVE)
+                    ENTERPRISE CMS & CRM (ACTIVE)
                   </span>
                   <h1 className="font-serif text-2xl sm:text-3xl font-bold mt-1">
                     Welcome back, {currentUser.name}

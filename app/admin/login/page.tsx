@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useId } from "react";
+import React, { useState, useEffect, useId } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ShieldCheck, Lock, Mail, Eye, EyeOff, ArrowLeft, Sparkles } from "lucide-react";
@@ -9,11 +9,24 @@ import { toast } from "sonner";
 export default function AdminLoginPage() {
   const router = useRouter();
   const formId = useId();
-  const [email, setEmail] = useState("manoj712009@gmail.com");
-  const [password, setPassword] = useState("Admin@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [isEmailReadOnly, setIsEmailReadOnly] = useState(true);
+  const [isPasswordReadOnly, setIsPasswordReadOnly] = useState(true);
+
+  // Strictly enforce empty initial inputs to prevent aggressive browser autofill
+  useEffect(() => {
+    setEmail("");
+    setPassword("");
+    const timer = setTimeout(() => {
+      setEmail("");
+      setPassword("");
+    }, 150);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,18 +74,20 @@ export default function AdminLoginPage() {
           <h1 id={`${formId}-title`} className="font-serif text-2xl sm:text-3xl font-bold text-white">
             Admin Dashboard Sign In
           </h1>
-          <p className="text-xs text-slate-300">
-            Manage website content, pricing packages, projects, SEO pages, and client leads in MySQL (`arch_tech`).
-          </p>
         </div>
 
         <form
           onSubmit={handleLogin}
-          method="POST"
-          action="/api/auth/login"
+          autoComplete="off"
           aria-labelledby={`${formId}-title`}
           className="rounded-2xl bg-white text-[#172033] p-7 sm:p-8 shadow-2xl border-2 border-[#D6B36A]/50 space-y-5"
         >
+          {/* Decoy traps to absorb browser password managers / Chrome autofill heuristics */}
+          <div className="sr-only opacity-0 pointer-events-none absolute -left-[9999px]" aria-hidden="true">
+            <input type="text" name="fake_username_trap" tabIndex={-1} autoComplete="off" />
+            <input type="password" name="fake_password_trap" tabIndex={-1} autoComplete="off" />
+          </div>
+
           {errorMsg && (
             <div
               role="alert"
@@ -97,10 +112,14 @@ export default function AdminLoginPage() {
               />
               <input
                 id={`${formId}-email`}
-                name="email"
+                name="admin_login_account"
                 type="email"
                 required
-                autoComplete="username"
+                readOnly={isEmailReadOnly}
+                onFocus={() => setIsEmailReadOnly(false)}
+                onClick={() => setIsEmailReadOnly(false)}
+                placeholder="Enter admin email address"
+                autoComplete="new-password"
                 autoCorrect="off"
                 autoCapitalize="none"
                 spellCheck={false}
@@ -141,10 +160,14 @@ export default function AdminLoginPage() {
               />
               <input
                 id={`${formId}-password`}
-                name="password"
+                name="admin_login_secret"
                 type={showPassword ? "text" : "password"}
                 required
-                autoComplete="current-password"
+                readOnly={isPasswordReadOnly}
+                onFocus={() => setIsPasswordReadOnly(false)}
+                onClick={() => setIsPasswordReadOnly(false)}
+                placeholder="Enter admin password"
+                autoComplete="new-password"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -163,16 +186,6 @@ export default function AdminLoginPage() {
             <ShieldCheck className="w-4 h-4 text-[#D6B36A]" />
             <span>{loading ? "Authenticating..." : "Sign In to Admin CMS"}</span>
           </button>
-
-          <div className="p-3.5 rounded-xl bg-[#F6F7FA] border border-slate-200 text-xs text-slate-600 space-y-1">
-            <p className="font-bold text-[#071A35]">Seeded Initial Admin Account:</p>
-            <p>
-              Email: <code className="font-mono text-[#071A35]">manoj712009@gmail.com</code>
-            </p>
-            <p>
-              Password: <code className="font-mono text-[#071A35]">Admin@123</code>
-            </p>
-          </div>
         </form>
 
         <div className="text-center">

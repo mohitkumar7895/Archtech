@@ -36,7 +36,7 @@
   ],
   "siteSettings": {
     "id": "default",
-    "companyName": "ARCH NEW ERA DESIGN",
+    "companyName": "ARCH NEW ERA DESIGN (NRBL TECH)",
     "brandIdentity": "NRBL TECH",
     "categoryText": "Architecture | Construction | Interior Designing | Turnkey Solutions",
     "contactPerson": "Manoj Kumar Sharma",
@@ -81,7 +81,7 @@
     "copyrightText": "© 2026 ARCH NEW ERA DESIGN (NRBL TECH). All rights reserved.",
     "googleMapsEmbedUrl": "https://www.google.com/maps?q=Ashok+Nagar+Shahdara+Delhi+110093&output=embed",
     "workingHours": "Mon – Sat: 9:30 AM – 7:30 PM | Sun: By Appointment",
-    "updatedAt": "2026-11-16T05:49:13.507Z"
+    "updatedAt": "2026-11-16T05:51:54.929Z"
   },
   "homepageSections": [
     {
@@ -220,7 +220,7 @@
   "aboutSection": {
     "id": "default-about",
     "sectionKey": "main_about",
-    "title": "Designing With Purpose. Building With Uncompromising Strength.",
+    "title": "Mastering Architecture, Structure & Interiors",
     "subtitle": "ARCH NEW ERA DESIGN – NRBL TECH | Spaces That Bring Good Energy.",
     "content": "Headquartered at B-366, Ashok Nagar, Shahdara, Delhi – 110093, ARCH NEW ERA DESIGN (technical identity NRBL TECH) is a full-spectrum Architecture, Civil Construction, Interior Designing, and Turnkey Solutions firm. We believe that every residence and commercial space should be a harmonious blend of intelligent space planning, earthquake-resistant structural engineering, and uplifting interior aesthetics.\n\nWhether you are building a new residential home from the ground up, developing a luxury farmhouse, or revitalizing your living and workspace interiors, our multidisciplinary studio handles every detail under one accountable leadership.",
     "highlights": [
@@ -253,7 +253,7 @@
         "desc": "Creating warm, inspiring homes and productive workplaces that enrich the lives of their occupants."
       }
     ],
-    "updatedAt": "2026-11-15T07:50:05.069Z"
+    "updatedAt": "2026-11-16T05:51:54.939Z"
   },
   "services": [
     {
@@ -1686,7 +1686,7 @@
   "realEstateSection": {
     "id": "default-real-estate",
     "badgeText": "REAL ESTATE & PROPERTY SOLUTIONS",
-    "title": "Buy, Sell, Collaborate & Invest in Verified Properties Across Delhi NCR",
+    "title": "Buy, Sell, Collaborate & Invest",
     "subtitle": "Under the expert leadership of Manoj Kumar Sharma (ARCH NEW ERA DESIGN – NRBL TECH) — 100% Freehold Registry Plots, Luxury Builder Floors, Joint Venture Collaborations & High-Yield PG Buildings with End-to-End Legal Transparency.",
     "description": "We bridge the gap between architectural excellence and prime real estate. Whether you are looking to purchase a modern builder floor with lift and car parking, buy a freehold registry plot, redevelop your ancestral property under a 50:50 builder collaboration, or invest in pre-leased commercial & PG complexes, we handle everything from site verification and legal documentation to architectural design, construction, and key handover.",
     "highlights": [
@@ -1816,7 +1816,7 @@
     "collaborationCtaTitle": "Have a Plot or Old House? Let's Build Together with Zero Investment from You!",
     "collaborationCtaSubtitle": "Partner with Manoj Kumar Sharma for a 50:50 Builder Collaboration. We invest 100% construction funds and build a state-of-the-art multi-storey luxury complex on your land.",
     "isEnabled": true,
-    "updatedAt": "2026-11-16T04:20:38.397Z"
+    "updatedAt": "2026-11-16T05:51:54.974Z"
   },
   "realEstateProperties": [
     {

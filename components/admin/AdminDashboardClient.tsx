@@ -322,20 +322,22 @@ export function AdminDashboardClient({ currentUser, initialData }: AdminBootstra
   const postCMS = async (module: string, payload: any, action = "save", id?: string) => {
     setSaving(true);
     try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("arch_tech_admin_token") : null;
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+        headers["x-admin-token"] = token;
+      }
+
       const res = await fetch("/api/cms", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         credentials: "include",
         body: JSON.stringify({ module, action, data: payload, id }),
       });
       const json = await res.json();
       if (!res.ok) {
-        if (res.status === 401) {
-          toast.error("Admin session expired. Please log in again.");
-          router.push("/admin/login");
-        } else {
-          toast.error(json.error || "Operation failed");
-        }
+        toast.error(json.error || "Operation failed");
         setSaving(false);
         return null;
       }

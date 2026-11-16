@@ -45,6 +45,9 @@ export default function AdminLoginPage() {
         setLoading(false);
         return;
       }
+      if (data.token && typeof window !== "undefined") {
+        localStorage.setItem("arch_tech_admin_token", data.token);
+      }
       toast.success(`Welcome back, ${data.user?.name || "Manoj Kumar Sharma"}!`);
       router.push("/admin/dashboard");
       router.refresh();

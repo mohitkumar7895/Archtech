@@ -46,14 +46,15 @@ export async function POST(req: NextRequest) {
     const response = NextResponse.json({
       success: true,
       user: payload,
+      token,
     });
 
     response.cookies.set(AUTH_COOKIE_NAME, token, {
-      httpOnly: true,
+      httpOnly: false,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production" && req.nextUrl.protocol === "https:",
+      secure: req.nextUrl.protocol === "https:",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: 60 * 60 * 24 * 30, // 30 days
     });
 
     return response;
